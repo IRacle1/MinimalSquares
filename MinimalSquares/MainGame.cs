@@ -18,14 +18,6 @@ namespace MinimalSquares;
 
 public class MainGame : Game
 {
-    VertexPositionColor[] axes = new VertexPositionColor[]
-    {
-        new() { Color = Color.White, Position = new Vector3(-10000f, 0f, 0f) },
-        new() { Color = Color.White, Position = new Vector3(10000f, 0f, 0f) },
-        new() { Color = Color.White, Position = new Vector3(0f, -10000f, 0f) },
-        new() { Color = Color.White, Position = new Vector3(0f, 10000f, 0f) }
-    };
-
     public GraphicsDeviceManager GraphicsManager = null!;
     public BasicEffect Effect = null!;
 

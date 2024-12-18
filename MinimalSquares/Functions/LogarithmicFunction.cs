@@ -9,27 +9,25 @@ using Microsoft.Xna.Framework;
 
 namespace MinimalSquares.Functions
 {
-    public class HyberbolicFunction : LinearAbstractFunction
+    public class LogarithmicFunction : LinearAbstractFunction
     {
         public override Color Color { get; set; } = Color.Blue;
-
-        public override float Step { get; set; } = 0.001f;
 
         public override float GetValue(float x)
         {
             if (!IsAcceptableArgument(x))
                 return float.NaN;
-            return A / x + B;
+            return A * MathF.Log(x) + B;
         }
 
         public override bool IsAcceptableArgument(float x)
         {
-            return x != 0f;
+            return x > 0f;
         }
 
         public override (float, float) GetModifiedXY(float x, float y)
         {
-            return (1 / x, y);
+            return (MathF.Log(x), y);
         }
     }
 }

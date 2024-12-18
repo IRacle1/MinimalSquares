@@ -9,27 +9,28 @@ using Microsoft.Xna.Framework;
 
 namespace MinimalSquares.Functions
 {
-    public class HyberbolicFunction : LinearAbstractFunction
+    public class ExponentialFunction : LinearAbstractFunction
     {
         public override Color Color { get; set; } = Color.Blue;
 
-        public override float Step { get; set; } = 0.001f;
-
         public override float GetValue(float x)
         {
-            if (!IsAcceptableArgument(x))
-                return float.NaN;
-            return A / x + B;
+            return B * MathF.Exp(A * x);
         }
 
-        public override bool IsAcceptableArgument(float x)
+        public override bool IsAcceptableValue(float y)
         {
-            return x != 0f;
+            return y >= 0.0f;
         }
 
         public override (float, float) GetModifiedXY(float x, float y)
         {
-            return (1 / x, y);
+            return (x, MathF.Log(y));
+        }
+
+        public override (float, float) PostSetter(float a, float b)
+        {
+            return (a, MathF.Exp(b));
         }
     }
 }

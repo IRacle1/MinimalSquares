@@ -23,7 +23,7 @@ namespace MinimalSquares.Functions
 
             pointManager.OnPointsUpdate += OnPointsUpdate; 
 
-            Functions.Add(new HyberbolicFunction());
+            Functions.Add(new LogarithmicFunction());
 
             base.Start(game);
         }

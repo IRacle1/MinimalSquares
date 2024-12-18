@@ -15,7 +15,9 @@ namespace MinimalSquares.Functions
 
         public virtual float Step { get; set; } = Program.Step;
 
-        public abstract bool IsAcceptable(float x);
+        public abstract bool IsAcceptableArgument(float x);
+
+        public abstract bool IsAcceptableValue(float y);
 
         public abstract void UpdateParameters(float[] x, float[] y);
 
