@@ -23,18 +23,17 @@ namespace MinimalSquares.Graphics
     {
         private MouseController mouseController = null!;
         private KeyboardManager keyboard = null!;
-        private FunctionManager functionManager = null!;
-
         private ViewInitializing view = null!;
 
-        public Stack<Vector2> Points = new Stack<Vector2>();
         private VertexPositionColor[] pointLines = new VertexPositionColor[1000];
+
+        public Stack<Vector2> Points { get; } = new Stack<Vector2>();
+        public event Action? OnPointsUpdate;
 
         public override void Start(MainGame game)
         {
             mouseController = ComponentManager.Get<MouseController>()!;
             keyboard = ComponentManager.Get<KeyboardManager>()!;
-            functionManager = ComponentManager.Get<FunctionManager>()!;
 
             view = ComponentManager.Get<ViewInitializing>()!;
 
@@ -55,7 +54,7 @@ namespace MinimalSquares.Graphics
             if (Points.Count > 0)
             {
                 Points.Pop();
-                functionManager.OnPointUpdate();
+                OnPointsUpdate?.Invoke();
             }
         }
 
@@ -71,6 +70,10 @@ namespace MinimalSquares.Graphics
             pointLines[offset + 3] = new VertexPositionColor(point + new Vector3(-step, step, 0), Color.Red);
             pointLines[offset + 4] = new VertexPositionColor(point + new Vector3(step, -step, 0), Color.Red);
             pointLines[offset + 5] = new VertexPositionColor(point + new Vector3(-step, -step, 0), Color.Red);
+            
+            Points.Push(new Vector2(point.X, point.Y));
+
+            OnPointsUpdate?.Invoke();
         }
 
         private void MouseController_OnLeftButtonPressed()
@@ -78,10 +81,6 @@ namespace MinimalSquares.Graphics
             Vector3 vector = view.GetMouseWorldPosition(mouseController.CursorPosition);
 
             SetNewPoint(vector);
-
-            Points.Push(new Vector2(vector.X, vector.Y));
-
-            functionManager.OnPointUpdate();
         }
     }
 }

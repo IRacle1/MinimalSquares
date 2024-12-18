@@ -14,7 +14,7 @@ using MinimalSquares.Functions;
 
 namespace MinimalSquares.Graphics
 {
-    public class MainGraphicController : BaseComponent, IDrawableComponent
+    public class FunctionsGraphic : BaseComponent, IDrawableComponent
     {
         private FunctionManager functionManager = null!;
         private List<VertexPositionColor[]> functionsVertex = new(10);
@@ -30,11 +30,19 @@ namespace MinimalSquares.Graphics
             functionsVertex.Clear();
             for (int i = 0; i < functionManager.Functions.Count; i++)
             {
-                IFunction function = functionManager.Functions[i];
+                BaseFunction function = functionManager.Functions[i];
                 List<VertexPositionColor> color = new(1000);
-                for (float x = -5f; x < 5f; x += Program.Step)
+                for (float x = -5f; x < 5f; x += function.Step)
                 {
-                    color.Add(new VertexPositionColor(new Vector3(x, function.GetValue(x), 0f), function.Color));
+                    float y = function.GetValue(x);
+                    if (float.IsNormal(y))
+                    {
+                        color.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
+                        color.Add(new VertexPositionColor(new Vector3(x, y + Program.Step, 0f), function.Color));
+                        color.Add(new VertexPositionColor(new Vector3(x, y - Program.Step, 0f), function.Color));
+                        color.Add(new VertexPositionColor(new Vector3(x + Program.Step, y, 0f), function.Color));
+                        color.Add(new VertexPositionColor(new Vector3(x - Program.Step, y, 0f), function.Color));
+                    }
                 }
                 functionsVertex.Add(color.ToArray());
             }
@@ -44,7 +52,8 @@ namespace MinimalSquares.Graphics
         {
             foreach (var item in functionsVertex)
             {
-                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineStrip, item, 0, item.Length - 1);
+                if (item.Length > 0)
+                    targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.PointList, item, 0, item.Length);
             }
         }
     }

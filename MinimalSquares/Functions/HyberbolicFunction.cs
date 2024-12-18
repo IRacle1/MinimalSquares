@@ -9,20 +9,28 @@ using Microsoft.Xna.Framework;
 
 namespace MinimalSquares.Functions
 {
-    public class LinearFunction : BaseFunction
+    public class HyberbolicFunction : BaseFunction
     {
         public float A { get; set; }
         public float B { get; set; }
 
         public override Color Color { get; set; } = Color.Blue;
 
+        public override float Step { get; set; } = 0.001f;
+
         public override float GetValue(float x)
         {
-            return A * x + B;
+            if (x == 0)
+            {
+                return float.NaN;
+            }
+            return A / x + B;
         }
 
         public override bool IsAcceptable(float x)
-            => true;
+        {
+            return x != 0f;
+        }
 
         public override void UpdateParameters(float[] x, float[] y)
         {
@@ -33,9 +41,11 @@ namespace MinimalSquares.Functions
 
             for (int i = 0; i < x.Length; i++)
             {
-                xSqrSum += x[i] * x[i];
-                xSum += x[i];
-                xySum += y[i] * x[i];
+                if (!IsAcceptable(x[i]))
+                    continue;
+                xSqrSum += 1 / (x[i] * x[i]);
+                xSum += 1 / x[i];
+                xySum += y[i] / x[i];
                 ySum += y[i];
             }
 

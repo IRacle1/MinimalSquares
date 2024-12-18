@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
+using MinimalSquares.Generic;
 using MinimalSquares.Graphics;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.MouseInput;
@@ -34,12 +35,14 @@ public class MainGame : Game
     private AxesPrinter AxesPrinter { get; } = new();
     private PointManager PointWriter { get; } = new();
     private FunctionManager FunctionManager { get; } = new();
-    private MainGraphicController MainGraphicController { get; } = new();
+    private FunctionsGraphic FunctionsGraphic { get; } = new();
+    private DeltaPrinter DeltaPrinter { get; } = new();
+    private DefaultKeybinds DefaultKeybinds { get; } = new();
 
     public MainGame()
     {
         GraphicsManager = new GraphicsDeviceManager(this);
-        Content.RootDirectory = "Content";
+        // Content.RootDirectory = "Content";
     }
 
     protected override void Initialize()
@@ -64,6 +67,7 @@ public class MainGame : Game
 
             ComponentManager.Draw();
         }
+
         base.Draw(gameTime);
     }
 }
