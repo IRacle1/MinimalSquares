@@ -25,9 +25,9 @@ namespace MinimalSquares.Graphics
         private KeyboardManager keyboard = null!;
         private ViewInitializing view = null!;
 
-        private VertexPositionColor[] pointLines = new VertexPositionColor[1000];
+        private VertexPositionColor[] pointLines = null!;
 
-        public Stack<Vector2> Points { get; } = new Stack<Vector2>();
+        public List<Vector2> Points { get; } = new List<Vector2>();
         public event Action? OnPointsUpdate;
 
         public override void Start(MainGame game)
@@ -37,9 +37,12 @@ namespace MinimalSquares.Graphics
 
             view = ComponentManager.Get<ViewInitializing>()!;
 
-            mouseController.OnLeftButtonPressed += MouseController_OnLeftButtonPressed;
+            mouseController.OnLeftButtonPressed += OnLeftButtonPressed;
+            mouseController.OnRightButtonPressed += OnRightButtonPressed;
+
             keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Back));
 
+            TriggerUpdate();
             base.Start(game);
         }
 
@@ -49,38 +52,80 @@ namespace MinimalSquares.Graphics
                 targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, pointLines, 0, Points.Count * 2);
         }
 
+        public void SetNewPoint(Vector3 point)
+        {            
+            Points.Add(new Vector2(point.X, point.Y));
+
+            TriggerUpdate();
+        }
+
+        public void TriggerUpdate()
+        {
+            UpdateVertex();
+            OnPointsUpdate?.Invoke();
+        }
+
+        private void UpdateVertex()
+        {
+            List<VertexPositionColor> vertexes = new(Points.Count * 6);
+
+            float step = 0.05f;
+
+            for (int i = 0; i < Points.Count; i++)
+            {
+                Vector3 worldVec = new(Points[i], 0.0f);
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, step, 0), Color.Red));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), Color.Red));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), Color.Red));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), Color.Red));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), Color.Red));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, -step, 0), Color.Red));
+            }
+
+            pointLines = vertexes.ToArray();
+        }
+
         private void HandleRemovePoint(InputType type, Keys keys)
         {
             if (Points.Count > 0)
             {
-                Points.Pop();
+                if (keyboard.PressedKeys.Contains(Keys.LeftShift))
+                {
+                    Points.Clear();
+                }
+                else
+                {
+                    Points.RemoveAt(Points.Count - 1);
+                }
                 OnPointsUpdate?.Invoke();
             }
         }
 
-        private void SetNewPoint(Vector3 point)
+        private void OnLeftButtonPressed()
         {
-            int offset = Points.Count * 6;
-
-            float step = 0.05f;
-
-            pointLines[offset + 0] = new VertexPositionColor(point + new Vector3(step, step, 0), Color.Red);
-            pointLines[offset + 1] = new VertexPositionColor(point + new Vector3(-step, step, 0), Color.Red);
-            pointLines[offset + 2] = new VertexPositionColor(point + new Vector3(step, -step, 0), Color.Red);
-            pointLines[offset + 3] = new VertexPositionColor(point + new Vector3(-step, step, 0), Color.Red);
-            pointLines[offset + 4] = new VertexPositionColor(point + new Vector3(step, -step, 0), Color.Red);
-            pointLines[offset + 5] = new VertexPositionColor(point + new Vector3(-step, -step, 0), Color.Red);
+            Vector3 vector = view.GetMouseWorldPosition(mouseController.CursorPosition);
             
-            Points.Push(new Vector2(point.X, point.Y));
+            Points.Add(new Vector2(vector.X, vector.Y));
 
-            OnPointsUpdate?.Invoke();
+            TriggerUpdate();
         }
 
-        private void MouseController_OnLeftButtonPressed()
+        private void OnRightButtonPressed()
         {
             Vector3 vector = view.GetMouseWorldPosition(mouseController.CursorPosition);
 
-            SetNewPoint(vector);
+            for (int i = 0; i < Points.Count; i++)
+            {
+                Vector3 point = new Vector3(Points[i], 0f);
+                float dist = Vector3.DistanceSquared(point, vector);
+
+                if (dist < 0.1f * 0.1f)
+                {
+                    Points.RemoveAt(i);
+                    TriggerUpdate();
+                    return;
+                }
+            }
         }
     }
 }

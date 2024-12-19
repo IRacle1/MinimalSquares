@@ -29,8 +29,11 @@ namespace MinimalSquares.Input.Keyboard
 
         private void OnKeyDown(object? sender, InputKeyEventArgs e)
         {
-          if (!KeyDownEvents.TryGetValue(e.Key, out List<IKeyEvent>? events))
+            if (!KeyDownEvents.TryGetValue(e.Key, out List<IKeyEvent>? events))
+            {
+                PressedKeys.Add(e.Key);
                 return;
+            }
 
             if (PressedKeys.Contains(e.Key))
             {

@@ -14,6 +14,8 @@ namespace MinimalSquares.Functions
         public float A { get; set; }
         public float B { get; set; }
 
+        public override int RequiredPoints { get; set; } = 2;
+
         public override bool IsAcceptableArgument(float x) => true;
         public override bool IsAcceptableValue(float y) => true;
 
@@ -41,6 +43,9 @@ namespace MinimalSquares.Functions
                 length++;
             }
 
+            if (length < RequiredPoints)
+                return;
+
             Matrix4x4 main = new Matrix4x4(xSqrSum, xSum, 0f, 0f, xSum, length, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
             Matrix4x4 getA = new Matrix4x4(xySum, xSum, 0f, 0f, ySum, length, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
             Matrix4x4 getB = new Matrix4x4(xSqrSum, xySum, 0f, 0f, xSum, ySum, 0f, 0f, 0f, 0f, 1f, 0f, 0f, 0f, 0f, 1f);
@@ -61,6 +66,5 @@ namespace MinimalSquares.Functions
         {
             return (a, b);
         }
-
     }
 }

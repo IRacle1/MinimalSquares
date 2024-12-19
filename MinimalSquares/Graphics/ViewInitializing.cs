@@ -63,6 +63,7 @@ namespace MinimalSquares.Graphics
             if (ray.Intersects(groundPlane) is float distance)
             {
                 Vector3 intersection = ray.Position + distance * ray.Direction;
+                intersection.Z = 0f;
                 return intersection;
             }
             else

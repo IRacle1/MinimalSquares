@@ -17,12 +17,15 @@ namespace MinimalSquares.Graphics
     public class FunctionsGraphic : BaseComponent, IDrawableComponent
     {
         private FunctionManager functionManager = null!;
+        private PointManager pointManager = null!;
+
         private List<VertexPositionColor[]> functionsVertex = new(10);
 
         public override void Start(MainGame game)
         {
             base.Start(game);
             functionManager = ComponentManager.Get<FunctionManager>()!;
+            pointManager = ComponentManager.Get<PointManager>()!;
         }
 
         public void UpdateVertex()
@@ -31,6 +34,8 @@ namespace MinimalSquares.Graphics
             for (int i = 0; i < functionManager.Functions.Count; i++)
             {
                 BaseFunction function = functionManager.Functions[i];
+                if (!functionManager.IsValidFunction(function))
+                    continue;
                 List<VertexPositionColor> color = new(1000);
                 for (float x = -5f; x < 5f; x += function.Step)
                 {

@@ -6,7 +6,7 @@ namespace MinimalSquares;
 internal class Program
 {
     public static MainGame MainGame = null!;
-    public const float Step = 0.005f;
+    public const float Step = 0.0005f;
 
     private static void Main(string[] args)
     {

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32916.344
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalSquares", "MinimalSquares\MinimalSquares.csproj", "{17D40505-D2F6-4E39-BB15-031E01444224}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MinimalSquares", "MinimalSquares\MinimalSquares.csproj", "{17D40505-D2F6-4E39-BB15-031E01444224}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test1", "Test1\Test1.csproj", "{B874E5F6-791B-4AA4-BCAE-05EF73A477C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{17D40505-D2F6-4E39-BB15-031E01444224}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17D40505-D2F6-4E39-BB15-031E01444224}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17D40505-D2F6-4E39-BB15-031E01444224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B874E5F6-791B-4AA4-BCAE-05EF73A477C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B874E5F6-791B-4AA4-BCAE-05EF73A477C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B874E5F6-791B-4AA4-BCAE-05EF73A477C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B874E5F6-791B-4AA4-BCAE-05EF73A477C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

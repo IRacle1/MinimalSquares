@@ -33,6 +33,8 @@ namespace MinimalSquares.Graphics
             {
                 foreach (BaseFunction function in functionManager.Functions)
                 {
+                    if (!functionManager.IsValidFunction(function))
+                        continue;
                     float y = function.GetValue(point.X);
                     if (!float.IsNormal(y))
                         continue;
