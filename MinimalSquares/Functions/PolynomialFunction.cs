@@ -30,7 +30,8 @@ namespace MinimalSquares.Functions
 
             for (int i = 0; i < Parameters.Length; i++)
             {
-                y += Parameters[i] * MathF.Pow(x, i);
+                int pow = Parameters.Length - 1 - i;
+                y += Parameters[i] * MathF.Pow(x, pow);
             }
 
             return y;
@@ -72,9 +73,10 @@ namespace MinimalSquares.Functions
             Vector<float> vector = Vector.Build.DenseOfArray(yxSums);
 
             Vector<float> ansv = mainMatrix.Solve(vector);
+
             for (int i = 0; i < Parameters.Length; i++)
             {
-                Parameters[Parameters.Length - 1 - i] = ansv[i];
+                Parameters[i] = ansv[i];
             }
         }
     }

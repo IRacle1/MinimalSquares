@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using MinimalSquares.Components;
-using MinimalSquares.Components.Abstractions;
 
 namespace MinimalSquares.Graphics
 {
@@ -16,12 +15,13 @@ namespace MinimalSquares.Graphics
 
         private float AspectRatio;
 
-        public Vector3 LeftDownBorder => GetMouseWorldPosition(new Vector2(0, 0));
-        public Vector3 RightDownBorder => GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
+        public Vector3 LeftDownBorder { get; private set; }
+        public Vector3 RightDownBorder { get; private set; }
 
         public override void Start(MainGame game)
         {
             base.Start(game);
+
 
             viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 6), Vector3.Zero, Vector3.Up);
 
@@ -34,7 +34,7 @@ namespace MinimalSquares.Graphics
 
             worldMatrix = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Up);
 
-            game.Window.AllowUserResizing = true;
+            //game.Window.AllowUserResizing = true;
             game.IsMouseVisible = true;
             game.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -54,6 +54,21 @@ namespace MinimalSquares.Graphics
 
             game.IsFixedTimeStep = true;
             game.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60);
+
+            //game.Window.ClientSizeChanged += ClientSizeChanged;
+
+            LeftDownBorder = GetMouseWorldPosition(new Vector2(0, 0));
+            RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
+        }
+
+        private void ClientSizeChanged(object? sender, EventArgs e)
+        {
+            targetGame.GraphicsManager.PreferredBackBufferWidth = targetGame.Window.ClientBounds.Width;
+            targetGame.GraphicsManager.PreferredBackBufferHeight = targetGame.Window.ClientBounds.Height;
+            targetGame.GraphicsManager.ApplyChanges();
+
+            LeftDownBorder = GetMouseWorldPosition(new Vector2(0, 0));
+            RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
         }
 
         public Vector3 GetMouseWorldPosition(Vector2 screenPosition)
