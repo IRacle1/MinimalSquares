@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
-using Microsoft.Xna.Framework;
-
-using MinimalSquares.Math;
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace MinimalSquares.Functions
 {
@@ -56,24 +55,26 @@ namespace MinimalSquares.Functions
                 }
             }
 
-            float[,] main = new float[MaxPow + 1, MaxPow + 1];
+            float[][] main = new float[MaxPow + 1][];
 
             for (int i = 0; i < MaxPow + 1; i++)
             {
+                main[i] = new float[MaxPow + 1];
+
                 for (int j = 0; j < MaxPow + 1; j++)
                 {
-                    main[i, j] = xSums[xSums.Length - 1 - (i + j)];
+                    main[i][j] = xSums[xSums.Length - 1 - (i + j)];
                 }
             }
 
-            SigmaMatrix mainMatrix = new SigmaMatrix(main);
+            Matrix<float> mainMatrix = Matrix.Build.DenseOfRowArrays(main);
 
-            float mainD = mainMatrix.GetDeterminant();
+            Vector<float> vector = Vector.Build.DenseOfArray(yxSums);
 
-            for (int i = 0; i < MaxPow + 1; i++)
+            Vector<float> ansv = mainMatrix.Solve(vector);
+            for (int i = 0; i < Parameters.Length; i++)
             {
-                SigmaMatrix newMatrix = mainMatrix.ReplaceColumn(yxSums, i);
-                Parameters[MaxPow - i] = newMatrix.GetDeterminant() / mainD;
+                Parameters[Parameters.Length - 1 - i] = ansv[i];
             }
         }
     }
