@@ -16,6 +16,9 @@ namespace MinimalSquares.Graphics
 
         private float AspectRatio;
 
+        public Vector3 LeftDownBorder => GetMouseWorldPosition(new Vector2(0, 0));
+        public Vector3 RightDownBorder => GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
+
         public override void Start(MainGame game)
         {
             base.Start(game);

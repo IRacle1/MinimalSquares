@@ -18,6 +18,7 @@ namespace MinimalSquares.Graphics
     {
         private FunctionManager functionManager = null!;
         private PointManager pointManager = null!;
+        private ViewInitializing view = null!;
 
         private List<VertexPositionColor[]> functionsVertex = new(10);
 
@@ -26,6 +27,7 @@ namespace MinimalSquares.Graphics
             base.Start(game);
             functionManager = ComponentManager.Get<FunctionManager>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
+            view = ComponentManager.Get<ViewInitializing>()!;
         }
 
         public void UpdateVertex()
@@ -37,7 +39,10 @@ namespace MinimalSquares.Graphics
                 if (!functionManager.IsValidFunction(function))
                     continue;
                 List<VertexPositionColor> color = new(1000);
-                for (float x = -5f; x < 5f; x += function.Step)
+               float left = view.LeftDownBorder.X;
+               float right = view.RightDownBorder.X;
+
+                for (float x = left; x < right; x += function.Step)
                 {
                     float y = function.GetValue(x);
                     if (float.IsNormal(y))

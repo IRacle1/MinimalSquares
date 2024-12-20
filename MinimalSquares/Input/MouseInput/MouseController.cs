@@ -39,6 +39,12 @@ namespace MinimalSquares.Input.MouseInput
 
             MouseState state = Mouse.GetState();
 
+            if (state.X < 0 || state.X > targetGame.Window.ClientBounds.Width ||
+                state.Y < 0 || state.Y > targetGame.Window.ClientBounds.Width)
+            {
+                return;
+            }
+
             if (state.X != CursorPosition.X ||
                 state.Y != CursorPosition.Y)
             {
