@@ -21,7 +21,7 @@ public class MainGame : Game
     public GraphicsDeviceManager GraphicsManager = null!;
     public BasicEffect Effect = null!;
 
-    private ViewInitializing ViewSettings { get; } = new();
+    private MainView ViewSettings { get; } = new();
     private KeyboardManager keyboardManager { get; } = new();
     private MouseController MouseController { get; } = new();
     private AxesPrinter AxesPrinter { get; } = new();
@@ -30,6 +30,7 @@ public class MainGame : Game
     private FunctionsGraphic FunctionsGraphic { get; } = new();
     private DeltaPrinter DeltaPrinter { get; } = new();
     private DefaultKeybinds DefaultKeybinds { get; } = new();
+    private BackgroundComponent BackgroundComponent { get; } = new();
 
     public MainGame()
     {
@@ -51,8 +52,6 @@ public class MainGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.Black);
-
         foreach (EffectPass pass in Effect.CurrentTechnique.Passes)
         {
             pass.Apply();

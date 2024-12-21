@@ -23,26 +23,29 @@ namespace MinimalSquares.Graphics
     {
         private MouseController mouseController = null!;
         private KeyboardManager keyboard = null!;
-        private ViewInitializing view = null!;
+        private MainView view = null!;
 
         private VertexPositionColor[] pointLines = null!;
 
         public List<Vector2> Points { get; } = new List<Vector2>();
         public event Action? OnPointsUpdate;
 
+        public int Order { get; } = 1;
+
+        public Color PointColor { get; set; } = Color.Red;
+
         public override void Start(MainGame game)
         {
             mouseController = ComponentManager.Get<MouseController>()!;
             keyboard = ComponentManager.Get<KeyboardManager>()!;
 
-            view = ComponentManager.Get<ViewInitializing>()!;
+            view = ComponentManager.Get<MainView>()!;
 
             mouseController.OnLeftButtonPressed += OnLeftButtonPressed;
             mouseController.OnRightButtonPressed += OnRightButtonPressed;
 
             keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Back));
 
-            TriggerUpdate();
             base.Start(game);
         }
 
@@ -65,7 +68,7 @@ namespace MinimalSquares.Graphics
             OnPointsUpdate?.Invoke();
         }
 
-        private void UpdateVertex()
+        public void UpdateVertex()
         {
             List<VertexPositionColor> vertexes = new(Points.Count * 6);
 
@@ -74,12 +77,12 @@ namespace MinimalSquares.Graphics
             for (int i = 0; i < Points.Count; i++)
             {
                 Vector3 worldVec = new(Points[i], 0.0f);
-                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, step, 0), Color.Red));
-                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), Color.Red));
-                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), Color.Red));
-                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), Color.Red));
-                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), Color.Red));
-                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, -step, 0), Color.Red));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, step, 0), PointColor));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), PointColor));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), PointColor));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), PointColor));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), PointColor));
+                vertexes.Add(new VertexPositionColor(worldVec + new Vector3(-step, -step, 0), PointColor));
             }
 
             pointLines = vertexes.ToArray();

@@ -14,15 +14,42 @@ namespace MinimalSquares.Functions
     {
         public PolynomialFunction(int maxPow)
         {
-            Parameters = new float[maxPow + 1];
-            MaxPow = maxPow;
-            RequiredPoints = MaxPow + 1;
+            MonomialCount = maxPow + 1;
+
+            Parameters = new float[MonomialCount];
+
+            MonomialFunctions = new Func<float, float>[MonomialCount];
+            for (int i = 0; i < MonomialCount; i++)
+            {
+                int k = i;
+                MonomialFunctions[i] = (x) => MathF.Pow(x, k);
+            }
+
+            RequiredPoints = MonomialCount;
         }
 
-        public float[] Parameters { get; }
-        public int MaxPow { get; }
+        public PolynomialFunction(Func<float, float>[] monomials, Func<float, float, bool>? AcceptablePoint = null)
+        {
+            MonomialCount = monomials.Length;
 
-        public override int RequiredPoints { get; set; }
+            Parameters = new float[MonomialCount];
+            AcceptablePointDelegate = AcceptablePoint;
+
+            MonomialFunctions = monomials;
+
+            RequiredPoints = MonomialCount;
+        }
+
+        public Func<float, float>[] MonomialFunctions { get; }
+        public Func<float, float, bool>? AcceptablePointDelegate { get; }
+
+        public float[] Parameters { get; }
+        public int MonomialCount { get; }
+
+        public override bool IsAcceptablePoint(float x, float y)
+        {
+            return AcceptablePointDelegate == null ? base.IsAcceptablePoint(x, y) : AcceptablePointDelegate(x, y);
+        }
 
         public override float GetValue(float x)
         {
@@ -30,8 +57,7 @@ namespace MinimalSquares.Functions
 
             for (int i = 0; i < Parameters.Length; i++)
             {
-                int pow = Parameters.Length - 1 - i;
-                y += Parameters[i] * MathF.Pow(x, pow);
+                y += Parameters[i] * MonomialFunctions[i](x);
             }
 
             return y;
@@ -42,33 +68,34 @@ namespace MinimalSquares.Functions
             if (x.Length < RequiredPoints)
                 return;
 
-            float[] xSums = new float[MaxPow * 2 + 1];
-            float[] yxSums = new float[MaxPow + 1];
+            float[][] xSums = new float[MonomialCount][];
+
+            for (int j = 0; j < MonomialCount; j++)
+            {
+                xSums[j] = new float[MonomialCount];
+            }
+
+            float[] yxSums = new float[MonomialCount];
 
             for (int i = 0; i < x.Length; i++)
             {
-                for (int j = 0; j < xSums.Length; j++)
+                if (!IsAcceptablePoint(x[i], y[i]))
                 {
-                    xSums[j] += MathF.Pow(x[i], j);
+                    continue;
+                }
+                
+                for (int j = 0; j < MonomialCount; j++)
+                {
+                    yxSums[j] += y[i] * MonomialFunctions[j](x[i]);
 
-                    if (j < yxSums.Length)
-                        yxSums[yxSums.Length - 1 - j] += y[i] * MathF.Pow(x[i], j);
+                    for (int k = 0; k < MonomialCount; k++)
+                    {
+                        xSums[j][k] += MonomialFunctions[j](x[i]) * MonomialFunctions[k](x[i]);
+                    }
                 }
             }
 
-            float[][] main = new float[MaxPow + 1][];
-
-            for (int i = 0; i < MaxPow + 1; i++)
-            {
-                main[i] = new float[MaxPow + 1];
-
-                for (int j = 0; j < MaxPow + 1; j++)
-                {
-                    main[i][j] = xSums[xSums.Length - 1 - (i + j)];
-                }
-            }
-
-            Matrix<float> mainMatrix = Matrix.Build.DenseOfRowArrays(main);
+            Matrix<float> mainMatrix = Matrix.Build.DenseOfRowArrays(xSums);
 
             Vector<float> vector = Vector.Build.DenseOfArray(yxSums);
 

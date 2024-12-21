@@ -18,53 +18,59 @@ namespace MinimalSquares.Graphics
     {
         private FunctionManager functionManager = null!;
         private PointManager pointManager = null!;
-        private ViewInitializing view = null!;
+        private MainView view = null!;
 
-        private List<VertexPositionColor[]> functionsVertex = new(10);
+        private VertexPositionColor[] functionsVertex = null!;
+
+        public int Order { get; } = 3;
 
         public override void Start(MainGame game)
         {
             base.Start(game);
             functionManager = ComponentManager.Get<FunctionManager>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
-            view = ComponentManager.Get<ViewInitializing>()!;
+            view = ComponentManager.Get<MainView>()!;
         }
 
         public void UpdateVertex()
         {
-            functionsVertex.Clear();
+            List<VertexPositionColor> list = new(functionManager.Functions.Count * 1000);
+
             for (int i = 0; i < functionManager.Functions.Count; i++)
             {
                 BaseFunction function = functionManager.Functions[i];
                 if (!functionManager.IsValidFunction(function))
                     continue;
-                List<VertexPositionColor> color = new(1000);
-               float left = view.LeftDownBorder.X;
-               float right = view.RightDownBorder.X;
+                float left = view.LeftDownBorder.X;
+                float right = view.RightDownBorder.X;
 
                 for (float x = left; x < right; x += function.Step)
                 {
                     float y = function.GetValue(x);
                     if (float.IsNormal(y))
                     {
-                        color.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
-                        color.Add(new VertexPositionColor(new Vector3(x, y + Program.Step, 0f), function.Color));
-                        color.Add(new VertexPositionColor(new Vector3(x, y - Program.Step, 0f), function.Color));
-                        color.Add(new VertexPositionColor(new Vector3(x + Program.Step, y, 0f), function.Color));
-                        color.Add(new VertexPositionColor(new Vector3(x - Program.Step, y, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
+
+                        list.Add(new VertexPositionColor(new Vector3(x, y + Program.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x, y - Program.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x + Program.GrafhicStep, y, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x - Program.GrafhicStep, y, 0f), function.Color));
+
+                        list.Add(new VertexPositionColor(new Vector3(x, y + 2 * Program.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x, y - 2 * Program.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x + 2 * Program.GrafhicStep, y, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x - 2 * Program.GrafhicStep, y, 0f), function.Color));
                     }
                 }
-                functionsVertex.Add(color.ToArray());
             }
+
+            functionsVertex = list.ToArray();
         }
 
         public void Draw()
         {
-            foreach (var item in functionsVertex)
-            {
-                if (item.Length > 0)
-                    targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.PointList, item, 0, item.Length);
-            }
+            if (functionsVertex != null && functionsVertex.Length > 0)
+                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.PointList, functionsVertex, 0, functionsVertex.Length);
         }
     }
 }

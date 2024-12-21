@@ -25,17 +25,23 @@ namespace MinimalSquares.Functions
         {
             pointManager = ComponentManager.Get<PointManager>()!;
             keyboardManager = ComponentManager.Get<KeyboardManager>()!;
-            keyboardManager.Register(new BasicKeyEvent(
-                (_, key) =>
-                {
-                    int num = (int)key - 48;
-                    Functions.Clear();
-                    Functions.Add(new PolynomialFunction(num));
+            //keyboardManager.Register(new BasicKeyEvent(
+            //    (_, key) =>
+            //    {
+            //        int num = (int)key - 48;
+            //        Functions.Clear();
+            //        Functions.Add(new PolynomialFunction(num));
 
-                    pointManager.TriggerUpdate();
-                }, InputType.OnKeyDown, Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9));
+            //        pointManager.TriggerUpdate();
+            //    }, InputType.OnKeyDown, Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9));
 
             functionsGraphic = ComponentManager.Get<FunctionsGraphic>()!;
+
+            Functions.Add(new PolynomialFunction(new Func<float, float>[]
+            {
+                MathF.Sin,
+                (x) => 1f,
+            }));
 
             pointManager.OnPointsUpdate += OnPointsUpdate; 
 

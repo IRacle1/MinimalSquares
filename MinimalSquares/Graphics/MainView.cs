@@ -7,7 +7,7 @@ using MinimalSquares.Components;
 
 namespace MinimalSquares.Graphics
 {
-    public class ViewInitializing : BaseComponent
+    public class MainView : BaseComponent
     {
         private Matrix projectionMatrix;
         private Matrix viewMatrix;
@@ -17,6 +17,9 @@ namespace MinimalSquares.Graphics
 
         public Vector3 LeftDownBorder { get; private set; }
         public Vector3 RightDownBorder { get; private set; }
+
+        public Color BackgroundColor { get; set; } = Color.Black;
+        public Color MainColor { get; set; } = Color.White;
 
         public override void Start(MainGame game)
         {

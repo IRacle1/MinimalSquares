@@ -17,40 +17,49 @@ namespace MinimalSquares.Graphics
 
         private VertexPositionColor[] LinesCoords = null!;
 
+        public int Order { get; } = 2;
+
         public override void Start(MainGame game)
         {
             pointManager = ComponentManager.Get<PointManager>()!;
             functionManager = ComponentManager.Get<FunctionManager>()!;
 
-            pointManager.OnPointsUpdate += OnPointsUpdate;
+            pointManager.OnPointsUpdate += UpdateVertex;
             base.Start(game);
-        }
-
-        private void OnPointsUpdate()
-        {
-            List<VertexPositionColor> lines = new();
-            foreach (Vector2 point in pointManager.Points)
-            {
-                foreach (BaseFunction function in functionManager.Functions)
-                {
-                    if (!functionManager.IsValidFunction(function))
-                        continue;
-                    float y = function.GetValue(point.X);
-                    if (!float.IsNormal(y))
-                        continue;
-
-                    lines.Add(new VertexPositionColor(new Vector3(point.X, point.Y, 0f), function.Color));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X, y, 0f), function.Color));
-                }
-            }
-
-            LinesCoords = lines.ToArray();
         }
 
         public void Draw()
         {
             if (LinesCoords != null && LinesCoords.Length > 0)
                 targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, LinesCoords, 0, LinesCoords.Length / 2);
+        }
+
+        public void UpdateVertex()
+        {
+            List<VertexPositionColor> lines = new();
+            foreach (Vector2 point in pointManager.Points)
+            {
+                foreach (BaseFunction function in functionManager.Functions)
+                {
+                    if (!functionManager.IsValidFunction(function) || !function.IsAcceptablePoint(point.X, point.Y))
+                        continue;
+
+                    float y = function.GetValue(point.X);
+
+                    if (!float.IsNormal(y))
+                        continue;
+
+                    lines.Add(new VertexPositionColor(new Vector3(point.X, point.Y, 0f), pointManager.PointColor));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X, y, 0f), function.Color));
+
+                    lines.Add(new VertexPositionColor(new Vector3(point.X - Program.GrafhicStep, point.Y, 0f), pointManager.PointColor));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X - Program.GrafhicStep, y, 0f), function.Color));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X + Program.GrafhicStep, point.Y, 0f), pointManager.PointColor));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X + Program.GrafhicStep, y, 0f), function.Color));
+                }
+            }
+
+            LinesCoords = lines.ToArray();
         }
     }
 }

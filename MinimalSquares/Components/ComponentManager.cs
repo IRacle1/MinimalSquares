@@ -14,7 +14,7 @@ namespace MinimalSquares.Components
     {
         public static List<IComponent> Components { get; } = new(10);
         public static List<IUpdatedComponent> UpdateComponents { get; } = new(10);
-        public static List<IDrawableComponent> DrawableComponents { get; } = new(10);
+        public static SortedSet<IDrawableComponent> DrawableComponents { get; } = new(new DrawableCompare());
         private static Dictionary<uint, IComponent> ComponentsById { get; } = new(10);
 
         public static void AddComponent(IComponent component)
