@@ -18,13 +18,12 @@ namespace MinimalSquares.Graphics
         public Vector3 LeftDownBorder { get; private set; }
         public Vector3 RightDownBorder { get; private set; }
 
-        public Color BackgroundColor { get; set; } = Color.Black;
-        public Color MainColor { get; set; } = Color.White;
+        public Color BackgroundColor { get; set; } = Color.White;
+        public Color MainColor { get; set; } = Color.DarkGray;
 
         public override void Start(MainGame game)
         {
             base.Start(game);
-
 
             viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 6), Vector3.Zero, Vector3.Up);
 

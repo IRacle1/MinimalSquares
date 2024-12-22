@@ -16,8 +16,9 @@ namespace MinimalSquares.Functions
         {
             MonomialCount = maxPow + 1;
 
-            Parameters = new float[MonomialCount];
+            Parameters = InitParameters();
 
+            YFunction = (y) => y;
             MonomialFunctions = new Func<float, float>[MonomialCount];
             for (int i = 0; i < MonomialCount; i++)
             {
@@ -28,19 +29,22 @@ namespace MinimalSquares.Functions
             RequiredPoints = MonomialCount;
         }
 
-        public PolynomialFunction(Func<float, float>[] monomials, Func<float, float, bool>? AcceptablePoint = null)
+        public PolynomialFunction(Func<float, float>[] monomials, Func<float, float>? yFunction = null, Func<float, float, bool>? AcceptablePoint = null)
         {
             MonomialCount = monomials.Length;
 
-            Parameters = new float[MonomialCount];
+            Parameters = InitParameters();
             AcceptablePointDelegate = AcceptablePoint;
 
+            YFunction = yFunction ?? ((y) => y);
             MonomialFunctions = monomials;
 
             RequiredPoints = MonomialCount;
         }
 
         public Func<float, float>[] MonomialFunctions { get; }
+        public Func<float, float> YFunction { get; }
+
         public Func<float, float, bool>? AcceptablePointDelegate { get; }
 
         public float[] Parameters { get; }
@@ -86,7 +90,7 @@ namespace MinimalSquares.Functions
                 
                 for (int j = 0; j < MonomialCount; j++)
                 {
-                    yxSums[j] += y[i] * MonomialFunctions[j](x[i]);
+                    yxSums[j] += YFunction(y[i]) * MonomialFunctions[j](x[i]);
 
                     for (int k = 0; k < MonomialCount; k++)
                     {
@@ -101,6 +105,16 @@ namespace MinimalSquares.Functions
 
             Vector<float> ansv = mainMatrix.Solve(vector);
 
+            SetParameters(ansv);
+        }
+
+        public virtual float[] InitParameters()
+        {
+            return new float[MonomialCount];
+        }
+
+        public virtual void SetParameters(Vector<float> ansv)
+        {
             for (int i = 0; i < Parameters.Length; i++)
             {
                 Parameters[i] = ansv[i];

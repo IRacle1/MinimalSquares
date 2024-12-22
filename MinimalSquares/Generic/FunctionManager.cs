@@ -37,11 +37,7 @@ namespace MinimalSquares.Functions
 
             functionsGraphic = ComponentManager.Get<FunctionsGraphic>()!;
 
-            Functions.Add(new PolynomialFunction(new Func<float, float>[]
-            {
-                MathF.Sin,
-                (x) => 1f,
-            }));
+            Functions.Add(new SinFunction(1f));
 
             pointManager.OnPointsUpdate += OnPointsUpdate; 
 

@@ -11,14 +11,14 @@ using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace MinimalSquares.Functions
 {
-    // y = b * e^ax
-    // ln y = ax + ln b
-    public class ExponentialFunction : PolynomialFunction
+    // y = b * x^a
+    // ln y = a * ln x + ln b
+    public class PowerFunction : PolynomialFunction
     {
-        public ExponentialFunction() : 
+        public PowerFunction() : 
             base(new Func<float, float>[]
             {
-                (x) => x,
+                MathF.Log,
                 (x) => 1,
             }, MathF.Log)
         {
@@ -26,12 +26,12 @@ namespace MinimalSquares.Functions
 
         public override bool IsAcceptablePoint(float x, float y)
         {
-            return y > 0f;
+            return y > 0f && x > 0f;
         }
 
         public override float GetValue(float x)
         {
-            return Parameters[1] * MathF.Exp(Parameters[0] * x);
+            return Parameters[1] * MathF.Pow(x, Parameters[0]);
         }
 
         public override float[] InitParameters()
