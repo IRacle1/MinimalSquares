@@ -32,7 +32,7 @@ namespace MinimalSquares.Graphics
 
         public int Order { get; } = 1;
 
-        public Color PointColor { get; set; } = Color.Red;
+        public Color PointColor { get; set; } = Color.Crimson;
 
         public override void Start(MainGame game)
         {

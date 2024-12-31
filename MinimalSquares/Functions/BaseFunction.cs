@@ -15,8 +15,6 @@ namespace MinimalSquares.Functions
 
         public virtual float Step { get; set; } = Program.Step;
 
-        public virtual int RequiredPoints { get; set; } = 1;
-
         public virtual bool IsAcceptablePoint(float x, float y) => true;
 
         public abstract void UpdateParameters(float[] x, float[] y);

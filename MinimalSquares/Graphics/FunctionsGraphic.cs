@@ -34,13 +34,12 @@ namespace MinimalSquares.Graphics
 
         public void UpdateVertex()
         {
-            List<VertexPositionColor> list = new(functionManager.Functions.Count * 1000);
+            List<VertexPositionColor> list = new(functionManager.CurrentFunctions.Count * 1000);
 
-            for (int i = 0; i < functionManager.Functions.Count; i++)
+            for (int i = 0; i < functionManager.CurrentFunctions.Count; i++)
             {
-                BaseFunction function = functionManager.Functions[i];
-                if (!functionManager.IsValidFunction(function))
-                    continue;
+                BaseFunction function = functionManager.CurrentFunctions[i];
+
                 float left = view.LeftDownBorder.X;
                 float right = view.RightDownBorder.X;
 

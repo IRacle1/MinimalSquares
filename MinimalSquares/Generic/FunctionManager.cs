@@ -19,25 +19,40 @@ namespace MinimalSquares.Functions
         private FunctionsGraphic functionsGraphic = null!;
         private KeyboardManager keyboardManager = null!;
 
-        public List<BaseFunction> Functions { get; } = new();
+        public List<BaseFunction> CurrentFunctions { get; } = new();
+
+        public List<BaseFunction> AvaibleFunctions { get; } = new()
+        {
+            new PolynomialFunction(0),
+            new PolynomialFunction(1),
+            new PolynomialFunction(2),
+            new PolynomialFunction(3),
+            new PolynomialFunction(4),
+            new PolynomialFunction(5),
+            new PolynomialFunction(new Func<float, float>[] {
+                MathF.Log,
+                x => 1
+            }, acceptablePoint: (x, y) => x > 0),
+            new ExponentialFunction(),
+            new PowerFunction(),
+            new SinFunction(1f),
+        };
 
         public override void Start(MainGame game)
         {
             pointManager = ComponentManager.Get<PointManager>()!;
             keyboardManager = ComponentManager.Get<KeyboardManager>()!;
-            //keyboardManager.Register(new BasicKeyEvent(
-            //    (_, key) =>
-            //    {
-            //        int num = (int)key - 48;
-            //        Functions.Clear();
-            //        Functions.Add(new PolynomialFunction(num));
+            keyboardManager.Register(new BasicKeyEvent(
+                (_, key) =>
+                {
+                    int num = (int)key - 48;
+                    CurrentFunctions.Clear();
+                    CurrentFunctions.Add(AvaibleFunctions[num]);
 
-            //        pointManager.TriggerUpdate();
-            //    }, InputType.OnKeyDown, Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9));
+                    pointManager.TriggerUpdate();
+                }, InputType.OnKeyDown, Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9));
 
             functionsGraphic = ComponentManager.Get<FunctionsGraphic>()!;
-
-            Functions.Add(new SinFunction(1f));
 
             pointManager.OnPointsUpdate += OnPointsUpdate; 
 
@@ -49,18 +64,12 @@ namespace MinimalSquares.Functions
             float[] arrX = pointManager.Points.Select(i => i.X).ToArray();
             float[] arrY = pointManager.Points.Select(i => i.Y).ToArray();
 
-            foreach (var item in Functions)
+            foreach (var item in CurrentFunctions)
             {
-                if (IsValidFunction(item))
-                    item.UpdateParameters(arrX, arrY);
+                item.UpdateParameters(arrX, arrY);
             }
 
             functionsGraphic.UpdateVertex();
-        }
-
-        public bool IsValidFunction(BaseFunction function)
-        {
-            return pointManager.Points.Count >= function.RequiredPoints;
         }
     }
 }

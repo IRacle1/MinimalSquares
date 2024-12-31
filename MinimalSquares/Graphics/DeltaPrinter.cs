@@ -39,9 +39,9 @@ namespace MinimalSquares.Graphics
             List<VertexPositionColor> lines = new();
             foreach (Vector2 point in pointManager.Points)
             {
-                foreach (BaseFunction function in functionManager.Functions)
+                foreach (BaseFunction function in functionManager.CurrentFunctions)
                 {
-                    if (!functionManager.IsValidFunction(function) || !function.IsAcceptablePoint(point.X, point.Y))
+                    if (!function.IsAcceptablePoint(point.X, point.Y))
                         continue;
 
                     float y = function.GetValue(point.X);
@@ -56,6 +56,12 @@ namespace MinimalSquares.Graphics
                     lines.Add(new VertexPositionColor(new Vector3(point.X - Program.GrafhicStep, y, 0f), function.Color));
                     lines.Add(new VertexPositionColor(new Vector3(point.X + Program.GrafhicStep, point.Y, 0f), pointManager.PointColor));
                     lines.Add(new VertexPositionColor(new Vector3(point.X + Program.GrafhicStep, y, 0f), function.Color));
+
+
+                    lines.Add(new VertexPositionColor(new Vector3(point.X - 2 * Program.GrafhicStep, point.Y, 0f), pointManager.PointColor));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X - 2 * Program.GrafhicStep, y, 0f), function.Color));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X + 2 * Program.GrafhicStep, point.Y, 0f), pointManager.PointColor));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X + 2 * Program.GrafhicStep, y, 0f), function.Color));
                 }
             }
 

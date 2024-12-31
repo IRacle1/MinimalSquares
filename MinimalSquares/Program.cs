@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using MinimalSquares.ConsoleCommands;
+
 namespace MinimalSquares;
 
 internal class Program
@@ -12,12 +14,24 @@ internal class Program
 
     private static void Main(string[] args)
     {
-        Task.Run(ConsoleHandle);
         MainGame = new MainGame();
+        Task.Run(ConsoleHandle);
         MainGame.Run();
     }
 
     private static void ConsoleHandle()
     {
+        CommandManager.WriteText("Введите команду: ");
+
+        do
+        {
+            string? str = Console.ReadLine();
+
+            if (string.IsNullOrWhiteSpace(str))
+                continue;
+
+            CommandManager.Handle(str.ToLowerInvariant());
+        }
+        while (true);
     }
 }

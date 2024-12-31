@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Single;
+using MathNet.Numerics.LinearAlgebra.Single.Solvers;
 
 namespace MinimalSquares.Functions
 {
@@ -25,21 +26,17 @@ namespace MinimalSquares.Functions
                 int k = i;
                 MonomialFunctions[i] = (x) => MathF.Pow(x, k);
             }
-
-            RequiredPoints = MonomialCount;
         }
 
-        public PolynomialFunction(Func<float, float>[] monomials, Func<float, float>? yFunction = null, Func<float, float, bool>? AcceptablePoint = null)
+        public PolynomialFunction(Func<float, float>[] monomials, Func<float, float>? yFunction = null, Func<float, float, bool>? acceptablePoint = null)
         {
             MonomialCount = monomials.Length;
 
             Parameters = InitParameters();
-            AcceptablePointDelegate = AcceptablePoint;
+            AcceptablePointDelegate = acceptablePoint;
 
             YFunction = yFunction ?? ((y) => y);
             MonomialFunctions = monomials;
-
-            RequiredPoints = MonomialCount;
         }
 
         public Func<float, float>[] MonomialFunctions { get; }
@@ -49,6 +46,8 @@ namespace MinimalSquares.Functions
 
         public float[] Parameters { get; }
         public int MonomialCount { get; }
+
+        public string Name { get; } = "Полином";
 
         public override bool IsAcceptablePoint(float x, float y)
         {
@@ -69,9 +68,6 @@ namespace MinimalSquares.Functions
 
         public override void UpdateParameters(float[] x, float[] y)
         {
-            if (x.Length < RequiredPoints)
-                return;
-
             float[][] xSums = new float[MonomialCount][];
 
             for (int j = 0; j < MonomialCount; j++)
@@ -103,7 +99,7 @@ namespace MinimalSquares.Functions
 
             Vector<float> vector = Vector.Build.DenseOfArray(yxSums);
 
-            Vector<float> ansv = mainMatrix.Solve(vector);
+            Vector<float> ansv = mainMatrix.SolveIterative(vector, new TFQMR());
 
             SetParameters(ansv);
         }
