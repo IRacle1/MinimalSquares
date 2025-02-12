@@ -23,7 +23,6 @@ namespace MinimalSquares.Graphics
         
         private bool flag { get; set; } = true;
 
-
         public override void Start(MainGame game) 
         {
             base.Start(game);
@@ -54,6 +53,7 @@ namespace MinimalSquares.Graphics
             else if (!mouseController.IsLeftButtonPressed && !flag) 
             {
                 flag = true;
+                ComponentManager.UpdateVertexes();
             }
         }
     }

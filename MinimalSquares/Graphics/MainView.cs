@@ -103,6 +103,8 @@ namespace MinimalSquares.Graphics
 
             viewMatrix = Matrix.CreateLookAt(cameraPosition, new Vector3(cameraPosition.X, cameraPosition.Y, 0), Vector3.Up);
             targetGame.Effect.View = viewMatrix;
+
+            UpdateBorders();
         }
     }
 }
