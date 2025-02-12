@@ -59,8 +59,7 @@ namespace MinimalSquares.Graphics
 
             //game.Window.ClientSizeChanged += ClientSizeChanged;
 
-            LeftDownBorder = GetMouseWorldPosition(new Vector2(0, 0));
-            RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
+            UpdateBorders();
         }
 
         private void ClientSizeChanged(object? sender, EventArgs e)
@@ -69,6 +68,11 @@ namespace MinimalSquares.Graphics
             targetGame.GraphicsManager.PreferredBackBufferHeight = targetGame.Window.ClientBounds.Height;
             targetGame.GraphicsManager.ApplyChanges();
 
+            UpdateBorders();
+        }
+
+        private void UpdateBorders()
+        {
             LeftDownBorder = GetMouseWorldPosition(new Vector2(0, 0));
             RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
         }
