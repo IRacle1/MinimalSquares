@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,34 +12,11 @@ namespace MinimalSquares.Graphics
 {
     public class AxesPrinter : BaseComponent, IDrawableComponent
     {
-        private MainView view;
-        private VertexPositionColor[] mainAxes = new VertexPositionColor[]
-        {
-            new() { Color = Color.White, Position = new Vector3(-10f, 0f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, 0f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0f, 10f, 0f) },
+        private List<VertexPositionColor> axes = new(100);
+        private List<VertexPositionColor> grid = new(100);
 
-            new() { Color = Color.White, Position = new Vector3(-10f, 0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, 0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.005f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.005f, 10f, 0f) },
-
-            new() { Color = Color.White, Position = new Vector3(-10f, -0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, -0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.005f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.005f, 10f, 0f) },
-
-            new() { Color = Color.White, Position = new Vector3(-10f, 0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, 0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.01f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.01f, 10f, 0f) },
-
-            new() { Color = Color.White, Position = new Vector3(-10f, -0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, -0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.01f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.01f, 10f, 0f) },
-        };
+        private MainView view = null!;
+        private VertexPositionColor[] mainAxes = null!;
 
         private VertexPositionColor[] NonPrimatyGrid = null!;
 
@@ -60,39 +38,41 @@ namespace MinimalSquares.Graphics
 
         public void UpdateVertex()
         {
-            List<VertexPositionColor> axes = new(100) {
-                new() { Color = view.MainColor, Position = new Vector3(-10f, 0f, 0f) },
-                new() { Color = view.MainColor, Position = new Vector3(10f, 0f, 0f) },
-                new() { Color = view.MainColor, Position = new Vector3(0f, -10f, 0f) },
-                new() { Color = view.MainColor, Position = new Vector3(0f, 10f, 0f) },
-            };
+            axes.Clear();
+            Vector3 leftUp = view.LeftUpBorder;
+            Vector3 rightDown = view.RightDownBorder;
 
-            for (int i = 1; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(-10f, i * Program.GrafhicStep, 0f) });
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(10f, i * Program.GrafhicStep, 0f) });
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(-10f, -i * Program.GrafhicStep, 0f) });
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(10f, -i * Program.GrafhicStep, 0f) });
-
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * Program.GrafhicStep, -10f, 0f) });
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * Program.GrafhicStep, 10f, 0f) });
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * Program.GrafhicStep, -10f, 0f) });
-                axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * Program.GrafhicStep, 10f, 0f) });
+                if (leftUp.X < 0f && rightDown.X > 0f)
+                {
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(leftUp.X, i * Program.GrafhicStep, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(rightDown.X, i * Program.GrafhicStep, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(leftUp.X, -i * Program.GrafhicStep, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(rightDown.X, -i * Program.GrafhicStep, 0f) });
+                }
+                if (leftUp.Y > 0f && rightDown.Y < 0f)
+                {
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * Program.GrafhicStep, rightDown.Y, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * Program.GrafhicStep, leftUp.Y, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * Program.GrafhicStep, rightDown.Y, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * Program.GrafhicStep, leftUp.Y, 0f) });
+                }
             }
 
             mainAxes = axes.ToArray();
 
-            List<VertexPositionColor> grid = new(100);
-            for (float x = -5f; x < 5f; x++)
+            grid.Clear();
+            for (float x = MathF.Ceiling(leftUp.X); x < MathF.Floor(rightDown.X); x++)
             {
-                grid.Add(new() { Color = view.MainColor, Position = new Vector3(x, -10f, 0f) });
-                grid.Add(new() { Color = view.MainColor, Position = new Vector3(x, 10f, 0f) });
+                grid.Add(new() { Color = view.MainColor, Position = new Vector3(x, rightDown.Y, 0f) });
+                grid.Add(new() { Color = view.MainColor, Position = new Vector3(x, leftUp.Y, 0f) });
             }
 
-            for (float y = -5f; y < 5f; y++)
+            for (float y = MathF.Ceiling(rightDown.Y); y < MathF.Floor(leftUp.Y); y++)
             {
-                grid.Add(new() { Color = view.MainColor, Position = new Vector3(-10f, y, 0f) });
-                grid.Add(new() { Color = view.MainColor, Position = new Vector3(10f, y, 0f) });
+                grid.Add(new() { Color = view.MainColor, Position = new Vector3(leftUp.X, y, 0f) });
+                grid.Add(new() { Color = view.MainColor, Position = new Vector3(rightDown.X, y, 0f) });
             }
 
             NonPrimatyGrid = grid.ToArray();

@@ -34,7 +34,7 @@ namespace MinimalSquares.Graphics
 
         public void UpdateVertex()
         {
-            List<VertexPositionColor> list = new(functionManager.CurrentFunctions.Count * 1000);
+            List<VertexPositionColor> list = new(functionManager.CurrentFunctions.Count * 100);
 
             for (int i = 0; i < functionManager.CurrentFunctions.Count; i++)
             {
