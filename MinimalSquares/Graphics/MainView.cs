@@ -15,7 +15,7 @@ namespace MinimalSquares.Graphics
 
         private float AspectRatio;
 
-        public Vector3 LeftDownBorder { get; private set; }
+        public Vector3 LeftUpBorder { get; private set; }
         public Vector3 RightDownBorder { get; private set; }
         public Vector3 CameraPosition { get; private set; }
 
@@ -62,8 +62,7 @@ namespace MinimalSquares.Graphics
 
             //game.Window.ClientSizeChanged += ClientSizeChanged;
 
-            LeftDownBorder = GetMouseWorldPosition(new Vector2(0, 0));
-            RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
+            UpdateBorders();
         }
 
         private void ClientSizeChanged(object? sender, EventArgs e)
@@ -72,7 +71,12 @@ namespace MinimalSquares.Graphics
             targetGame.GraphicsManager.PreferredBackBufferHeight = targetGame.Window.ClientBounds.Height;
             targetGame.GraphicsManager.ApplyChanges();
 
-            LeftDownBorder = GetMouseWorldPosition(new Vector2(0, 0));
+            UpdateBorders();
+        }
+
+        private void UpdateBorders()
+        {
+            LeftUpBorder = GetMouseWorldPosition(new Vector2(0, 0));
             RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
         }
 
