@@ -15,7 +15,7 @@ namespace MinimalSquares.Graphics
 
         private float AspectRatio;
 
-        public Vector3 LeftDownBorder { get; private set; }
+        public Vector3 LeftUpBorder { get; private set; }
         public Vector3 RightDownBorder { get; private set; }
 
         public Color BackgroundColor { get; set; } = Color.White;
@@ -73,7 +73,7 @@ namespace MinimalSquares.Graphics
 
         private void UpdateBorders()
         {
-            LeftDownBorder = GetMouseWorldPosition(new Vector2(0, 0));
+            LeftUpBorder = GetMouseWorldPosition(new Vector2(0, 0));
             RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
         }
 
