@@ -65,13 +65,13 @@ namespace MinimalSquares.Graphics
             mainAxes = axes.ToArray();
 
             grid.Clear();
-            for (float x = MathF.Ceiling(leftUp.X); x < MathF.Floor(rightDown.X); x++)
+            for (float x = MathF.Floor(leftUp.X); x < MathF.Ceiling(rightDown.X); x++)
             {
                 grid.Add(new() { Color = view.MainColor, Position = new Vector3(x, rightDown.Y, 0f) });
                 grid.Add(new() { Color = view.MainColor, Position = new Vector3(x, leftUp.Y, 0f) });
             }
 
-            for (float y = MathF.Ceiling(rightDown.Y); y < MathF.Floor(leftUp.Y); y++)
+            for (float y = MathF.Floor(rightDown.Y); y < MathF.Ceiling(leftUp.Y); y++)
             {
                 grid.Add(new() { Color = view.MainColor, Position = new Vector3(leftUp.X, y, 0f) });
                 grid.Add(new() { Color = view.MainColor, Position = new Vector3(rightDown.X, y, 0f) });
