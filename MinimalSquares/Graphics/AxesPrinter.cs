@@ -12,35 +12,9 @@ namespace MinimalSquares.Graphics
     public class AxesPrinter : BaseComponent, IDrawableComponent
     {
         private MainView view;
-        private VertexPositionColor[] mainAxes = new VertexPositionColor[]
-        {
-            new() { Color = Color.White, Position = new Vector3(-10f, 0f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, 0f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0f, 10f, 0f) },
-
-            new() { Color = Color.White, Position = new Vector3(-10f, 0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, 0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.005f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.005f, 10f, 0f) },
-
-            new() { Color = Color.White, Position = new Vector3(-10f, -0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, -0.005f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.005f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.005f, 10f, 0f) },
-
-            new() { Color = Color.White, Position = new Vector3(-10f, 0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, 0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.01f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(0.01f, 10f, 0f) },
-
-            new() { Color = Color.White, Position = new Vector3(-10f, -0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(10f, -0.01f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.01f, -10f, 0f) },
-            new() { Color = Color.White, Position = new Vector3(-0.01f, 10f, 0f) },
-        };
-
-        private VertexPositionColor[] NonPrimatyGrid = null!;
+        
+        private VertexPositionColor[] mainAxes = null!;
+        private VertexPositionColor[] NonPrimaryGrid = null!;
 
         public int Order { get; } = 0;
 
@@ -55,7 +29,7 @@ namespace MinimalSquares.Graphics
         public void Draw()
         {
             targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, mainAxes, 0, mainAxes.Length / 2);
-            targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, NonPrimatyGrid, 0, NonPrimatyGrid.Length / 2);
+            targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, NonPrimaryGrid, 0, NonPrimaryGrid.Length / 2);
         }
 
         public void UpdateVertex()
@@ -95,7 +69,7 @@ namespace MinimalSquares.Graphics
                 grid.Add(new() { Color = view.MainColor, Position = new Vector3(10f, y, 0f) });
             }
 
-            NonPrimatyGrid = grid.ToArray();
+            NonPrimaryGrid = grid.ToArray();
         }
     }
 }

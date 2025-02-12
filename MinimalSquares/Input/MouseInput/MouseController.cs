@@ -20,6 +20,8 @@ namespace MinimalSquares.Input.MouseInput
         public bool IsLeftButtonPressed { get; private set; } = false;
         public bool IsRightButtonPressed { get; private set; } = false;
 
+        public int WheelScrollValue { get; private set; } = 0;
+
         public event Action<Vector2, Vector2>? OnCursorMoving;
 
         public event Action? OnLeftButtonPressed;
@@ -40,10 +42,12 @@ namespace MinimalSquares.Input.MouseInput
             MouseState state = Mouse.GetState();
 
             if (state.X < 0 || state.X > targetGame.Window.ClientBounds.Width ||
-                state.Y < 0 || state.Y > targetGame.Window.ClientBounds.Width)
+                state.Y < 0 || state.Y > targetGame.Window.ClientBounds.Height)
             {
                 return;
             }
+
+            WheelScrollValue = state.ScrollWheelValue;
 
             if (state.X != CursorPosition.X ||
                 state.Y != CursorPosition.Y)

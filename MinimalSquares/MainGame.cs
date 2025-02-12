@@ -32,6 +32,8 @@ public class MainGame : Game
     private DefaultKeybinds DefaultKeybinds { get; } = new();
     private BackgroundComponent BackgroundComponent { get; } = new();
 
+    private Move Move { get; } = new();
+
     public MainGame()
     {
         GraphicsManager = new GraphicsDeviceManager(this);
@@ -46,6 +48,7 @@ public class MainGame : Game
 
     protected override void Update(GameTime gameTime)
     {
+        //Window.Title = $"{MouseController.WheelScrollValue}";
         ComponentManager.Update();
         base.Update(gameTime);
     }

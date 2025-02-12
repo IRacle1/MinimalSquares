@@ -17,6 +17,7 @@ namespace MinimalSquares.Graphics
 
         public Vector3 LeftDownBorder { get; private set; }
         public Vector3 RightDownBorder { get; private set; }
+        public Vector3 CameraPosition { get; private set; }
 
         public Color BackgroundColor { get; set; } = Color.White;
         public Color MainColor { get; set; } = Color.DarkGray;
@@ -25,7 +26,9 @@ namespace MinimalSquares.Graphics
         {
             base.Start(game);
 
-            viewMatrix = Matrix.CreateLookAt(new Vector3(0, 0, 6), Vector3.Zero, Vector3.Up);
+            CameraPosition = new Vector3(0, 0, 6);
+
+            viewMatrix = Matrix.CreateLookAt(CameraPosition, Vector3.Zero, Vector3.Up);
 
             AspectRatio = (float)game.Window.ClientBounds.Width /
                 (float)game.Window.ClientBounds.Height;
@@ -88,6 +91,14 @@ namespace MinimalSquares.Graphics
             }
             else
                 return Vector3.Zero;
+        }
+
+        public void SetCameraPosition(Vector3 cameraPosition, Vector3 cameraTarget) 
+        {
+            CameraPosition = cameraPosition;
+
+            viewMatrix = Matrix.CreateLookAt(cameraPosition, new Vector3(cameraPosition.X, cameraPosition.Y, 0), Vector3.Up);
+            targetGame.Effect.View = viewMatrix;
         }
     }
 }
