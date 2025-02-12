@@ -65,6 +65,14 @@ namespace MinimalSquares.Components
             }
         }
 
+        public static void UpdateVertexes()
+        {
+            foreach (IDrawableComponent item in DrawableComponents)
+            {
+                item.UpdateVertex();
+            }
+        }
+
         public static bool TryGetById(uint id, [MaybeNullWhen(false)] out IComponent component)
         {
             return ComponentsById.TryGetValue(id, out component);

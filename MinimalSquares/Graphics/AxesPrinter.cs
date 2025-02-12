@@ -32,8 +32,10 @@ namespace MinimalSquares.Graphics
 
         public void Draw()
         {
-            targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, mainAxes, 0, mainAxes.Length / 2);
-            targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, NonPrimaryGrid, 0, NonPrimaryGrid.Length / 2);
+            if (mainAxes.Length > 0)
+                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, mainAxes, 0, mainAxes.Length / 2);
+            if (NonPrimaryGrid.Length > 0)
+                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, NonPrimaryGrid, 0, NonPrimaryGrid.Length / 2);
         }
 
         public void UpdateVertex()
