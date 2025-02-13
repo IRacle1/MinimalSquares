@@ -15,10 +15,10 @@ namespace MinimalSquares.Functions
 
         public virtual float Step { get; set; } = Program.Step;
 
-        public virtual bool IsAcceptablePoint(float x, float y) => true;
+        public virtual bool IsAcceptablePoint(double x, double y) => true;
 
-        public abstract void UpdateParameters(float[] x, float[] y);
+        public abstract void UpdateParameters(double[] x, double[] y);
 
-        public abstract float GetValue(float x);
+        public abstract double GetValue(double x);
     }
 }

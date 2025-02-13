@@ -6,8 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Single;
-using MathNet.Numerics.LinearAlgebra.Single.Solvers;
+using MathNet.Numerics.LinearAlgebra.Double;
+using MathNet.Numerics.LinearAlgebra.Double.Solvers;
 
 namespace MinimalSquares.Functions
 {
@@ -20,15 +20,15 @@ namespace MinimalSquares.Functions
             Parameters = InitParameters();
 
             YFunction = (y) => y;
-            MonomialFunctions = new Func<float, float>[MonomialCount];
+            MonomialFunctions = new Func<double, double>[MonomialCount];
             for (int i = 0; i < MonomialCount; i++)
             {
                 int k = i;
-                MonomialFunctions[i] = (x) => MathF.Pow(x, k);
+                MonomialFunctions[i] = (x) => Math.Pow(x, k);
             }
         }
 
-        public PolynomialFunction(Func<float, float>[] monomials, Func<float, float>? yFunction = null, Func<float, float, bool>? acceptablePoint = null)
+        public PolynomialFunction(Func<double, double>[] monomials, Func<double, double>? yFunction = null, Func<double, double, bool>? acceptablePoint = null)
         {
             MonomialCount = monomials.Length;
 
@@ -39,24 +39,24 @@ namespace MinimalSquares.Functions
             MonomialFunctions = monomials;
         }
 
-        public Func<float, float>[] MonomialFunctions { get; }
-        public Func<float, float> YFunction { get; }
+        public Func<double, double>[] MonomialFunctions { get; }
+        public Func<double, double> YFunction { get; }
 
-        public Func<float, float, bool>? AcceptablePointDelegate { get; }
+        public Func<double, double, bool>? AcceptablePointDelegate { get; }
 
-        public float[] Parameters { get; }
+        public double[] Parameters { get; }
         public int MonomialCount { get; }
 
         public string Name { get; } = "Полином";
 
-        public override bool IsAcceptablePoint(float x, float y)
+        public override bool IsAcceptablePoint(double x, double y)
         {
             return AcceptablePointDelegate == null ? base.IsAcceptablePoint(x, y) : AcceptablePointDelegate(x, y);
         }
 
-        public override float GetValue(float x)
+        public override double GetValue(double x)
         {
-            float y = 0.0f;
+            double y = 0.0f;
 
             for (int i = 0; i < Parameters.Length; i++)
             {
@@ -66,16 +66,16 @@ namespace MinimalSquares.Functions
             return y;
         }
 
-        public override void UpdateParameters(float[] x, float[] y)
+        public override void UpdateParameters(double[] x, double[] y)
         {
-            float[][] xSums = new float[MonomialCount][];
+            double[][] xSums = new double[MonomialCount][];
 
             for (int j = 0; j < MonomialCount; j++)
             {
-                xSums[j] = new float[MonomialCount];
+                xSums[j] = new double[MonomialCount];
             }
 
-            float[] yxSums = new float[MonomialCount];
+            double[] yxSums = new double[MonomialCount];
 
             for (int i = 0; i < x.Length; i++)
             {
@@ -95,21 +95,21 @@ namespace MinimalSquares.Functions
                 }
             }
 
-            Matrix<float> mainMatrix = Matrix.Build.DenseOfRowArrays(xSums);
+            Matrix<double> mainMatrix = Matrix.Build.DenseOfRowArrays(xSums);
 
-            Vector<float> vector = Vector.Build.DenseOfArray(yxSums);
+            Vector<double> vector = Vector.Build.DenseOfArray(yxSums);
 
-            Vector<float> ansv = mainMatrix.SolveIterative(vector, new TFQMR());
+            Vector<double> ansv = mainMatrix.SolveIterative(vector, new TFQMR());
 
             SetParameters(ansv);
         }
 
-        public virtual float[] InitParameters()
+        public virtual double[] InitParameters()
         {
-            return new float[MonomialCount];
+            return new double[MonomialCount];
         }
 
-        public virtual void SetParameters(Vector<float> ansv)
+        public virtual void SetParameters(Vector<double> ansv)
         {
             for (int i = 0; i < Parameters.Length; i++)
             {

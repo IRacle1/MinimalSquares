@@ -16,33 +16,28 @@ namespace MinimalSquares.Functions
     public class ExponentialFunction : PolynomialFunction
     {
         public ExponentialFunction() : 
-            base(new Func<float, float>[]
+            base(new Func<double, double>[]
             {
                 (x) => x,
                 (x) => 1,
-            }, MathF.Log)
+            }, Math.Log)
         {
         }
 
-        public override bool IsAcceptablePoint(float x, float y)
+        public override bool IsAcceptablePoint(double x, double y)
         {
             return y > 0f;
         }
 
-        public override float GetValue(float x)
+        public override double GetValue(double x)
         {
-            return Parameters[1] * MathF.Exp(Parameters[0] * x);
+            return Parameters[1] * Math.Exp(Parameters[0] * x);
         }
 
-        public override float[] InitParameters()
-        {
-            return new float[2];
-        }
-
-        public override void SetParameters(Vector<float> ansv)
+        public override void SetParameters(Vector<double> ansv)
         {
             Parameters[0] = ansv[0];
-            Parameters[1] = MathF.Exp(ansv[1]);
+            Parameters[1] = Math.Exp(ansv[1]);
         }
     }
 }

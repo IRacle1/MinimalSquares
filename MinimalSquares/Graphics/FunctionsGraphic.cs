@@ -45,7 +45,7 @@ namespace MinimalSquares.Graphics
 
                 for (float x = left; x < right; x += function.Step)
                 {
-                    float y = function.GetValue(x);
+                    float y = (float)function.GetValue(x);
                     if (float.IsNormal(y))
                     {
                         list.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));

@@ -16,33 +16,28 @@ namespace MinimalSquares.Functions
     public class PowerFunction : PolynomialFunction
     {
         public PowerFunction() : 
-            base(new Func<float, float>[]
+            base(new Func<double, double>[]
             {
-                MathF.Log,
+                Math.Log,
                 (x) => 1,
-            }, MathF.Log)
+            }, Math.Log)
         {
         }
 
-        public override bool IsAcceptablePoint(float x, float y)
+        public override bool IsAcceptablePoint(double x, double y)
         {
             return y > 0f && x > 0f;
         }
 
-        public override float GetValue(float x)
+        public override double GetValue(double x)
         {
-            return Parameters[1] * MathF.Pow(x, Parameters[0]);
+            return Parameters[1] * Math.Pow(x, Parameters[0]);
         }
 
-        public override float[] InitParameters()
-        {
-            return new float[2];
-        }
-
-        public override void SetParameters(Vector<float> ansv)
+        public override void SetParameters(Vector<double> ansv)
         {
             Parameters[0] = ansv[0];
-            Parameters[1] = MathF.Exp(ansv[1]);
+            Parameters[1] = Math.Exp(ansv[1]);
         }
     }
 }
