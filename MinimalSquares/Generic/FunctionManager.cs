@@ -29,8 +29,8 @@ namespace MinimalSquares.Functions
             new PolynomialFunction(3),
             new PolynomialFunction(4),
             new PolynomialFunction(5),
-            new PolynomialFunction(new Func<float, float>[] {
-                MathF.Log,
+            new PolynomialFunction(new Func<double, double>[] {
+                Math.Log,
                 x => 1
             }, acceptablePoint: (x, y) => x > 0),
             new ExponentialFunction(),
@@ -61,8 +61,8 @@ namespace MinimalSquares.Functions
 
         internal void OnPointsUpdate()
         {
-            float[] arrX = pointManager.Points.Select(i => i.X).ToArray();
-            float[] arrY = pointManager.Points.Select(i => i.Y).ToArray();
+            double[] arrX = pointManager.Points.Select(i => (double)i.X).ToArray();
+            double[] arrY = pointManager.Points.Select(i => (double)i.Y).ToArray();
 
             foreach (var item in CurrentFunctions)
             {

@@ -22,10 +22,10 @@ namespace MinimalSquares.Functions
     public class SinFunction : PolynomialFunction
     {
         public SinFunction(float k) : 
-            base(new Func<float, float>[]
+            base(new Func<double, double>[]
             {
-                (x) => MathF.Sin(k * x),
-                (x) => MathF.Cos(k * x),
+                (x) => Math.Sin(k * x),
+                (x) => Math.Cos(k * x),
                 (x) => 1,
             })
         {
@@ -34,22 +34,22 @@ namespace MinimalSquares.Functions
 
         public float K { get; }
 
-        public override float GetValue(float x)
+        public override double GetValue(double x)
         {
-            return Parameters[0] * MathF.Sin(x * K + Parameters[1]) + Parameters[2];
+            return Parameters[0] * Math.Sin(x * K + Parameters[1]) + Parameters[2];
         }
 
-        public override float[] InitParameters()
+        public override double[] InitParameters()
         {
-            return new float[3];
+            return new double[3];
         }
 
-        public override void SetParameters(Vector<float> ansv)
+        public override void SetParameters(Vector<double> ansv)
         {
-            (float a1, float a2) = (ansv[0], ansv[1]);
+            (double a1, double a2) = (ansv[0], ansv[1]);
             Parameters[2] = ansv[2];
-            Parameters[0] = MathF.Sqrt(a1 * a1 + a2 * a2);
-            Parameters[1] = MathF.Atan2(a2, a1);
+            Parameters[0] = Math.Sqrt(a1 * a1 + a2 * a2);
+            Parameters[1] = Math.Atan2(a2, a1);
         }
     }
 }

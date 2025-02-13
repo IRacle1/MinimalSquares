@@ -44,7 +44,7 @@ namespace MinimalSquares.Graphics
                     if (!function.IsAcceptablePoint(point.X, point.Y))
                         continue;
 
-                    float y = function.GetValue(point.X);
+                    float y = (float)function.GetValue(point.X);
 
                     if (!float.IsNormal(y))
                         continue;
