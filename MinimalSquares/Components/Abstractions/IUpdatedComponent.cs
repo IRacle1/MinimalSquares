@@ -1,7 +1,9 @@
-﻿namespace MinimalSquares.Components.Abstractions
+﻿using Microsoft.Xna.Framework;
+
+namespace MinimalSquares.Components.Abstractions
 {
     public interface IUpdatedComponent
     {
-        public void Update();
+        public void Update(GameTime gameTime);
     }
 }

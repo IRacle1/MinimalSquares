@@ -97,11 +97,11 @@ namespace MinimalSquares.Graphics
                 return Vector3.Zero;
         }
 
-        public void SetCameraPosition(Vector3 cameraPosition, Vector3 cameraTarget) 
+        public void SetCamera(Vector3 cameraPosition, Vector3 cameraTarget) 
         {
             CameraPosition = cameraPosition;
 
-            viewMatrix = Matrix.CreateLookAt(cameraPosition, new Vector3(cameraPosition.X, cameraPosition.Y, 0), Vector3.Up);
+            viewMatrix = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
             targetGame.Effect.View = viewMatrix;
 
             UpdateBorders();

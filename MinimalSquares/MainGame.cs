@@ -6,6 +6,7 @@ using MinimalSquares.Components;
 using MinimalSquares.Functions;
 using MinimalSquares.Generic;
 using MinimalSquares.Graphics;
+using MinimalSquares.Input;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.MouseInput;
 
@@ -31,13 +32,11 @@ public class MainGame : Game
     private DeltaPrinter DeltaPrinter { get; } = new();
     private DefaultKeybinds DefaultKeybinds { get; } = new();
     private BackgroundComponent BackgroundComponent { get; } = new();
-
-    private Move Move { get; } = new();
+    private MainMouseHandler Move { get; } = new();
 
     public MainGame()
     {
         GraphicsManager = new GraphicsDeviceManager(this);
-        // Content.RootDirectory = "Content";
     }
 
     protected override void Initialize()
@@ -48,8 +47,7 @@ public class MainGame : Game
 
     protected override void Update(GameTime gameTime)
     {
-        //Window.Title = $"{MouseController.WheelScrollValue}";
-        ComponentManager.Update();
+        ComponentManager.Update(gameTime);
         base.Update(gameTime);
     }
 

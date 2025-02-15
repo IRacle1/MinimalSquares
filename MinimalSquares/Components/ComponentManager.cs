@@ -49,11 +49,11 @@ namespace MinimalSquares.Components
             }
         }
 
-        public static void Update()
+        public static void Update(GameTime gameTime)
         {
             foreach (IUpdatedComponent item in UpdateComponents)
             {
-                item.Update();
+                item.Update(gameTime);
             }
         }
 

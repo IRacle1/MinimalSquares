@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using MinimalSquares;
 using MinimalSquares.Components;
 using MinimalSquares.Components.Abstractions;
 using MinimalSquares.Functions;
@@ -21,9 +22,7 @@ namespace MinimalSquares.Graphics
 {
     public class PointManager : BaseComponent, IDrawableComponent
     {
-        private MouseController mouseController = null!;
         private KeyboardManager keyboard = null!;
-        private MainView view = null!;
 
         private VertexPositionColor[] pointLines = null!;
 
@@ -34,15 +33,11 @@ namespace MinimalSquares.Graphics
 
         public Color PointColor { get; set; } = Color.Crimson;
 
+        public bool CanAddPoint { get; set; } = false;
+
         public override void Start(MainGame game)
         {
-            mouseController = ComponentManager.Get<MouseController>()!;
             keyboard = ComponentManager.Get<KeyboardManager>()!;
-
-            view = ComponentManager.Get<MainView>()!;
-
-            mouseController.OnLeftButtonPressed += OnLeftButtonPressed;
-            mouseController.OnRightButtonPressed += OnRightButtonPressed;
 
             keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Back));
 
@@ -101,33 +96,6 @@ namespace MinimalSquares.Graphics
                     Points.RemoveAt(Points.Count - 1);
                 }
                 OnPointsUpdate?.Invoke();
-            }
-        }
-
-        private void OnLeftButtonPressed()
-        {
-            Vector3 vector = view.GetMouseWorldPosition(mouseController.CursorPosition);
-            
-            Points.Add(new Vector2(vector.X, vector.Y));
-
-            TriggerUpdate();
-        }
-
-        private void OnRightButtonPressed()
-        {
-            Vector3 vector = view.GetMouseWorldPosition(mouseController.CursorPosition);
-
-            for (int i = 0; i < Points.Count; i++)
-            {
-                Vector3 point = new Vector3(Points[i], 0f);
-                float dist = Vector3.DistanceSquared(point, vector);
-
-                if (dist < 0.1f * 0.1f)
-                {
-                    Points.RemoveAt(i);
-                    TriggerUpdate();
-                    return;
-                }
             }
         }
     }

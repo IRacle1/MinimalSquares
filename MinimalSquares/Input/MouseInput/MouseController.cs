@@ -34,7 +34,7 @@ namespace MinimalSquares.Input.MouseInput
             base.Start(game);
         }
 
-        public void Update() 
+        public void Update(GameTime gameTime) 
         {
             if (!targetGame.IsActive)
                 return;
