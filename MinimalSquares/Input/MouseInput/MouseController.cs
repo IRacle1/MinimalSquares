@@ -28,6 +28,7 @@ namespace MinimalSquares.Input.MouseInput
         public event Action? OnLeftButtonReleased;
         public event Action? OnRightButtonPressed;
         public event Action? OnRightButtonReleased;
+        public event Action? OnWheelScrolled;
 
         public override void Start(MainGame game)
         {
@@ -47,7 +48,11 @@ namespace MinimalSquares.Input.MouseInput
                 return;
             }
 
-            WheelScrollValue = state.ScrollWheelValue;
+            if (WheelScrollValue != state.ScrollWheelValue)
+            {
+                WheelScrollValue = state.ScrollWheelValue;
+                OnWheelScrolled?.Invoke();
+            }
 
             if (state.X != CursorPosition.X ||
                 state.Y != CursorPosition.Y)

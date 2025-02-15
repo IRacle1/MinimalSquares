@@ -48,7 +48,6 @@ public class MainGame : Game
 
     protected override void Update(GameTime gameTime)
     {
-        //Window.Title = $"{MouseController.WheelScrollValue}";
         ComponentManager.Update();
         base.Update(gameTime);
     }

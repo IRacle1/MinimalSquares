@@ -21,7 +21,7 @@ namespace MinimalSquares.Functions
     // b = arctg(a2/a1)
     public class SinFunction : PolynomialFunction
     {
-        public SinFunction(float k) : 
+        public SinFunction(double k) : 
             base(new Func<double, double>[]
             {
                 (x) => Math.Sin(k * x),
@@ -32,7 +32,7 @@ namespace MinimalSquares.Functions
             K = k;
         }
 
-        public float K { get; }
+        public double K { get; }
 
         public override double GetValue(double x)
         {

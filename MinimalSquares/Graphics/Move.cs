@@ -33,24 +33,22 @@ namespace MinimalSquares.Graphics
 
         public void Update()
         {
-            targetGame.Window.Title = $"{view.CameraPosition}";
-
-            if (mouseController.IsLeftButtonPressed && flag)
+            if (mouseController.IsRightButtonPressed && flag)
             {
                 flag = false;
                 
                 StartPoint = mouseController.CursorPosition;
                 PreviousPosition = StartPoint;
             }
-            else if (mouseController.IsLeftButtonPressed && !flag)
+            else if (mouseController.IsRightButtonPressed && !flag)
             {
-                Delta = (mouseController.CursorPosition - PreviousPosition) * new Vector2(-1, 1 );
+                Delta = (mouseController.CursorPosition - PreviousPosition) * new Vector2(-1, 1);
                 PreviousPosition = mouseController.CursorPosition;
 
-                MoveVector = view.CameraPosition + new Vector3(Delta, 0f) / new Vector3(130f);
+                MoveVector = view.CameraPosition + new Vector3(Delta, 0f) / 130f;
                 view.SetCameraPosition(MoveVector, MoveVector);
             }
-            else if (!mouseController.IsLeftButtonPressed && !flag) 
+            else if (!mouseController.IsRightButtonPressed && !flag) 
             {
                 flag = true;
                 ComponentManager.UpdateVertexes();
