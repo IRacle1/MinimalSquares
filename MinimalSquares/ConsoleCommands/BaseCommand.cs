@@ -18,8 +18,6 @@ namespace MinimalSquares.ConsoleCommands
         public string Description { get; }
 
         public abstract void Handle();
-
-        protected abstract string GetResponse(CommandStatus status);
     }
 
     public enum CommandStatus

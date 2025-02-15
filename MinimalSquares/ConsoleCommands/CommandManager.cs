@@ -11,6 +11,7 @@ namespace MinimalSquares.ConsoleCommands
         public static List<BaseCommand> Commands { get; } = new(10)
         {
             new PolynomialCommand(),
+            new Restart(),
         };
 
         public static void Handle(string command)

@@ -21,10 +21,10 @@ internal class Program
 
     private static void ConsoleHandle()
     {
-        CommandManager.WriteText("Введите команду: ");
 
         do
         {
+            CommandManager.WriteText("Введите команду: ");
             string? str = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(str))
