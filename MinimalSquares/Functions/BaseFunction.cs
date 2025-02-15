@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 
+using MinimalSquares.Graphics;
+
 namespace MinimalSquares.Functions
 {
     public abstract class BaseFunction
     {
         public virtual Color Color { get; set; } = Color.MediumSlateBlue;
-
-        public virtual float Step { get; set; } = Program.Step;
 
         public virtual bool IsAcceptablePoint(double x, double y) => true;
 

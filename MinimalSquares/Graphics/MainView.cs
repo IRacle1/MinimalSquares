@@ -9,6 +9,9 @@ namespace MinimalSquares.Graphics
 {
     public class MainView : BaseComponent
     {
+        public static float Step = 0.0005f;
+        public static float GrafhicStep = 0.005f;
+
         private Matrix projectionMatrix;
         private Matrix viewMatrix;
         private Matrix worldMatrix;
@@ -37,7 +40,7 @@ namespace MinimalSquares.Graphics
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                 AspectRatio,
-                1, 10);
+                0.1f, CameraPosition.Z + 1f);
 
             worldMatrix = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Up);
 
@@ -62,8 +65,6 @@ namespace MinimalSquares.Graphics
             game.IsFixedTimeStep = true;
             game.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60);
 
-            //game.Window.ClientSizeChanged += ClientSizeChanged;
-
             UpdateBorders();
         }
 
@@ -78,7 +79,7 @@ namespace MinimalSquares.Graphics
 
         private void UpdateBorders()
         {
-            LeftUpBorder = GetMouseWorldPosition(new Vector2(0, 0));
+            LeftUpBorder = GetMouseWorldPosition(new Vector2(0));
             RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
             RenderLeftUpBorder = new Vector3(2f * LeftUpBorder.X - RightDownBorder.X, 2f * LeftUpBorder.Y - RightDownBorder.Y, 0);
             RenderRightDownBorder = new Vector3(2f * RightDownBorder.X - LeftUpBorder.X, 2f * RightDownBorder.Y - LeftUpBorder.Y, 0);
@@ -106,7 +107,13 @@ namespace MinimalSquares.Graphics
             CameraPosition = cameraPosition;
 
             viewMatrix = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
+
+            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
+                AspectRatio,
+                0.1f, CameraPosition.Z + 1f);
+
             targetGame.Effect.View = viewMatrix;
+            targetGame.Effect.Projection = projectionMatrix;
 
             UpdateBorders();
         }

@@ -25,6 +25,7 @@ namespace MinimalSquares.Input
             view = ComponentManager.Get<MainView>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
 
+            //mouseController.OnWheelScrolled += OnWheelScrolled;
             mouseController.OnCursorMoving += OnCursorMoving;
             mouseController.OnLeftButtonPressed += OnLeftButtonPressed;
             mouseController.OnLeftButtonReleased += OnLeftButtonReleased;
@@ -88,6 +89,16 @@ namespace MinimalSquares.Input
 
                 shouldUpdateVertex = true;
             }
+        }
+
+        private void OnWheelScrolled(float oldValue, float newValue)
+        {
+            float delta = newValue - oldValue;
+            float z = view.CameraPosition.Z;
+            z += z / 100;
+
+            Vector3 newCameraPosition = new Vector3(view.CameraPosition.X, view.CameraPosition.Y, z);
+            view.SetCamera(newCameraPosition, new Vector3(newCameraPosition.GetXY(), 0));
         }
     }
 }

@@ -12,7 +12,7 @@ namespace MinimalSquares.ConsoleCommands
     public class PolynomialCommand : BaseCommand
     {
         public PolynomialCommand()
-            : base("Полином", "")
+            : base("полином", "")
         {
                 
         }

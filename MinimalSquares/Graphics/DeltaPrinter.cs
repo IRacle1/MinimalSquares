@@ -52,10 +52,10 @@ namespace MinimalSquares.Graphics
                     lines.Add(new VertexPositionColor(new Vector3(point.X, point.Y, 0f), pointManager.PointColor));
                     lines.Add(new VertexPositionColor(new Vector3(point.X, y, 0f), function.Color));
 
-                    lines.Add(new VertexPositionColor(new Vector3(point.X - Program.GrafhicStep, point.Y, 0f), pointManager.PointColor));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X - Program.GrafhicStep, y, 0f), function.Color));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X + Program.GrafhicStep, point.Y, 0f), pointManager.PointColor));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X + Program.GrafhicStep, y, 0f), function.Color));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X - MainView.GrafhicStep, point.Y, 0f), pointManager.PointColor));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X - MainView.GrafhicStep, y, 0f), function.Color));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X + MainView.GrafhicStep, point.Y, 0f), pointManager.PointColor));
+                    lines.Add(new VertexPositionColor(new Vector3(point.X + MainView.GrafhicStep, y, 0f), function.Color));
                 }
             }
 

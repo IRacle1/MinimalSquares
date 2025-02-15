@@ -15,7 +15,7 @@ namespace MinimalSquares.ConsoleCommands
 
         public static void Handle(string command)
         {
-            if (Commands.Find(c => c.Name == command) is BaseCommand targetCommand)
+            if (Commands.Find(c => c.Name == command.ToLowerInvariant()) is BaseCommand targetCommand)
             {
                 targetCommand.Handle();
             }

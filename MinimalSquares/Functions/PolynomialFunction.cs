@@ -77,8 +77,11 @@ namespace MinimalSquares.Functions
 
             double[] yxSums = new double[MonomialCount];
 
+            int acceptableCount = 0;
+
             for (int i = 0; i < x.Length; i++)
             {
+                acceptableCount++;
                 if (!IsAcceptablePoint(x[i], y[i]))
                 {
                     continue;
@@ -99,7 +102,12 @@ namespace MinimalSquares.Functions
 
             Vector<double> vector = Vector.Build.DenseOfArray(yxSums);
 
-            Vector<double> ansv = mainMatrix.SolveIterative(vector, new TFQMR());
+            Vector<double> ansv;
+
+            if (acceptableCount >= MonomialCount)
+                ansv = mainMatrix.Solve(vector);
+            else
+                ansv = mainMatrix.SolveIterative(vector, new TFQMR());
 
             SetParameters(ansv);
         }
