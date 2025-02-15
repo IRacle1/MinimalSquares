@@ -39,7 +39,7 @@ namespace MinimalSquares.Graphics
         {
             keyboard = ComponentManager.Get<KeyboardManager>()!;
 
-            keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Back));
+            keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Z));
 
             base.Start(game);
         }

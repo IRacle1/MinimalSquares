@@ -17,6 +17,8 @@ namespace MinimalSquares.Graphics
 
         public Vector3 LeftUpBorder { get; private set; }
         public Vector3 RightDownBorder { get; private set; }
+        public Vector3 RenderLeftUpBorder { get; private set; }
+        public Vector3 RenderRightDownBorder { get; private set; }
         public Vector3 CameraPosition { get; private set; }
 
         public Color BackgroundColor { get; set; } = Color.White;
@@ -78,6 +80,8 @@ namespace MinimalSquares.Graphics
         {
             LeftUpBorder = GetMouseWorldPosition(new Vector2(0, 0));
             RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
+            RenderLeftUpBorder = new Vector3(2f * LeftUpBorder.X - RightDownBorder.X, 2f * LeftUpBorder.Y - RightDownBorder.Y, 0);
+            RenderRightDownBorder = new Vector3(2f * RightDownBorder.X - LeftUpBorder.X, 2f * RightDownBorder.Y - LeftUpBorder.Y, 0);
         }
 
         public Vector3 GetMouseWorldPosition(Vector2 screenPosition)

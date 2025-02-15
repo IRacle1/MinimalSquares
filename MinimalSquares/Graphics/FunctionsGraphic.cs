@@ -40,8 +40,8 @@ namespace MinimalSquares.Graphics
             {
                 BaseFunction function = functionManager.CurrentFunctions[i];
 
-                float left = view.LeftUpBorder.X;
-                float right = view.RightDownBorder.X;
+                float left = view.RenderLeftUpBorder.X;
+                float right = view.RenderRightDownBorder.X;
 
                 for (float x = left; x < right; x += function.Step)
                 {
