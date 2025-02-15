@@ -49,17 +49,17 @@ namespace MinimalSquares.Graphics
             {
                 if (renderLeftUp.X <= 0f && renderRightDown.X >= 0f)
                 {
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * Program.GrafhicStep, renderRightDown.Y, 0f) });
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * Program.GrafhicStep, renderLeftUp.Y, 0f) });
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * Program.GrafhicStep, renderRightDown.Y, 0f) });
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * Program.GrafhicStep, renderLeftUp.Y, 0f) });   
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * MainView.GrafhicStep, renderRightDown.Y, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(i * MainView.GrafhicStep, renderLeftUp.Y, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * MainView.GrafhicStep, renderRightDown.Y, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(-i * MainView.GrafhicStep, renderLeftUp.Y, 0f) });   
                 }
                 if (renderLeftUp.Y >= 0f && renderRightDown.Y <= 0f)
                 {
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderLeftUp.X, i * Program.GrafhicStep, 0f) });
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderRightDown.X, i * Program.GrafhicStep, 0f) });
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderLeftUp.X, -i * Program.GrafhicStep, 0f) });
-                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderRightDown.X, -i * Program.GrafhicStep, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderLeftUp.X, i * MainView.GrafhicStep, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderRightDown.X, i * MainView.GrafhicStep, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderLeftUp.X, -i * MainView.GrafhicStep, 0f) });
+                    axes.Add(new() { Color = view.MainColor, Position = new Vector3(renderRightDown.X, -i * MainView.GrafhicStep, 0f) });
                 }
             }
             

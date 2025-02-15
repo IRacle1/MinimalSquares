@@ -67,7 +67,7 @@ namespace MinimalSquares.Graphics
         {
             List<VertexPositionColor> vertexes = new(Points.Count * 6);
 
-            float step = 0.05f;
+            float step = MainView.Step * 100;
 
             for (int i = 0; i < Points.Count; i++)
             {

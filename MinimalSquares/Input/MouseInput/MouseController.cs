@@ -23,12 +23,12 @@ namespace MinimalSquares.Input.MouseInput
         public int WheelScrollValue { get; private set; } = 0;
 
         public event Action<Vector2, Vector2>? OnCursorMoving;
+        public event Action<float, float>? OnWheelScrolled;
 
         public event Action? OnLeftButtonPressed;
         public event Action? OnLeftButtonReleased;
         public event Action? OnRightButtonPressed;
         public event Action? OnRightButtonReleased;
-        public event Action? OnWheelScrolled;
 
         public override void Start(MainGame game)
         {
@@ -50,8 +50,8 @@ namespace MinimalSquares.Input.MouseInput
 
             if (WheelScrollValue != state.ScrollWheelValue)
             {
+                OnWheelScrolled?.Invoke(WheelScrollValue, state.ScrollWheelValue);
                 WheelScrollValue = state.ScrollWheelValue;
-                OnWheelScrolled?.Invoke();
             }
 
             if (state.X != CursorPosition.X ||

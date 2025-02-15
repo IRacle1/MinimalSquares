@@ -43,22 +43,22 @@ namespace MinimalSquares.Graphics
                 float left = view.RenderLeftUpBorder.X;
                 float right = view.RenderRightDownBorder.X;
 
-                for (float x = left; x < right; x += function.Step)
+                for (float x = left; x < right; x += MainView.Step)
                 {
                     float y = (float)function.GetValue(x);
                     if (float.IsNormal(y))
                     {
                         list.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
 
-                        list.Add(new VertexPositionColor(new Vector3(x, y + Program.GrafhicStep, 0f), function.Color));
-                        list.Add(new VertexPositionColor(new Vector3(x, y - Program.GrafhicStep, 0f), function.Color));
-                        list.Add(new VertexPositionColor(new Vector3(x + Program.GrafhicStep, y, 0f), function.Color));
-                        list.Add(new VertexPositionColor(new Vector3(x - Program.GrafhicStep, y, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x, y + MainView.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x, y - MainView.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x + MainView.GrafhicStep, y, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x - MainView.GrafhicStep, y, 0f), function.Color));
 
-                        list.Add(new VertexPositionColor(new Vector3(x, y + 2 * Program.GrafhicStep, 0f), function.Color));
-                        list.Add(new VertexPositionColor(new Vector3(x, y - 2 * Program.GrafhicStep, 0f), function.Color));
-                        list.Add(new VertexPositionColor(new Vector3(x + 2 * Program.GrafhicStep, y, 0f), function.Color));
-                        list.Add(new VertexPositionColor(new Vector3(x - 2 * Program.GrafhicStep, y, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x, y + 2 * MainView.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x, y - 2 * MainView.GrafhicStep, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x + 2 * MainView.GrafhicStep, y, 0f), function.Color));
+                        list.Add(new VertexPositionColor(new Vector3(x - 2 * MainView.GrafhicStep, y, 0f), function.Color));
                     }
                 }
             }
