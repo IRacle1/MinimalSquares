@@ -77,12 +77,12 @@ namespace MinimalSquares.Input
 
         private void OnCursorMoving(Vector2 oldPosition, Vector2 newPosition)
         {
-            Vector3 oldGlobalPos = view.GetMouseWorldPosition(oldPosition);
-            Vector3 newGlobalPos = view.GetMouseWorldPosition(newPosition);
-
             if (mouseController.IsLeftButtonPressed)
             {
-                Vector3 moveVector = (newGlobalPos - oldGlobalPos) * new Vector3(-1);
+                Vector3 oldGlobalPos = view.GetMouseWorldPosition(oldPosition);
+                Vector3 newGlobalPos = view.GetMouseWorldPosition(newPosition);
+                
+                Vector3 moveVector = oldGlobalPos - newGlobalPos;
 
                 Vector3 newCameraPosition = view.CameraPosition + moveVector;
                 view.SetCamera(newCameraPosition, new Vector3(newCameraPosition.GetXY(), 0));

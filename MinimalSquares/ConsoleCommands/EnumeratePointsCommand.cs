@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace MinimalSquares.ConsoleCommands
 {
-    internal class Restart : BaseCommand
+    public class EnumeratePointsCommand : BaseCommand
     {
-        public Restart() : base("рестарт", "resetting all") 
+        public EnumeratePointsCommand() : base("asd", "")
         {
-        
+            
         }
+
         public override void Handle()
         {
-            CommandManager.WriteText("Test", CommandStatus.Success);
         }
     }
 }

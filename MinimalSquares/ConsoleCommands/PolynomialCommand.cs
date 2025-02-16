@@ -22,12 +22,8 @@ namespace MinimalSquares.ConsoleCommands
             while (true)
             {
                 CommandManager.WriteText("Введите максимальную степень полинома: ");
-                string? str = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(str) || !int.TryParse(str, out int result))
-                {
-                    CommandManager.WriteLineText("Введеный параметр не является числом!", CommandStatus.Invalid);
-                    continue;
-                }
+
+                int result = CommandManager.IntReadLine();
 
                 ComponentManager.Get<FunctionManager>()!.CurrentFunctions.Add(new PolynomialFunction(result));
                 CommandManager.WriteLineText("Успешно!", CommandStatus.Success);
