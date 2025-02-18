@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
 using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace MinimalSquares.Functions
 {
@@ -15,6 +14,8 @@ namespace MinimalSquares.Functions
     // ln y = ax + ln b
     public class ExponentialFunction : PolynomialFunction
     {
+        public override string Name { get; } = "Экспонента";
+
         public ExponentialFunction() : 
             base(new Func<double, double>[]
             {

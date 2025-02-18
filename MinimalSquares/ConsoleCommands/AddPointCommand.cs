@@ -17,7 +17,7 @@ namespace MinimalSquares.ConsoleCommands
 
         public AddPoint() : base("точка", "добавляет точку по координатам x, y") 
         {
-            pointManager = ComponentManager.Get<PointManager>();
+            pointManager = ComponentManager.Get<PointManager>()!;
         }
         
         public override void Handle()

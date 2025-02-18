@@ -14,12 +14,13 @@ namespace MinimalSquares.ConsoleCommands
             new PolynomialCommand(),
             new RestartCommand(),
             new AddPoint(),  
+            new SaveCommand(),
+            new LoadPointDataset(),
+            new HelpCommand(),
         };
 
         public static void Handle(string command)
         {
-            //string[] args = command.Split(' ');
-
             if (Commands.Find(c => c.Name == command.ToLowerInvariant()) is BaseCommand targetCommand)
             {
                 targetCommand.Handle();

@@ -13,7 +13,7 @@ using MinimalSquares.Components;
 namespace MinimalSquares.ConsoleCommands
 {
     public class RestartCommand : BaseCommand
-    {
+    {   
         MainView mainView;
         PointManager pointManager;
         FunctionManager functionsManager;

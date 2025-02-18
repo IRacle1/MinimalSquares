@@ -13,6 +13,9 @@ namespace MinimalSquares.Functions
 {
     public class PolynomialFunction : BaseFunction
     {
+
+        public override string Name { get; } = "Полином";
+
         public PolynomialFunction(int maxPow)
         {
             MonomialCount = maxPow + 1;
@@ -46,8 +49,6 @@ namespace MinimalSquares.Functions
 
         public double[] Parameters { get; }
         public int MonomialCount { get; }
-
-        public string Name { get; } = "Полином";
 
         public override bool IsAcceptablePoint(double x, double y)
         {
@@ -123,6 +124,10 @@ namespace MinimalSquares.Functions
             {
                 Parameters[i] = ansv[i];
             }
+        }
+        public override double[] GetParameters() 
+        {
+            return Parameters;
         }
     }
 }

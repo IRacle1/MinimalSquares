@@ -15,6 +15,7 @@ namespace MinimalSquares.Functions
     // ln y = a * ln x + ln b
     public class PowerFunction : PolynomialFunction
     {
+        public override string Name { get; } = "Степенная функция";
         public PowerFunction() : 
             base(new Func<double, double>[]
             {
