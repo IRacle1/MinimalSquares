@@ -125,9 +125,5 @@ namespace MinimalSquares.Functions
                 Parameters[i] = ansv[i];
             }
         }
-        public override double[] GetParameters() 
-        {
-            return Parameters;
-        }
     }
 }
