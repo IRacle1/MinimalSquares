@@ -15,6 +15,8 @@ namespace MinimalSquares.Functions
     {
         public virtual Color Color { get; set; } = Color.MediumSlateBlue;
 
+        public abstract string Name { get; }
+
         public virtual bool IsAcceptablePoint(double x, double y) => true;
 
         public abstract void UpdateParameters(double[] x, double[] y);
