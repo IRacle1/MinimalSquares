@@ -24,9 +24,10 @@ namespace MinimalSquares.ConsoleCommands
             pointManager = ComponentManager.Get<PointManager>()!;
             functionsManager = ComponentManager.Get<FunctionManager>()!;
         }
+
         public override void Handle()
         {
-            mainView.SetCamera(new Vector3(0,0,6), Vector3.Zero);
+            mainView.SetCamera(new Vector3(0, 0, 6), Vector3.Zero);
             pointManager.Points.Clear();
             functionsManager.CurrentFunctions.Clear();
 

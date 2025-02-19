@@ -13,21 +13,21 @@ namespace MinimalSquares.ConsoleCommands
 {
     public class AddPoint : BaseCommand
     {
-        PointManager pointManager;
+        private PointManager pointManager = null!;
 
         public AddPoint() : base("точка", "добавляет точку по координатам x, y") 
         {
-            pointManager = ComponentManager.Get<PointManager>();
+            pointManager = ComponentManager.Get<PointManager>()!;
         }
         
         public override void Handle()
         {
             Vector3 point = Vector3.Zero;
-            CommandManager.WriteText("Введите координату X: ");
-            point.X = CommandManager.IntReadLine();
-            CommandManager.WriteText("Введите координату Y: ");
-            point.Y = CommandManager.IntReadLine();
+            point.X = CommandManager.TryReadObjectLine<float>("Введите координату X: ");
+            point.Y = CommandManager.TryReadObjectLine<float>("Введите координату Y: ");
             pointManager.SetNewPoint(point);
+
+            CommandManager.WriteLineText("Успешно!", CommandStatus.Success);
         }
     }
 }

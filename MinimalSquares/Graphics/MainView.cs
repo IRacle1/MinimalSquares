@@ -33,18 +33,12 @@ namespace MinimalSquares.Graphics
 
             CameraPosition = new Vector3(0, 0, 6);
 
-            viewMatrix = Matrix.CreateLookAt(CameraPosition, Vector3.Zero, Vector3.Up);
-
             AspectRatio = (float)game.Window.ClientBounds.Width /
                 (float)game.Window.ClientBounds.Height;
 
-            projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
-                AspectRatio,
-                0.1f, CameraPosition.Z + 1f);
-
             worldMatrix = Matrix.CreateWorld(Vector3.Zero, Vector3.Forward, Vector3.Up);
 
-            //game.Window.AllowUserResizing = true;
+            game.Window.AllowUserResizing = true;
             game.IsMouseVisible = true;
             game.GraphicsDevice.RasterizerState = RasterizerState.CullNone;
             game.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
@@ -58,9 +52,9 @@ namespace MinimalSquares.Graphics
                 VertexColorEnabled = true,
 
                 World = worldMatrix,
-                View = viewMatrix,
-                Projection = projectionMatrix
             };
+
+            SetCamera(CameraPosition, Vector3.Zero);
 
             game.IsFixedTimeStep = true;
             game.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60);
@@ -73,6 +67,9 @@ namespace MinimalSquares.Graphics
             targetGame.GraphicsManager.PreferredBackBufferWidth = targetGame.Window.ClientBounds.Width;
             targetGame.GraphicsManager.PreferredBackBufferHeight = targetGame.Window.ClientBounds.Height;
             targetGame.GraphicsManager.ApplyChanges();
+
+            AspectRatio = (float)targetGame.Window.ClientBounds.Width /
+                (float)targetGame.Window.ClientBounds.Height;
 
             UpdateBorders();
         }

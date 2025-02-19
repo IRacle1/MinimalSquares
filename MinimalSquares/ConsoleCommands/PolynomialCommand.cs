@@ -11,25 +11,20 @@ namespace MinimalSquares.ConsoleCommands
 {
     public class PolynomialCommand : BaseCommand
     {
+        private FunctionManager functionManager;
+
         public PolynomialCommand()
             : base("полином", "")
         {
-                
+            functionManager = ComponentManager.Get<FunctionManager>()!;
         }
 
         public override void Handle()
         {
-            while (true)
-            {
-                CommandManager.WriteText("Введите максимальную степень полинома: ");
+            int result = CommandManager.TryReadObjectLine<int>("Введите максимальную степень полинома: ");
 
-                int result = CommandManager.IntReadLine();
-
-                ComponentManager.Get<FunctionManager>()!.CurrentFunctions.Add(new PolynomialFunction(result));
-                CommandManager.WriteLineText("Успешно!", CommandStatus.Success);
-
-                break;
-            }
+            functionManager.CurrentFunctions.Add(new PolynomialFunction(result));
+            CommandManager.WriteLineText("Успешно!", CommandStatus.Success);
         }
     }
 }

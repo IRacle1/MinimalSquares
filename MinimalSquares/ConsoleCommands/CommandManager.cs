@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,15 +19,13 @@ namespace MinimalSquares.ConsoleCommands
 
         public static void Handle(string command)
         {
-            //string[] args = command.Split(' ');
-
             if (Commands.Find(c => c.Name == command.ToLowerInvariant()) is BaseCommand targetCommand)
             {
                 targetCommand.Handle();
             }
             else
             {
-                WriteLineText($"Команда '{command}'не найдена!", CommandStatus.Invalid);
+                WriteLineText($"Команда '{command}' не найдена!", CommandStatus.Invalid);
             }
         }
 
@@ -78,30 +77,22 @@ namespace MinimalSquares.ConsoleCommands
             Console.ForegroundColor = consoleColor;
         }
 
-        public static int IntReadLine()
+        public static T TryReadObjectLine<T>(string message)
+            where T : struct
         {
+            MethodInfo method = typeof(T).GetMethod("TryParse", BindingFlags.Static | BindingFlags.Public, new Type[] { typeof(string), typeof(T).MakeByRefType() })!;
+
             while (true)
             {
+                WriteText(message);
                 string? str = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(str) || !int.TryParse(str, out int result))
+                object[] invokeParams = new object[] { str!, default(T) };
+                if (string.IsNullOrWhiteSpace(str) || !(bool)method.Invoke(null, invokeParams)!)
                 {
-                    WriteLineText("Значение неверно введено!", CommandStatus.Invalid);
+                    WriteLineText("Значение введено неверно!", CommandStatus.Invalid);
                     continue;
                 }
-                return result;
-            }
-        }
-        public static float floatReadLine()
-        {
-            while (true)
-            {
-                string? str = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(str) || !float.TryParse(str, out float result))
-                {
-                    WriteLineText("Значение неверно введено!", CommandStatus.Invalid);
-                    continue;
-                }
-                return result;
+                return (T)invokeParams[1];
             }
         }
     }

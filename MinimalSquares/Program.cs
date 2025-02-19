@@ -18,7 +18,6 @@ internal class Program
 
     private static void ConsoleHandle()
     {
-
         do
         {
             CommandManager.WriteText("Введите команду: ");
