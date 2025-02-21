@@ -69,9 +69,7 @@ namespace MinimalSquares.Input
             {
                 Vector3 vector = view.GetMouseWorldPosition(mouseController.CursorPosition);
 
-                pointManager.Points.Add(vector.GetXY());
-
-                pointManager.TriggerUpdate();
+                pointManager.SetNewPoint(vector.GetXY(), true);
             }
         }
 

@@ -16,44 +16,45 @@ namespace MinimalSquares.ConsoleCommands
     public class SaveCommand : BaseCommand
     {
         PointManager pointManager = null!;
-        FileStream SaveFile = null!;
 
-        public SaveCommand() : base("сохранить", "")
+        public SaveCommand() : base("сохранить", Array.Empty<string>(), "")
         {  
             pointManager = ComponentManager.Get<PointManager>()!;
         }
 
-        public override async void Handle()
+        public override void Handle()
         {
-            StringBuilder stringBuilder = new StringBuilder();
-
-            foreach (var point in pointManager.Points)
+            if (!CommandManager.TryReadString("Введите название файла (пустой - стандартное название): ", out string? path))
             {
-                stringBuilder.AppendLine(point.X + " " + point.Y);
+                Abort();
+                return;
             }
-            
-            byte[] savebuffer = Encoding.Default.GetBytes(stringBuilder.ToString());
+
+            if (!Directory.Exists("Points"))
+            {
+                Directory.CreateDirectory("Points");
+            }
+
+            if(string.IsNullOrWhiteSpace(path))
+                path = $"points_{DateTime.Now:HH-mm-ss}.txt";
+
+            string fullPath = Path.Combine("Points", path);
+
+            string targetText = string.Join(Environment.NewLine, pointManager.Points.Select(p => $"{p.X} {p.Y}"));
 
             //можно и лучше
-            if (!File.Exists("СписокТочек.pt"))
+            if (File.Exists(path))
             {
-                SaveFile = File.OpenWrite("СписокТочек.pt");
-                SaveFile.Write(savebuffer, 0, savebuffer.Length);
-            }
-            else 
-            {
-                for (int i = 0; ; i++)
+                if (!CommandManager.TryReadBool("Файл с таким названием уже существует, хотите перезаписать его?\n[Y - да/любое другое - нет]", out bool? flag))
                 {
-                    if (!File.Exists($"СписокТочек{i}.pt"))
-                    {
-                        SaveFile = File.OpenWrite($"СписокТочек{i}.pt");
-                        await SaveFile.WriteAsync(savebuffer, 0, savebuffer.Length);
-                        CommandManager.WriteLineText($"Сохранено в СписокТочек{i}.pt", CommandStatus.Success);
-                        break;
-                    }
+                    Abort();
+                    return;
                 }
             }
-            SaveFile.Close();
+
+            File.WriteAllText(fullPath, targetText);
+
+            Success();
         }
     }
 }

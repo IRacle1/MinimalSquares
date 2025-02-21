@@ -19,16 +19,11 @@ namespace MinimalSquares.Functions
     // a2 = a * sin(b)
     // a^2 = a1^2 + a2^2
     // b = arctg(a2/a1)
-    public class SinFunction : PolynomialFunction
+    public class SinFunction : BaseFunction
     {
         public override string Name { get; } = "Синусоидальная функция";
         public SinFunction(double k) : 
-            base(new Func<double, double>[]
-            {
-                (x) => Math.Sin(k * x),
-                (x) => Math.Cos(k * x),
-                (x) => 1,
-            })
+            base(3)
         {
             K = k;
         }
@@ -40,10 +35,13 @@ namespace MinimalSquares.Functions
             return Parameters[0] * Math.Sin(x * K + Parameters[1]) + Parameters[2];
         }
 
-        public override double[] InitParameters()
+        public override double GetMonomialValue(int monomialIndex, double x) => monomialIndex switch
         {
-            return new double[3];
-        }
+            0 => Math.Sin(K * x),
+            1 => Math.Cos(K * x),
+            2 => 1,
+            _ => double.NaN,
+        };
 
         public override void SetParameters(Vector<double> ansv)
         {

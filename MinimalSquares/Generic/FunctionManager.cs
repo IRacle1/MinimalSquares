@@ -23,19 +23,16 @@ namespace MinimalSquares.Functions
 
         public List<BaseFunction> AvaibleFunctions { get; } = new()
         {
-            new PolynomialFunction(0),
             new PolynomialFunction(1),
             new PolynomialFunction(2),
             new PolynomialFunction(3),
             new PolynomialFunction(4),
             new PolynomialFunction(5),
-            new PolynomialFunction(new Func<double, double>[] {
-                Math.Log,
-                x => 1
-            }, acceptablePoint: (x, y) => x > 0),
+            new PolynomialFunction(6),
+            new LogFunction(),
             new ExponentialFunction(),
             new PowerFunction(),
-            new SinFunction(1f),
+            new SinFunction(1.0),
         };
 
         public override void Start(MainGame game)

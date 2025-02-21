@@ -13,21 +13,31 @@ namespace MinimalSquares.Functions
 {
     // y = b * x^a
     // ln y = a * ln x + ln b
-    public class PowerFunction : PolynomialFunction
+    public class PowerFunction : BaseFunction
     {
         public override string Name { get; } = "Степенная функция";
+
         public PowerFunction() : 
-            base(new Func<double, double>[]
-            {
-                Math.Log,
-                (x) => 1,
-            }, Math.Log)
+            base(2)
         {
         }
 
         public override bool IsAcceptablePoint(double x, double y)
         {
             return y > 0f && x > 0f;
+        }
+
+        public override double GetMonomialValue(int monomialIndex, double x) =>
+            monomialIndex switch
+            {
+                0 => Math.Log(x),
+                1 => 1,
+                _ => double.NaN,
+            };
+
+        public override double GetYValue(double y)
+        {
+            return Math.Log(y);
         }
 
         public override double GetValue(double x)

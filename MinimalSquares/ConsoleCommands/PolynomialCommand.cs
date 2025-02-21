@@ -14,17 +14,21 @@ namespace MinimalSquares.ConsoleCommands
         private FunctionManager functionManager;
 
         public PolynomialCommand()
-            : base("полином", "")
+            : base("полином", Array.Empty<string>(), "")
         {
             functionManager = ComponentManager.Get<FunctionManager>()!;
         }
 
         public override void Handle()
         {
-            int result = CommandManager.TryReadObjectLine<int>("Введите максимальную степень полинома: ");
+            if (!CommandManager.TryReadScalarLine("Введите максимальную степень полинома: ", out int pow))
+            {
+                Abort();
+                return;
+            }
 
-            functionManager.CurrentFunctions.Add(new PolynomialFunction(result));
-            CommandManager.WriteLineText("Успешно!", CommandStatus.Success);
+            functionManager.CurrentFunctions.Add(new PolynomialFunction(pow));
+            Success();
         }
     }
 }

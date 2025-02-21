@@ -13,12 +13,12 @@ using MinimalSquares.Components;
 namespace MinimalSquares.ConsoleCommands
 {
     public class RestartCommand : BaseCommand
-    {   
+    {
         MainView mainView;
         PointManager pointManager;
         FunctionManager functionsManager;
 
-        public RestartCommand() : base("рестарт", "откатывает программу") 
+        public RestartCommand() : base("рестарт", Array.Empty<string>(), "откатывает программу") 
         {
             mainView = ComponentManager.Get<MainView>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
@@ -32,6 +32,8 @@ namespace MinimalSquares.ConsoleCommands
             functionsManager.CurrentFunctions.Clear();
 
             ComponentManager.UpdateVertexes();
+
+            Success();
         }
     }
 }

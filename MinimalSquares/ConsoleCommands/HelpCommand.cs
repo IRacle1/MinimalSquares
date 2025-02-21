@@ -9,7 +9,7 @@ namespace MinimalSquares.ConsoleCommands
 {
     public class HelpCommand : BaseCommand
     {
-        public HelpCommand() : base("помощь", "=(")
+        public HelpCommand() : base("помощь", new string[] { "help", }, "=(")
         {
             
         }

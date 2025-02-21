@@ -27,6 +27,7 @@ namespace MinimalSquares.Graphics
         private VertexPositionColor[] pointLines = null!;
 
         public List<Vector2> Points { get; } = new List<Vector2>();
+
         public event Action? OnPointsUpdate;
 
         public int Order { get; } = 1;
@@ -46,15 +47,16 @@ namespace MinimalSquares.Graphics
 
         public void Draw()
         {
-            if (Points.Count > 0)
-                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, pointLines, 0, Points.Count * 2);
+            if (pointLines != null && pointLines.Length > 0)
+                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, pointLines, 0, pointLines.Length / 3);
         }
 
-        public void SetNewPoint(Vector3 point)
+        public void SetNewPoint(Vector2 point, bool updateVertex)
         {            
-            Points.Add(new Vector2(point.X, point.Y));
+            Points.Add(point);
 
-            TriggerUpdate();
+            if (updateVertex)
+                TriggerUpdate();
         }
 
         public void TriggerUpdate()
@@ -95,7 +97,8 @@ namespace MinimalSquares.Graphics
                 {
                     Points.RemoveAt(Points.Count - 1);
                 }
-                OnPointsUpdate?.Invoke();
+
+                TriggerUpdate();
             }
         }
     }

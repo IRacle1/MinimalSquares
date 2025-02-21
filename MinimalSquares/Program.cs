@@ -20,7 +20,7 @@ internal class Program
     {
         do
         {
-            CommandManager.WriteText("Введите команду: ");
+            CommandManager.WriteText(": ", space: false);
             string? str = Console.ReadLine();
 
             if (string.IsNullOrWhiteSpace(str))

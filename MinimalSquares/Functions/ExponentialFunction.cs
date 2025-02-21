@@ -12,22 +12,31 @@ namespace MinimalSquares.Functions
 {
     // y = b * e^ax
     // ln y = ax + ln b
-    public class ExponentialFunction : PolynomialFunction
+    public class ExponentialFunction : BaseFunction
     {
         public override string Name { get; } = "Экспонента";
 
         public ExponentialFunction() : 
-            base(new Func<double, double>[]
-            {
-                (x) => x,
-                (x) => 1,
-            }, Math.Log)
+            base(2)
         {
         }
 
         public override bool IsAcceptablePoint(double x, double y)
         {
             return y > 0f;
+        }
+
+        public override double GetMonomialValue(int monomialIndex, double x) => 
+            monomialIndex switch
+            {
+                0 => x,
+                1 => 1,
+                _ => double.NaN,
+            };
+
+        public override double GetYValue(double y)
+        {
+            return Math.Log(y);
         }
 
         public override double GetValue(double x)

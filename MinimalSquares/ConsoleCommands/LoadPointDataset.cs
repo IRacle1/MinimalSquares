@@ -15,7 +15,7 @@ namespace MinimalSquares.ConsoleCommands
     {
         PointManager pointManager = null!;
 
-        public LoadPointDataset() : base("загрузить", "")
+        public LoadPointDataset() : base("загрузить", Array.Empty<string>(), "")
         {
             pointManager = ComponentManager.Get<PointManager>()!;
         }
@@ -31,16 +31,18 @@ namespace MinimalSquares.ConsoleCommands
             } while (true);
 
             string[] SaveFile = File.ReadAllLines(path);
-            Vector3 vector;
+            Vector2 vector;
 
             foreach (var Line in SaveFile) 
             {
-                var a = Line.Split(' ').Select(float.Parse).ToArray();
-                vector = new Vector3(a[0], a[1], 0f);
-                pointManager.SetNewPoint(vector);
+                float[] a = Line.Split(' ').Select(float.Parse).ToArray();
+                vector = new Vector2(a[0], a[1]);
+                pointManager.SetNewPoint(vector, false);
             }
 
-            CommandManager.WriteLineText(";=;", CommandStatus.Success);
+            pointManager.TriggerUpdate();
+
+            Success();
         }
     }
 }
