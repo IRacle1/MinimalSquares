@@ -1,6 +1,9 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using System.Collections.Generic;
+
+using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra.Double.Solvers;
+using MathNet.Numerics.LinearAlgebra.Solvers;
 
 using Microsoft.Xna.Framework;
 
@@ -8,10 +11,12 @@ namespace MinimalSquares.Functions
 {
     public abstract class BaseFunction
     {
+        private static IIterativeSolver<double> cachedSolver = new TFQMR();
+
         public BaseFunction(int monomialsCount)
         {
             MonomialCount = monomialsCount;
-            Parameters = InitParameters();
+            Parameters = new double[MonomialCount];
         }
 
         public abstract string Name { get; }
@@ -30,53 +35,59 @@ namespace MinimalSquares.Functions
 
         public void UpdateParameters(double[] x, double[] y)
         {
-            double[][] xSums = new double[MonomialCount][];
+            Matrix<double> xSums = MathNet.Numerics.LinearAlgebra.Double.Matrix.Build.Dense(MonomialCount, MonomialCount);
 
-            for (int j = 0; j < MonomialCount; j++)
-            {
-                xSums[j] = new double[MonomialCount];
-            }
-
-            double[] yxSums = new double[MonomialCount];
+            Vector<double> yxSums = Vector.Build.Dense(MonomialCount);
 
             int acceptableCount = 0;
+
+            double[] monomialsCache = new double[MonomialCount];
 
             for (int i = 0; i < x.Length; i++)
             {
                 if (!IsAcceptablePoint(x[i], y[i]))
-                {
                     continue;
-                }
+
+                int lastSetCache = -1;
+
                 acceptableCount++;
+
+                double yValue = GetYValue(y[i]);
 
                 for (int j = 0; j < MonomialCount; j++)
                 {
-                    yxSums[j] += GetYValue(y[i]) * GetMonomialValue(j, x[i]);
+                    double xj = GetMonomialsByCache(ref monomialsCache, j, ref lastSetCache, x[i]);
+
+                    yxSums[j] += yValue * xj;
 
                     for (int k = 0; k < MonomialCount; k++)
                     {
-                        xSums[j][k] += GetMonomialValue(j, x[i]) * GetMonomialValue(k, x[i]);
+                        double xk = GetMonomialsByCache(ref monomialsCache, k, ref lastSetCache, x[i]);
+
+                        xSums[j, k] += xj * xk;
                     }
                 }
             }
 
-            Matrix<double> mainMatrix = MathNet.Numerics.LinearAlgebra.Double.Matrix.Build.DenseOfRowArrays(xSums);
-
-            Vector<double> vector = Vector.Build.DenseOfArray(yxSums);
-
             Vector<double> ansv;
 
             if (acceptableCount >= MonomialCount)
-                ansv = mainMatrix.Solve(vector);
+                ansv = xSums.Solve(yxSums);
             else
-                ansv = mainMatrix.SolveIterative(vector, new TFQMR());
+                ansv = xSums.SolveIterative(yxSums, cachedSolver);
 
             SetParameters(ansv);
         }
 
-        public virtual double[] InitParameters()
+        private double GetMonomialsByCache(ref double[] cache, int index, ref int cacheIndex, double x)
         {
-            return new double[MonomialCount];
+            if (cacheIndex < index)
+            {
+                cacheIndex = index;
+                return cache[index] = GetMonomialValue(index, x);
+            }
+
+            return cache[index];
         }
 
         public virtual void SetParameters(Vector<double> ansv)

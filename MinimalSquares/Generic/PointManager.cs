@@ -23,6 +23,14 @@ namespace MinimalSquares.Generic
             base.Start(game);
         }
 
+        public (double[] x, double[] y) GetAsArrays()
+        {
+            double[] arrX = Points.Select(i => (double)i.X).ToArray();
+            double[] arrY = Points.Select(i => (double)i.Y).ToArray();
+
+            return (arrX, arrY);
+        }
+
         public void SetNewPoint(Vector2 point, bool updateVertex)
         {
             Points.Add(point);

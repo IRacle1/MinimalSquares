@@ -13,11 +13,12 @@ namespace MinimalSquares.Functions
 {
     public class PolynomialFunction : BaseFunction
     {
-        public override string Name { get; } = "Полином";
+        public override string Name { get; }
 
         public PolynomialFunction(int monomialsCount)
             : base(monomialsCount)
         {
+            Name = $"Полином {monomialsCount - 1} степени";
         }
 
         public override double GetMonomialValue(int monomialIndex, double x) =>

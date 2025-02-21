@@ -48,20 +48,21 @@ namespace MinimalSquares.Graphics
                 for (float x = left; x < right; x += MainView.Step)
                 {
                     float y = (float)function.GetValue(x);
-                    if (float.IsNormal(y))
-                    {
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
 
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x, y + MainView.GrafhicStep, 0f), function.Color));
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x, y - MainView.GrafhicStep, 0f), function.Color));
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x + MainView.GrafhicStep, y, 0f), function.Color));
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x - MainView.GrafhicStep, y, 0f), function.Color));
+                    if (!float.IsNormal(y))
+                        continue;
 
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x, y + 2 * MainView.GrafhicStep, 0f), function.Color));
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x, y - 2 * MainView.GrafhicStep, 0f), function.Color));
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x + 2 * MainView.GrafhicStep, y, 0f), function.Color));
-                        vertexCache.Add(new VertexPositionColor(new Vector3(x - 2 * MainView.GrafhicStep, y, 0f), function.Color));
-                    }
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
+
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y + MainView.GrafhicStep, 0f), function.Color));
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y - MainView.GrafhicStep, 0f), function.Color));
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x + MainView.GrafhicStep, y, 0f), function.Color));
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x - MainView.GrafhicStep, y, 0f), function.Color));
+
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y + 2 * MainView.GrafhicStep, 0f), function.Color));
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y - 2 * MainView.GrafhicStep, 0f), function.Color));
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x + 2 * MainView.GrafhicStep, y, 0f), function.Color));
+                    vertexCache.Add(new VertexPositionColor(new Vector3(x - 2 * MainView.GrafhicStep, y, 0f), function.Color));
                 }
             }
 

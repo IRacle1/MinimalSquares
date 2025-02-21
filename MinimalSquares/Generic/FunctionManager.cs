@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,6 @@ namespace MinimalSquares.Functions
     public class FunctionManager : BaseComponent
     {
         private PointManager pointManager = null!;
-        private FunctionsGraphic functionsGraphic = null!;
 
         public List<BaseFunction> CurrentFunctions { get; } = new();
 
@@ -40,17 +40,20 @@ namespace MinimalSquares.Functions
         public override void Start(MainGame game)
         {
             pointManager = ComponentManager.Get<PointManager>()!;
-            functionsGraphic = ComponentManager.Get<FunctionsGraphic>()!;
 
             pointManager.OnPointsUpdate += UpdateParameters;
 
             base.Start(game);
         }
 
+        public void FixedUpdateParameters(int functionIndex)
+        {
+
+        }
+
         public void UpdateParameters()
         {
-            double[] arrX = pointManager.Points.Select(i => (double)i.X).ToArray();
-            double[] arrY = pointManager.Points.Select(i => (double)i.Y).ToArray();
+            (double[] arrX, double[] arrY) = pointManager.GetAsArrays();
 
             foreach (var item in CurrentFunctions)
             {

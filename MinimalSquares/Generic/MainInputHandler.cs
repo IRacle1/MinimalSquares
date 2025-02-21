@@ -8,11 +8,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.Keyboard.KeyEvents;
-using MinimalSquares.Generic;
 
-namespace MinimalSquares.Input
+namespace MinimalSquares.Generic
 {
-    class MainMouseHandler : BaseComponent
+    class MainInputHandler : BaseComponent
     {
         private MouseController mouseController = null!;
         private MainView view = null!;
