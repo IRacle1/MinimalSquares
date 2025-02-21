@@ -9,16 +9,17 @@ using Microsoft.Xna.Framework;
 using MinimalSquares.Graphics;
 using MinimalSquares.Functions;
 using MinimalSquares.Components;
+using MinimalSquares.Generic;
 
 namespace MinimalSquares.ConsoleCommands
 {
     public class RestartCommand : BaseCommand
     {
-        MainView mainView;
-        PointManager pointManager;
-        FunctionManager functionsManager;
+        private MainView mainView;
+        private PointManager pointManager;
+        private FunctionManager functionsManager;
 
-        public RestartCommand() : base("рестарт", Array.Empty<string>(), "откатывает программу") 
+        public RestartCommand() : base("рестарт", new string[] { "restart" }, "откатывает программу") 
         {
             mainView = ComponentManager.Get<MainView>()!;
             pointManager = ComponentManager.Get<PointManager>()!;

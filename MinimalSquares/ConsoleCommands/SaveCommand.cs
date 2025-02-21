@@ -9,15 +9,16 @@ using System.Threading.Tasks;
 
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
+using MinimalSquares.Generic;
 using MinimalSquares.Graphics;
 
 namespace MinimalSquares.ConsoleCommands
 {
     public class SaveCommand : BaseCommand
     {
-        PointManager pointManager = null!;
+        private PointManager pointManager = null!;
 
-        public SaveCommand() : base("сохранить", Array.Empty<string>(), "")
+        public SaveCommand() : base("сохранить", new string[] { "save" }, "")
         {  
             pointManager = ComponentManager.Get<PointManager>()!;
         }

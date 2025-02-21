@@ -5,6 +5,10 @@ using MinimalSquares.Graphics;
 using MinimalSquares.Input.MouseInput;
 
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
+using MinimalSquares.Input.Keyboard;
+using MinimalSquares.Input.Keyboard.KeyEvents;
+using MinimalSquares.Generic;
 
 namespace MinimalSquares.Input
 {
@@ -13,6 +17,7 @@ namespace MinimalSquares.Input
         private MouseController mouseController = null!;
         private MainView view = null!;
         private PointManager pointManager = null!;
+        private KeyboardManager keyboard = null!;
 
         private bool shouldUpdateVertex = false;
 
@@ -24,6 +29,10 @@ namespace MinimalSquares.Input
 
             view = ComponentManager.Get<MainView>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
+
+            keyboard = ComponentManager.Get<KeyboardManager>()!;
+
+            keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Z));
 
             //mouseController.OnWheelScrolled += OnWheelScrolled;
             mouseController.OnCursorMoving += OnCursorMoving;
@@ -97,6 +106,23 @@ namespace MinimalSquares.Input
 
             Vector3 newCameraPosition = new Vector3(view.CameraPosition.X, view.CameraPosition.Y, z);
             view.SetCamera(newCameraPosition, new Vector3(newCameraPosition.GetXY(), 0));
+        }
+
+        private void HandleRemovePoint(InputType type, Keys keys)
+        {
+            if (pointManager.Points.Count > 0)
+            {
+                if (keyboard.PressedKeys.Contains(Keys.LeftShift))
+                {
+                    pointManager.Points.Clear();
+                }
+                else
+                {
+                    pointManager.Points.RemoveAt(pointManager.Points.Count - 1);
+                }
+
+                pointManager.TriggerUpdate();
+            }
         }
     }
 }

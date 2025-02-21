@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 
 using MinimalSquares.Components;
+using MinimalSquares.Generic;
 using MinimalSquares.Graphics;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.Keyboard.KeyEvents;
@@ -17,7 +18,6 @@ namespace MinimalSquares.Functions
     {
         private PointManager pointManager = null!;
         private FunctionsGraphic functionsGraphic = null!;
-        private KeyboardManager keyboardManager = null!;
 
         public List<BaseFunction> CurrentFunctions { get; } = new();
 
@@ -35,28 +35,19 @@ namespace MinimalSquares.Functions
             new SinFunction(1.0),
         };
 
+        public event Action? OnFunctionUpdate;
+
         public override void Start(MainGame game)
         {
             pointManager = ComponentManager.Get<PointManager>()!;
-            keyboardManager = ComponentManager.Get<KeyboardManager>()!;
-            keyboardManager.Register(new BasicKeyEvent(
-                (_, key) =>
-                {
-                    int num = (int)key - 48;
-                    CurrentFunctions.Clear();
-                    CurrentFunctions.Add(AvaibleFunctions[num]);
-
-                    pointManager.TriggerUpdate();
-                }, InputType.OnKeyDown, Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9));
-
             functionsGraphic = ComponentManager.Get<FunctionsGraphic>()!;
 
-            pointManager.OnPointsUpdate += OnPointsUpdate; 
+            pointManager.OnPointsUpdate += UpdateParameters;
 
             base.Start(game);
         }
 
-        internal void OnPointsUpdate()
+        public void UpdateParameters()
         {
             double[] arrX = pointManager.Points.Select(i => (double)i.X).ToArray();
             double[] arrY = pointManager.Points.Select(i => (double)i.Y).ToArray();
@@ -66,7 +57,12 @@ namespace MinimalSquares.Functions
                 item.UpdateParameters(arrX, arrY);
             }
 
-            functionsGraphic.UpdateVertex();
+            TriggerUpdate();
+        }
+
+        public void TriggerUpdate()
+        {
+            OnFunctionUpdate?.Invoke();
         }
     }
 }

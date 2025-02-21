@@ -7,14 +7,17 @@ using Microsoft.Xna.Framework.Graphics;
 using MinimalSquares.Components;
 using MinimalSquares.Components.Abstractions;
 using MinimalSquares.Functions;
+using MinimalSquares.Generic;
 
 namespace MinimalSquares.Graphics
 {
     public class DeltaPrinter : BaseComponent, IDrawableComponent
     {
         private PointManager pointManager = null!;
+        private PointPrinter pointPrinter = null!;
         private FunctionManager functionManager = null!;
 
+        private List<VertexPositionColor> linesCache = new(100);
         private VertexPositionColor[] LinesCoords = null!;
 
         public int Order { get; } = 2;
@@ -22,9 +25,10 @@ namespace MinimalSquares.Graphics
         public override void Start(MainGame game)
         {
             pointManager = ComponentManager.Get<PointManager>()!;
+            pointPrinter = ComponentManager.Get<PointPrinter>()!;
             functionManager = ComponentManager.Get<FunctionManager>()!;
 
-            pointManager.OnPointsUpdate += UpdateVertex;
+            functionManager.OnFunctionUpdate += UpdateVertex;
             base.Start(game);
         }
 
@@ -36,7 +40,7 @@ namespace MinimalSquares.Graphics
 
         public void UpdateVertex()
         {
-            List<VertexPositionColor> lines = new();
+            linesCache.Clear();
             foreach (Vector2 point in pointManager.Points)
             {
                 foreach (BaseFunction function in functionManager.CurrentFunctions)
@@ -49,17 +53,17 @@ namespace MinimalSquares.Graphics
                     if (!float.IsNormal(y))
                         continue;
 
-                    lines.Add(new VertexPositionColor(new Vector3(point.X, point.Y, 0f), pointManager.PointColor));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X, y, 0f), function.Color));
+                    linesCache.Add(new VertexPositionColor(new Vector3(point.X, point.Y, 0f), pointPrinter.PointColor));
+                    linesCache.Add(new VertexPositionColor(new Vector3(point.X, y, 0f), function.Color));
 
-                    lines.Add(new VertexPositionColor(new Vector3(point.X - MainView.GrafhicStep, point.Y, 0f), pointManager.PointColor));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X - MainView.GrafhicStep, y, 0f), function.Color));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X + MainView.GrafhicStep, point.Y, 0f), pointManager.PointColor));
-                    lines.Add(new VertexPositionColor(new Vector3(point.X + MainView.GrafhicStep, y, 0f), function.Color));
+                    linesCache.Add(new VertexPositionColor(new Vector3(point.X - MainView.GrafhicStep, point.Y, 0f), pointPrinter.PointColor));
+                    linesCache.Add(new VertexPositionColor(new Vector3(point.X - MainView.GrafhicStep, y, 0f), function.Color));
+                    linesCache.Add(new VertexPositionColor(new Vector3(point.X + MainView.GrafhicStep, point.Y, 0f), pointPrinter.PointColor));
+                    linesCache.Add(new VertexPositionColor(new Vector3(point.X + MainView.GrafhicStep, y, 0f), function.Color));
                 }
             }
 
-            LinesCoords = lines.ToArray();
+            LinesCoords = linesCache.ToArray();
         }
     }
 }

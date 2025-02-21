@@ -18,6 +18,8 @@ internal class Program
 
     private static void ConsoleHandle()
     {
+        CommandManager.Init();
+
         do
         {
             CommandManager.WriteText(": ", space: false);

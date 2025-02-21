@@ -14,7 +14,7 @@ namespace MinimalSquares.ConsoleCommands
         private FunctionManager functionManager;
 
         public PolynomialCommand()
-            : base("полином", Array.Empty<string>(), "")
+            : base("полином", new string[] { "polymonial" }, "")
         {
             functionManager = ComponentManager.Get<FunctionManager>()!;
         }

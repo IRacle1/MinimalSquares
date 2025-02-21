@@ -29,6 +29,7 @@ public class MainGame : Game
     private PointManager PointWriter { get; } = new();
     private FunctionManager FunctionManager { get; } = new();
     private FunctionsGraphic FunctionsGraphic { get; } = new();
+    private PointPrinter PointPrinter { get; } = new();
     private DeltaPrinter DeltaPrinter { get; } = new();
     private DefaultKeybinds DefaultKeybinds { get; } = new();
     private BackgroundComponent BackgroundComponent { get; } = new();

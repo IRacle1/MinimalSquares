@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
+using MinimalSquares.Generic;
 using MinimalSquares.Graphics;
 
 namespace MinimalSquares.ConsoleCommands
 {
     public class LoadPointDataset : BaseCommand
     {
-        PointManager pointManager = null!;
+        private PointManager pointManager = null!;
 
-        public LoadPointDataset() : base("загрузить", Array.Empty<string>(), "")
+        public LoadPointDataset() : base("загрузить", new string[] { "load", "ld" }, "")
         {
             pointManager = ComponentManager.Get<PointManager>()!;
         }
+
         public override void Handle()
         {
             string path;

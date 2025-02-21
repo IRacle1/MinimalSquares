@@ -21,9 +21,23 @@ namespace MinimalSquares.ConsoleCommands
             new HelpCommand(),
         };
 
+        public static Dictionary<string, BaseCommand> AliasesToCommands { get; } = new(10);
+
+        public static void Init()
+        {
+            foreach (BaseCommand command in Commands)
+            {
+                AliasesToCommands.Add(command.Name.ToLowerInvariant(), command);
+                foreach (string alias in command.Aliases)
+                {
+                    AliasesToCommands.Add(alias.ToLowerInvariant(), command);
+                }
+            }
+        }
+
         public static void Handle(string command)
         {
-            if (Commands.Find(c => c.Name.Equals(command, StringComparison.InvariantCultureIgnoreCase) || c.Aliases.Any(al => al.Equals(command, StringComparison.InvariantCultureIgnoreCase))) is BaseCommand targetCommand)
+            if (AliasesToCommands.TryGetValue(command.ToLowerInvariant(), out BaseCommand? targetCommand))
             {
                 targetCommand.Handle();
             }

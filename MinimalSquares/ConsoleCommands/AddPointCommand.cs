@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using MinimalSquares.Components;
 using MinimalSquares.Graphics;
+using MinimalSquares.Generic;
 
 namespace MinimalSquares.ConsoleCommands
 {
@@ -15,14 +16,14 @@ namespace MinimalSquares.ConsoleCommands
     {
         private PointManager pointManager = null!;
 
-        public AddPoint() : base("точка", new string[] { "точ" }, "добавляет точку по координатам x, y") 
+        public AddPoint() : base("точка", new string[] { "point", "pt" }, "добавляет точку по координатам x, y") 
         {
             pointManager = ComponentManager.Get<PointManager>()!;
         }
         
         public override void Handle()
         {
-            if (CommandManager.TryReadScalarLine("Введите координату X: ", out float x))
+            if (!CommandManager.TryReadScalarLine("Введите координату X: ", out float x))
             {
                 Abort();
                 return;
