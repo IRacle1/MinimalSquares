@@ -25,10 +25,8 @@ namespace MinimalSquares.Generic
         public override void Start(MainGame game)
         {
             mouseController = ComponentManager.Get<MouseController>()!;
-
             view = ComponentManager.Get<MainView>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
-
             keyboard = ComponentManager.Get<KeyboardManager>()!;
 
             keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Z));
@@ -75,9 +73,11 @@ namespace MinimalSquares.Generic
             
             if (Vector2.DistanceSquared(mouseController.CursorPosition, leftPressed) <= 10 * 10)
             {
-                Vector3 vector = view.GetMouseWorldPosition(mouseController.CursorPosition);
+                Vector2 vector = view.GetMouseWorldPosition(mouseController.CursorPosition).GetXY();
 
-                pointManager.SetNewPoint(vector.GetXY(), true);
+                pointManager.Add(vector);
+
+                pointManager.TriggerUpdate();
             }
         }
 
@@ -109,18 +109,16 @@ namespace MinimalSquares.Generic
 
         private void HandleRemovePoint(InputType type, Keys keys)
         {
-            if (pointManager.Points.Count > 0)
-            {
-                if (keyboard.PressedKeys.Contains(Keys.LeftShift))
-                {
-                    pointManager.Points.Clear();
-                }
-                else
-                {
-                    pointManager.Points.RemoveAt(pointManager.Points.Count - 1);
-                }
+            if (pointManager.Points.Count == 0)
+                return;
 
-                pointManager.TriggerUpdate();
+            if (keyboard.PressedKeys.Contains(Keys.LeftShift))
+            {
+                pointManager.Clear();
+            }
+            else
+            {
+                pointManager.RemoveLast();
             }
         }
     }

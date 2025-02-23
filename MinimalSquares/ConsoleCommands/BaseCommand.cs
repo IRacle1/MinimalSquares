@@ -21,14 +21,19 @@ namespace MinimalSquares.ConsoleCommands
 
         public abstract void Handle();
 
+        protected string BuildMessage(string msg)
+        {
+            return "[" + Name + "] " + msg;
+        }
+
         protected void Success()
         {
-            CommandManager.WriteLineText("Успешно!", CommandStatus.Success);
+            CommandManager.WriteLineText(BuildMessage("Успешно!"), CommandStatus.Success);
         }
 
         protected void Abort()
         {
-            CommandManager.WriteLineText("Прервано", CommandStatus.Exit);
+            CommandManager.WriteLineText(BuildMessage("Прервано"), CommandStatus.Exit);
         }
     }
 

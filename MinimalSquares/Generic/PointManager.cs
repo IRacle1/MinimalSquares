@@ -9,6 +9,7 @@ using MinimalSquares.Components.Abstractions;
 using MinimalSquares.Components;
 using MinimalSquares.Graphics;
 using Microsoft.Xna.Framework;
+using MinimalSquares.Functions;
 
 namespace MinimalSquares.Generic
 {
@@ -31,12 +32,31 @@ namespace MinimalSquares.Generic
             return (arrX, arrY);
         }
 
-        public void SetNewPoint(Vector2 point, bool updateVertex)
+        public void Add(Vector2 point)
         {
             Points.Add(point);
+            TriggerUpdate();
+        }
 
-            if (updateVertex)
-                TriggerUpdate();
+        public void AddRange(IEnumerable<Vector2> enumerable)
+        {
+            Points.AddRange(enumerable);
+            TriggerUpdate();
+        }
+
+        public void Clear()
+        {
+            Points.Clear();
+            TriggerUpdate();
+        }
+
+        public void RemoveLast()
+        {
+            if (Points.Count == 0)
+                return;
+
+            Points.RemoveAt(Points.Count - 1);
+            TriggerUpdate();
         }
 
         public void TriggerUpdate()

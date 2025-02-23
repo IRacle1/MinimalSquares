@@ -7,27 +7,29 @@ using System.Threading.Tasks;
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
 
-namespace MinimalSquares.ConsoleCommands
+using Sharprompt;
+
+namespace MinimalSquares.ConsoleCommands.Commands
 {
+    [ConsoleCommand]
     public class PolynomialCommand : BaseCommand
     {
         private FunctionManager functionManager;
 
         public PolynomialCommand()
-            : base("полином", new string[] { "polymonial" }, "")
+            : base("Полином", new string[] { "Polymonial" }, "")
         {
             functionManager = ComponentManager.Get<FunctionManager>()!;
         }
 
         public override void Handle()
         {
-            if (!CommandManager.TryReadScalarLine("Введите максимальную степень полинома: ", out int pow))
-            {
-                Abort();
-                return;
-            }
+            int pow = Prompt.Input<int>(BuildMessage("Введите максимальную степень полинома"));
 
-            functionManager.CurrentFunctions.Add(new PolynomialFunction(pow));
+            functionManager.CurrentFunctions.Clear();
+            functionManager.CurrentFunctions.Add(new PolynomialFunction(pow + 1));
+
+            functionManager.UpdateParameters();
             Success();
         }
     }

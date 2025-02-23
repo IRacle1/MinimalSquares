@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 
-namespace MinimalSquares.ConsoleCommands
+namespace MinimalSquares.ConsoleCommands.Commands
 {
+    [ConsoleCommand]
     public class HelpCommand : BaseCommand
     {
-        public HelpCommand() : base("помощь", new string[] { "help", }, "Помощь по всем командам")
+        public HelpCommand() : base("Помощь", new string[] { "Help", }, "Помощь по всем командам")
         {
             
         }
@@ -18,7 +19,7 @@ namespace MinimalSquares.ConsoleCommands
         {
             foreach (var item in CommandManager.Commands.OrderBy(t => t.Name))
             {
-                CommandManager.WriteLineText($"{item.Name} : {item.Description}");
+                CommandManager.WriteLineText($"'{item.Name}' : {item.Description}");
             }
         }
     }

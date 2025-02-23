@@ -84,7 +84,7 @@ namespace MinimalSquares.Functions
             if (cacheIndex < index)
             {
                 cacheIndex = index;
-                return cache[index] = GetMonomialValue(index, x);
+                cache[index] = GetMonomialValue(index, x);
             }
 
             return cache[index];

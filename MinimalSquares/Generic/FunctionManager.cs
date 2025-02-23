@@ -46,11 +46,6 @@ namespace MinimalSquares.Functions
             base.Start(game);
         }
 
-        public void FixedUpdateParameters(int functionIndex)
-        {
-
-        }
-
         public void UpdateParameters()
         {
             (double[] arrX, double[] arrY) = pointManager.GetAsArrays();

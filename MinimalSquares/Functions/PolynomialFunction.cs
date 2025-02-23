@@ -21,8 +21,13 @@ namespace MinimalSquares.Functions
             Name = $"Полином {monomialsCount - 1} степени";
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) =>
-            Math.Pow(x, monomialIndex);
+        public override double GetMonomialValue(int monomialIndex, double x) => 
+            monomialIndex switch
+            {
+                0 => 1,
+                1 => x,
+                _ => Math.Pow(x, monomialIndex),
+            };
 
         public override double GetValue(double x)
         {

@@ -21,7 +21,8 @@ namespace MinimalSquares.Functions
     // b = arctg(a2/a1)
     public class SinFunction : BaseFunction
     {
-        public override string Name { get; } = "Синусоидальная функция";
+        public override string Name { get; } = "Синусоида";
+
         public SinFunction(double k) : 
             base(3)
         {

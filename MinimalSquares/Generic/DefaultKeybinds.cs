@@ -27,7 +27,7 @@ namespace MinimalSquares.Generic
             keyboardManager.Register(new BasicKeyEvent(
                 (_, _) => targetGame.Exit(), 
                 InputType.OnKeyDown, 
-                Microsoft.Xna.Framework.Input.Keys.Escape));
+                Keys.Escape));
             base.Start(game);
 
             keyboardManager.Register(new BasicKeyEvent(

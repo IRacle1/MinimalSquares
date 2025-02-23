@@ -9,22 +9,23 @@ using System.Threading.Tasks;
 
 namespace MinimalSquares.ConsoleCommands
 {
-    public class CommandManager
+    public static class CommandManager
     {
-        public static List<BaseCommand> Commands { get; } = new(10)
-        {
-            new PolynomialCommand(),
-            new RestartCommand(),
-            new AddPoint(),  
-            new SaveCommand(),
-            new LoadPointDataset(),
-            new HelpCommand(),
-        };
+        private static List<BaseCommand> allCommands { get; } = new();
+
+        public static IReadOnlyList<BaseCommand> Commands => allCommands;
 
         public static Dictionary<string, BaseCommand> AliasesToCommands { get; } = new(10);
 
-        public static void Init()
+        static CommandManager()
         {
+            var types = Assembly.GetExecutingAssembly().GetTypes()
+                .Where(type => type.GetCustomAttribute<ConsoleCommandAttribute>() is not null);
+
+            var objects = types.Select(Activator.CreateInstance);
+
+            allCommands.AddRange(objects.OfType<BaseCommand>());
+            
             foreach (BaseCommand command in Commands)
             {
                 AliasesToCommands.Add(command.Name.ToLowerInvariant(), command);
@@ -47,11 +48,8 @@ namespace MinimalSquares.ConsoleCommands
             }
         }
 
-        public static void WriteLineText(string text, CommandStatus status = CommandStatus.None, bool space = true)
+        public static void WriteLineText(string text, CommandStatus status = CommandStatus.None)
         {
-            if (space)
-                Console.Write(" - ");
-
             ConsoleColor consoleColor = Console.ForegroundColor;
 
             switch (status)
@@ -72,11 +70,8 @@ namespace MinimalSquares.ConsoleCommands
             Console.ForegroundColor = consoleColor;
         }
 
-        public static void WriteText(string text, CommandStatus status = CommandStatus.None, bool space = true)
+        public static void WriteText(string text, CommandStatus status = CommandStatus.None)
         {
-            if (space)
-                Console.Write(" - ");
-
             ConsoleColor consoleColor = Console.ForegroundColor;
 
             switch (status)
@@ -95,60 +90,6 @@ namespace MinimalSquares.ConsoleCommands
             Console.Write(text);
 
             Console.ForegroundColor = consoleColor;
-        }
-
-        public static bool TryReadBool(string message, [NotNullWhen(true)] out bool? toReturn)
-        {
-            return TryReadAbstact(message, out toReturn, str => (string.Equals(str, "Y", StringComparison.InvariantCultureIgnoreCase), true));
-        }
-
-        public static bool TryReadString(string message, out string? toReturn)
-        {
-            return TryReadAbstact(message, out toReturn, str => (str, true));
-        }
-
-        public static bool TryReadScalarLine<T>(string message, [NotNullWhen(true)] out T? toReturn)
-        {
-            return TryReadAbstact(message, out toReturn, GetScalar<T>);
-        }
-
-        private static (T?, bool) GetScalar<T>(string? str)
-        {
-            MethodInfo method = typeof(T).GetMethod("TryParse", BindingFlags.Static | BindingFlags.Public, new Type[] { typeof(string), typeof(T).MakeByRefType() })!;
-
-            object[] invokeParams = new object[] { str!, default(T)! };
-            if (string.IsNullOrWhiteSpace(str) || !(bool)method.Invoke(null, invokeParams)!)
-            {
-                return (default, false);
-            }
-
-            return ((T)invokeParams[1], true);
-        }
-
-        public static bool TryReadAbstact<T>(string message, out T? toReturn, Func<string?, (T?, bool)> objectFunction)
-        {
-            while (true)
-            {
-                WriteText(message);
-                string str = Console.ReadLine()!;
-
-                if (string.Equals(str, "выход", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    toReturn = default;
-                    return false;
-                }
-
-                var result = objectFunction.Invoke(str);
-                if (!result.Item2)
-                {
-                    WriteLineText("Значение введено неверно!", CommandStatus.Invalid);
-                    continue;
-                }
-
-                toReturn = result.Item1;
-
-                return true;
-            }
         }
     }
 }

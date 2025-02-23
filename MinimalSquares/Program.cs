@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 
 using MinimalSquares.ConsoleCommands;
 
+using Sharprompt;
+
 namespace MinimalSquares;
 
 internal class Program
@@ -18,17 +20,22 @@ internal class Program
 
     private static void ConsoleHandle()
     {
-        CommandManager.Init();
-
+        Prompt.ThrowExceptionOnCancel = true;
         do
         {
-            CommandManager.WriteText(": ", space: false);
-            string? str = Console.ReadLine();
+            try
+            {
+                string command = Prompt.Input<string>("Название команды");
 
-            if (string.IsNullOrWhiteSpace(str))
-                continue;
+                if (string.IsNullOrWhiteSpace(command))
+                    continue;
 
-            CommandManager.Handle(str);
+                CommandManager.Handle(command);
+            }
+            catch (PromptCanceledException)
+            {
+                CommandManager.WriteLineText("[Прервано]", CommandStatus.Exit);
+            }
         }
         while (true);
     }

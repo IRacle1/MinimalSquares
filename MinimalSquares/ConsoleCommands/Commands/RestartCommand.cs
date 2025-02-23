@@ -11,26 +11,29 @@ using MinimalSquares.Functions;
 using MinimalSquares.Components;
 using MinimalSquares.Generic;
 
-namespace MinimalSquares.ConsoleCommands
+namespace MinimalSquares.ConsoleCommands.Commands
 {
+    [ConsoleCommand]
     public class RestartCommand : BaseCommand
     {
         private MainView mainView;
         private PointManager pointManager;
-        private FunctionManager functionsManager;
+        private FunctionManager functionManager;
 
-        public RestartCommand() : base("рестарт", new string[] { "restart" }, "откатывает программу") 
+        public RestartCommand() : base("Рестарт", new string[] { "Restart" }, "откатывает программу") 
         {
             mainView = ComponentManager.Get<MainView>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
-            functionsManager = ComponentManager.Get<FunctionManager>()!;
+            functionManager = ComponentManager.Get<FunctionManager>()!;
         }
 
         public override void Handle()
         {
             mainView.SetCamera(new Vector3(0, 0, 6), Vector3.Zero);
             pointManager.Points.Clear();
-            functionsManager.CurrentFunctions.Clear();
+            functionManager.CurrentFunctions.Clear();
+
+            pointManager.TriggerUpdate();
 
             ComponentManager.UpdateVertexes();
 
