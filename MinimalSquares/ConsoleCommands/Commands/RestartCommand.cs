@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-
-using MinimalSquares.Graphics;
-using MinimalSquares.Functions;
+﻿using Microsoft.Xna.Framework;
 using MinimalSquares.Components;
+using MinimalSquares.Functions;
 using MinimalSquares.Generic;
+using MinimalSquares.Graphics;
 
 namespace MinimalSquares.ConsoleCommands.Commands
 {
@@ -20,7 +13,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
         private PointManager pointManager;
         private FunctionManager functionManager;
 
-        public RestartCommand() : base("Рестарт", new string[] { "Restart" }, "откатывает программу") 
+        public RestartCommand() : base("Рестарт", new string[] { "Restart" }, "откатывает программу")
         {
             mainView = ComponentManager.Get<MainView>()!;
             pointManager = ComponentManager.Get<PointManager>()!;

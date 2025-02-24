@@ -1,13 +1,10 @@
-﻿using System;
-
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using MinimalSquares.Components;
 using MinimalSquares.Graphics;
-using MinimalSquares.Input.MouseInput;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.Keyboard.KeyEvents;
+using MinimalSquares.Input.MouseInput;
 
 namespace MinimalSquares.Generic
 {
@@ -70,7 +67,7 @@ namespace MinimalSquares.Generic
             {
                 ComponentManager.UpdateVertexes();
             }
-            
+
             if (Vector2.DistanceSquared(mouseController.CursorPosition, leftPressed) <= 10 * 10)
             {
                 Vector2 vector = view.GetMouseWorldPosition(mouseController.CursorPosition).GetXY();
@@ -85,7 +82,7 @@ namespace MinimalSquares.Generic
             {
                 Vector3 oldGlobalPos = view.GetMouseWorldPosition(oldPosition);
                 Vector3 newGlobalPos = view.GetMouseWorldPosition(newPosition);
-                
+
                 Vector3 moveVector = oldGlobalPos - newGlobalPos;
 
                 Vector3 newCameraPosition = view.CameraPosition + moveVector;

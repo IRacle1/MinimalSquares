@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Single;
 
 namespace MinimalSquares.Functions
 {
@@ -16,7 +7,7 @@ namespace MinimalSquares.Functions
     {
         public override string Name { get; } = "Логарифмическая функция";
 
-        public LogFunction() : 
+        public LogFunction() :
             base(2)
         {
         }

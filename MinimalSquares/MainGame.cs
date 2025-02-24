@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
@@ -8,11 +7,6 @@ using MinimalSquares.Generic;
 using MinimalSquares.Graphics;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.MouseInput;
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 
 namespace MinimalSquares;
 

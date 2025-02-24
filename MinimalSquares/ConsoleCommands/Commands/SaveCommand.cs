@@ -1,19 +1,11 @@
-﻿using System;
+﻿using MinimalSquares.Components;
+using MinimalSquares.Generic;
+using Sharprompt;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.Unicode;
-using System.Threading.Tasks;
-
-using MinimalSquares.Components;
-using MinimalSquares.Functions;
-using MinimalSquares.Generic;
-using MinimalSquares.Graphics;
-
-using Sharprompt;
 
 namespace MinimalSquares.ConsoleCommands.Commands
 {
@@ -24,7 +16,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
         private List<Func<object?, ValidationResult?>> validators = new(1);
 
         public SaveCommand() : base("Сохранить", new string[] { "Save" }, "")
-        {  
+        {
             pointManager = ComponentManager.Get<PointManager>()!;
             validators.Add(Extensions.ValidateFileName("Это название не может быть именем файла"));
         }

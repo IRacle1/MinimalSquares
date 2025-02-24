@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-using MinimalSquares.Components.Abstractions;
+﻿using MinimalSquares.Components.Abstractions;
 
 namespace MinimalSquares.Components
 {

@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
-using MinimalSquares.Graphics;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.Keyboard.KeyEvents;
 
@@ -25,8 +18,8 @@ namespace MinimalSquares.Generic
             functionManager = ComponentManager.Get<FunctionManager>()!;
 
             keyboardManager.Register(new BasicKeyEvent(
-                (_, _) => targetGame.Exit(), 
-                InputType.OnKeyDown, 
+                (_, _) => targetGame.Exit(),
+                InputType.OnKeyDown,
                 Keys.Escape));
             base.Start(game);
 

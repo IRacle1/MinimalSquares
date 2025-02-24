@@ -1,15 +1,8 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using MinimalSquares.Components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework.Graphics;
-using MinimalSquares.Components.Abstractions;
-using MinimalSquares.Components;
-using MinimalSquares.Graphics;
-using Microsoft.Xna.Framework;
-using MinimalSquares.Functions;
 
 namespace MinimalSquares.Generic
 {

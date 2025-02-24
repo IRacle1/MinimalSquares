@@ -1,9 +1,7 @@
-﻿using System;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-
 using MinimalSquares.Components;
+using System;
 
 namespace MinimalSquares.Graphics
 {
@@ -111,7 +109,7 @@ namespace MinimalSquares.Graphics
                 return Vector3.Zero;
         }
 
-        public void SetCamera(Vector3 cameraPosition, Vector3 cameraTarget) 
+        public void SetCamera(Vector3 cameraPosition, Vector3 cameraTarget)
         {
             CameraPosition = cameraPosition;
 
