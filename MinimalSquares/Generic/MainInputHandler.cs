@@ -31,7 +31,7 @@ namespace MinimalSquares.Generic
 
             keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Z));
 
-            //mouseController.OnWheelScrolled += OnWheelScrolled;
+            mouseController.OnWheelScrolled += OnWheelScrolled;
             mouseController.OnCursorMoving += OnCursorMoving;
             mouseController.OnLeftButtonPressed += OnLeftButtonPressed;
             mouseController.OnLeftButtonReleased += OnLeftButtonReleased;
@@ -76,8 +76,6 @@ namespace MinimalSquares.Generic
                 Vector2 vector = view.GetMouseWorldPosition(mouseController.CursorPosition).GetXY();
 
                 pointManager.Add(vector);
-
-                pointManager.TriggerUpdate();
             }
         }
 
@@ -100,11 +98,20 @@ namespace MinimalSquares.Generic
         private void OnWheelScrolled(float oldValue, float newValue)
         {
             float delta = newValue - oldValue;
-            float z = view.CameraPosition.Z;
-            z += z / 100;
 
-            Vector3 newCameraPosition = new Vector3(view.CameraPosition.X, view.CameraPosition.Y, z);
+            Vector3 cursorPos = view.GetMouseWorldPosition(mouseController.CursorPosition);
+
+            Vector3 moveVector = view.CameraPosition - cursorPos;
+
+            Vector3 newCameraPosition;
+
+            if (delta < 0f)
+                newCameraPosition = Vector3.Lerp(view.CameraPosition, view.CameraPosition + moveVector, 0.1f);
+            else
+                newCameraPosition = Vector3.Lerp(view.CameraPosition, view.CameraPosition - moveVector, 0.1f);
+
             view.SetCamera(newCameraPosition, new Vector3(newCameraPosition.GetXY(), 0));
+            ComponentManager.UpdateVertexes();
         }
 
         private void HandleRemovePoint(InputType type, Keys keys)

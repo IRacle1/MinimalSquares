@@ -9,8 +9,8 @@ namespace MinimalSquares.Graphics
 {
     public class MainView : BaseComponent
     {
-        public static float Step = 0.0005f;
-        public static float GrafhicStep = 0.005f;
+        public static float Step { get; private set; } = 0.0005f;
+        public static float GrafhicStep { get; private set; } = 0.005f;
 
         private Matrix projectionMatrix;
         private Matrix viewMatrix;
@@ -76,10 +76,22 @@ namespace MinimalSquares.Graphics
 
         private void UpdateBorders()
         {
-            LeftUpBorder = GetMouseWorldPosition(new Vector2(0));
+            LeftUpBorder = GetMouseWorldPosition(Vector2.Zero);
             RightDownBorder = GetMouseWorldPosition(new Vector2(targetGame.Window.ClientBounds.Width, targetGame.Window.ClientBounds.Height));
             RenderLeftUpBorder = new Vector3(2f * LeftUpBorder.X - RightDownBorder.X, 2f * LeftUpBorder.Y - RightDownBorder.Y, 0);
             RenderRightDownBorder = new Vector3(2f * RightDownBorder.X - LeftUpBorder.X, 2f * RightDownBorder.Y - LeftUpBorder.Y, 0);
+        }
+
+        private void UpdateSteps()
+        {
+            Vector3 relativeVector = LeftUpBorder;
+            Vector3 deltaYVector = GetMouseWorldPosition(Vector2.UnitY);
+
+            float deltaY = relativeVector.Y - deltaYVector.Y;
+
+            GrafhicStep = deltaY;
+            Step = GrafhicStep / 10;
+            targetGame.Window.Title = GrafhicStep.ToString();
         }
 
         public Vector3 GetMouseWorldPosition(Vector2 screenPosition)
@@ -107,12 +119,13 @@ namespace MinimalSquares.Graphics
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                 AspectRatio,
-                0.1f, CameraPosition.Z + 1f);
+                MathF.Max(CameraPosition.Z - 0.2f, 0.00001f), CameraPosition.Z + 0.2f);
 
             targetGame.Effect.View = viewMatrix;
             targetGame.Effect.Projection = projectionMatrix;
 
             UpdateBorders();
+            UpdateSteps();
         }
     }
 }
