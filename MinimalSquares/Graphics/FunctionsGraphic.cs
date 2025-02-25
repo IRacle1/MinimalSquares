@@ -18,7 +18,6 @@ namespace MinimalSquares.Graphics
     public class FunctionsGraphic : BaseComponent, IDrawableComponent
     {
         private FunctionManager functionManager = null!;
-        private MainView view = null!;
 
         private List<VertexPositionColor> vertexCache = new(100);
         private VertexPositionColor[] functionsVertex = null!;
@@ -29,9 +28,16 @@ namespace MinimalSquares.Graphics
         {
             base.Start(game);
             functionManager = ComponentManager.Get<FunctionManager>()!;
-            view = ComponentManager.Get<MainView>()!;
 
-            functionManager.OnFunctionUpdate += UpdateVertex;
+            ComponentManager.MainView.OnViewUpdate += OnViewUpdate;
+        }
+
+        private void OnViewUpdate(RenderRequestType renderRequestType)
+        {
+            if (!renderRequestType.HasFlag(RenderRequestType.Function))
+                return;
+
+            UpdateVertex();
         }
 
         public void UpdateVertex()
@@ -42,8 +48,8 @@ namespace MinimalSquares.Graphics
             {
                 BaseFunction function = functionManager.CurrentFunctions[i];
 
-                float left = view.RenderLeftUpBorder.X;
-                float right = view.RenderRightDownBorder.X;
+                float left = ComponentManager.MainView.RenderLeftUpBorder.X;
+                float right = ComponentManager.MainView.RenderRightDownBorder.X;
 
                 for (float x = left; x < right; x += MainView.Step)
                 {

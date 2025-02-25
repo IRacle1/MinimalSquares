@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework.Input;
 
 using MinimalSquares.Components;
 using MinimalSquares.Generic;
-using MinimalSquares.Graphics;
-using MinimalSquares.Input.Keyboard;
-using MinimalSquares.Input.Keyboard.KeyEvents;
 
 namespace MinimalSquares.Functions
 {

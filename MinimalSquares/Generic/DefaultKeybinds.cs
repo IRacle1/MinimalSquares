@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 using MinimalSquares.Components;
@@ -18,17 +19,39 @@ namespace MinimalSquares.Generic
     {
         private KeyboardManager keyboardManager = null!;
         private FunctionManager functionManager = null!;
+        private InternalManager internalManager = null!;
+        private PointManager pointManager = null!;
 
         public override void Start(MainGame game)
         {
+            base.Start(game);
+
             keyboardManager = ComponentManager.Get<KeyboardManager>()!;
             functionManager = ComponentManager.Get<FunctionManager>()!;
+            internalManager = ComponentManager.Get<InternalManager>()!;
+            pointManager = ComponentManager.Get<PointManager>()!;
 
             keyboardManager.Register(new BasicKeyEvent(
                 (_, _) => targetGame.Exit(), 
                 InputType.OnKeyDown, 
                 Keys.Escape));
-            base.Start(game);
+
+            keyboardManager.Register(new BasicKeyEvent(
+                (_, _) =>
+                {
+                    internalManager.Reset();
+                },
+                InputType.OnKeyDown,
+                Keys.R));
+
+            keyboardManager.Register(new BasicKeyEvent(
+                (_, _) =>
+                {
+                    pointManager.Add(ComponentManager.MainView.CenterWorld.GetXY());
+                    ComponentManager.MainView.RenderRequest(RenderRequestType.Static);
+                },
+                InputType.OnKeyDown,
+                Keys.Space));
 
             keyboardManager.Register(new BasicKeyEvent(
                 (_, key) =>
@@ -38,6 +61,8 @@ namespace MinimalSquares.Generic
                     functionManager.CurrentFunctions.Add(functionManager.AvaibleFunctions[num]);
 
                     functionManager.UpdateParameters();
+
+                    ComponentManager.MainView.RenderRequest(RenderRequestType.Function);
                 }, InputType.OnKeyDown, Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9));
         }
     }

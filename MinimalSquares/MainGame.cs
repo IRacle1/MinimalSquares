@@ -21,7 +21,6 @@ public class MainGame : Game
     public GraphicsDeviceManager GraphicsManager = null!;
     public BasicEffect Effect = null!;
 
-    private MainView ViewSettings { get; } = new();
     private KeyboardManager keyboardManager { get; } = new();
     private MouseController MouseController { get; } = new();
     private AxesPrinter AxesPrinter { get; } = new();
@@ -33,6 +32,8 @@ public class MainGame : Game
     private DefaultKeybinds DefaultKeybinds { get; } = new();
     private BackgroundComponent BackgroundComponent { get; } = new();
     private MainInputHandler Move { get; } = new();
+    private InternalManager InternalManager { get; } = new();
+    private MovingKeyboard MovingKeyboard { get; } = new();
 
     public MainGame()
     {

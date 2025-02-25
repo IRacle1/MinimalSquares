@@ -4,11 +4,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 using MinimalSquares.Components;
+using MinimalSquares.Functions;
+using MinimalSquares.Generic;
 
 namespace MinimalSquares.Graphics
 {
     public class MainView : BaseComponent
     {
+        public event Action<RenderRequestType>? OnViewUpdate;
+
         public static float Step { get; private set; } = 0.0005f;
         public static float GrafhicStep { get; private set; } = 0.005f;
 
@@ -26,6 +30,9 @@ namespace MinimalSquares.Graphics
 
         public Color BackgroundColor { get; set; } = Color.White;
         public Color MainColor { get; set; } = Color.DarkGray;
+
+        public Vector2 CenterScreen => targetGame.Window.ClientBounds.Size.ToVector2() / 2f;
+        public Vector3 CenterWorld => GetMouseWorldPosition(CenterScreen);
 
         public override void Start(MainGame game)
         {
@@ -54,12 +61,17 @@ namespace MinimalSquares.Graphics
                 World = worldMatrix,
             };
 
-            SetCamera(CameraPosition, Vector3.Zero);
+            SetCamera(CameraPosition);
 
             game.IsFixedTimeStep = true;
             game.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60);
 
             UpdateBorders();
+        }
+
+        public void RenderRequest(RenderRequestType render)
+        {
+            OnViewUpdate?.Invoke(render);
         }
 
         private void ClientSizeChanged(object? sender, EventArgs e)
@@ -72,6 +84,9 @@ namespace MinimalSquares.Graphics
                 (float)targetGame.Window.ClientBounds.Height;
 
             UpdateBorders();
+            UpdateSteps();
+
+            //RenderRequest(RenderRequestType.All);
         }
 
         private void UpdateBorders()
@@ -90,8 +105,16 @@ namespace MinimalSquares.Graphics
             float deltaY = relativeVector.Y - deltaYVector.Y;
 
             GrafhicStep = deltaY;
-            Step = GrafhicStep / 10;
+            Step = GrafhicStep / 10f;
             targetGame.Window.Title = GrafhicStep.ToString();
+        }
+
+        public bool IsOnScreen(Vector2 point)
+        {
+            return RenderLeftUpBorder.X < point.X &&
+                RenderRightDownBorder.X > point.X &&
+                RenderLeftUpBorder.Y > point.Y &&
+                RenderRightDownBorder.Y < point.Y;
         }
 
         public Vector3 GetMouseWorldPosition(Vector2 screenPosition)
@@ -111,9 +134,12 @@ namespace MinimalSquares.Graphics
                 return Vector3.Zero;
         }
 
-        public void SetCamera(Vector3 cameraPosition, Vector3 cameraTarget) 
+        public void SetCamera(Vector3 cameraPosition) 
         {
             CameraPosition = cameraPosition;
+
+            Vector3 cameraTarget = cameraPosition;
+            cameraTarget.Z = 0;
 
             viewMatrix = Matrix.CreateLookAt(cameraPosition, cameraTarget, Vector3.Up);
 

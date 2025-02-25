@@ -29,13 +29,11 @@ namespace MinimalSquares.ConsoleCommands.Commands
 
         public override void Handle()
         {
-            mainView.SetCamera(new Vector3(0, 0, 6), Vector3.Zero);
+            mainView.SetCamera(new Vector3(0, 0, 6));
             pointManager.Points.Clear();
             functionManager.CurrentFunctions.Clear();
 
             pointManager.TriggerUpdate();
-
-            ComponentManager.UpdateVertexes();
 
             Success();
         }

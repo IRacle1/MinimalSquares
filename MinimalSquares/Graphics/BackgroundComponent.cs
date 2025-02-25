@@ -13,19 +13,16 @@ namespace MinimalSquares.Graphics
 {
     internal class BackgroundComponent : BaseComponent, IDrawableComponent
     {
-        private MainView view = null!;
-
         public int Order { get; } = int.MinValue;
 
         public override void Start(MainGame game)
         {
-            view = ComponentManager.Get<MainView>()!;
             base.Start(game);
         }
 
         public void Draw()
         {
-            targetGame.GraphicsDevice.Clear(view.BackgroundColor);
+            targetGame.GraphicsDevice.Clear(ComponentManager.MainView.BackgroundColor);
         }
 
         public void UpdateVertex() { }

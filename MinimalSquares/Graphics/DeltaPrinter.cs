@@ -28,7 +28,8 @@ namespace MinimalSquares.Graphics
             pointPrinter = ComponentManager.Get<PointPrinter>()!;
             functionManager = ComponentManager.Get<FunctionManager>()!;
 
-            functionManager.OnFunctionUpdate += UpdateVertex;
+            ComponentManager.MainView.OnViewUpdate += OnViewUpdate;
+
             base.Start(game);
         }
 
@@ -38,11 +39,22 @@ namespace MinimalSquares.Graphics
                 targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, LinesCoords, 0, LinesCoords.Length / 2);
         }
 
+        private void OnViewUpdate(RenderRequestType renderRequestType)
+        {
+            if (!renderRequestType.HasFlag(RenderRequestType.Points) && !renderRequestType.HasFlag(RenderRequestType.Function))
+                return;
+
+            UpdateVertex();
+        }
+
         public void UpdateVertex()
         {
             linesCache.Clear();
             foreach (Vector2 point in pointManager.Points)
             {
+                //if (!ComponentManager.MainView.IsOnScreen(point))
+                //    continue;
+
                 foreach (BaseFunction function in functionManager.CurrentFunctions)
                 {
                     if (!function.IsAcceptablePoint(point.X, point.Y))

@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 using Microsoft.Xna.Framework;
 using MinimalSquares.Components.Abstractions;
+using MinimalSquares.Graphics;
 
 namespace MinimalSquares.Components
 {
     public static class ComponentManager
     {
+        public static MainView MainView { get; private set; }
+
         public static List<IComponent> Components { get; } = new(10);
         public static List<IUpdatedComponent> UpdateComponents { get; } = new(10);
         public static SortedSet<IDrawableComponent> DrawableComponents { get; } = new(new DrawableCompare());
@@ -43,6 +46,8 @@ namespace MinimalSquares.Components
 
         public static void Start(MainGame game)
         {
+            (MainView = new()).Start(game);
+
             foreach (IComponent item in Components)
             {
                 item.Start(game);
@@ -62,14 +67,6 @@ namespace MinimalSquares.Components
             foreach (IDrawableComponent item in DrawableComponents)
             {
                 item.Draw();
-            }
-        }
-
-        public static void UpdateVertexes()
-        {
-            foreach (IDrawableComponent item in DrawableComponents)
-            {
-                item.UpdateVertex();
             }
         }
 
