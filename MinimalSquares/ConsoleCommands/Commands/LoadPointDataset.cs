@@ -14,7 +14,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
     {
         private PointManager pointManager = null!;
 
-        public LoadPointDataset() : base("Загрузить", new string[] { "Load" }, "")
+        public LoadPointDataset() : base("Загрузить", new string[] { "Load" }, "Загружает точки из файла")
         {
             pointManager = ComponentManager.Get<PointManager>()!;
         }

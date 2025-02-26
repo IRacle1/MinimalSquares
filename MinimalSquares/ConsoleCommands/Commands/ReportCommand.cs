@@ -21,7 +21,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
 
         private List<Func<object?, ValidationResult?>> validators = new(1);
 
-        public ReportCommand() : base("Репорт", new string[] { "Info", }, "Помощь по всем командам")
+        public ReportCommand() : base("Репорт", new string[] { "Report", }, "Формирует информацию по функциям в файл")
         {
             functionManager = ComponentManager.Get<FunctionManager>()!;
             pointsManager = ComponentManager.Get<PointManager>()!;

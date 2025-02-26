@@ -37,7 +37,7 @@ namespace MinimalSquares.Generic
             ComponentManager.KeyboardManager.Register(new BasicKeyEvent(
                 (_, _) =>
                 {
-                    internalManager.Reset();
+                    internalManager.ResetAll();
                 },
                 InputType.OnKeyDown,
                 Keys.R));

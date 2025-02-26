@@ -23,8 +23,12 @@ namespace MinimalSquares.Generic
             { Keys.S, -Vector3.UnitY },
             { Keys.D, Vector3.UnitX },
             { Keys.A, -Vector3.UnitX },
+
+            { Keys.Up, Vector3.UnitY },
+            { Keys.Down, -Vector3.UnitY },
+            { Keys.Right, Vector3.UnitX },
+            { Keys.Left, -Vector3.UnitX },
         };
-            
 
         public override void Start(MainGame game)
         {

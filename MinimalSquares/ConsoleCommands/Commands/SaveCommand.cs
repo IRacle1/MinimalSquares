@@ -15,7 +15,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
         private PointManager pointManager = null!;
         private List<Func<object?, ValidationResult?>> validators = new(1);
 
-        public SaveCommand() : base("Сохранить", new string[] { "Save" }, "")
+        public SaveCommand() : base("Сохранить", new string[] { "Save" }, "Сохраняет точки в файл")
         {
             pointManager = ComponentManager.Get<PointManager>()!;
             validators.Add(Extensions.ValidateFileName("Это название не может быть именем файла"));

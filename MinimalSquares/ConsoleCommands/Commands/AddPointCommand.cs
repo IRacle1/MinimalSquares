@@ -11,7 +11,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
     {
         private PointManager pointManager = null!;
 
-        public AddPoint() : base("Точка", new string[] { "Point", "Pt" }, "добавляет точку по координатам x, y")
+        public AddPoint() : base("Точка", new string[] { "Point", "Pt" }, "Добавляет точку по координатам x, y")
         {
             pointManager = ComponentManager.Get<PointManager>()!;
         }

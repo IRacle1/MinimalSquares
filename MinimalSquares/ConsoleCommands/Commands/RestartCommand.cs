@@ -11,7 +11,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
     {
         private InternalManager internalManager;
 
-        public RestartCommand() : base("Рестарт", new string[] { "Restart" }, "откатывает программу")
+        public RestartCommand() : base("Рестарт", new string[] { "Restart" }, "Откатывает программу на начальное состояние")
         {
             internalManager = ComponentManager.Get<InternalManager>()!;
         }

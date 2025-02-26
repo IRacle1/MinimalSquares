@@ -9,17 +9,17 @@ namespace MinimalSquares.ConsoleCommands.Commands
     [ConsoleCommand]
     public class PolynomialCommand : BaseCommand
     {
-        private FunctionManager functionManager;
+        private FunctionManager functionManager = null!;
 
         public PolynomialCommand()
-            : base("Полином", new string[] { "Polymonial" }, "")
+            : base("Полином", new string[] { "Polymonial" }, "Загружает функцию произвольного полинома, любой степени")
         {
             functionManager = ComponentManager.Get<FunctionManager>()!;
         }
 
         public override void Handle()
         {
-            int pow = Prompt.Input<int>(BuildMessage("Введите максимальную степень полинома"));
+            ushort pow = Prompt.Input<ushort>(BuildMessage("Введите максимальную степень полинома"));
 
             functionManager.CurrentFunctions.Clear();
             functionManager.CurrentFunctions.Add(new PolynomialFunction(pow + 1));
