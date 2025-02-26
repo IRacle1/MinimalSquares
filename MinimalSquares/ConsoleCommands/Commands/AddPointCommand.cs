@@ -1,5 +1,7 @@
 ﻿using MinimalSquares.Components;
 using MinimalSquares.Generic;
+using MinimalSquares.Graphics;
+
 using Sharprompt;
 
 namespace MinimalSquares.ConsoleCommands.Commands
@@ -20,6 +22,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
             float y = Prompt.Input<float>(BuildMessage("Введите координату X"));
 
             pointManager.Add(new(x, y));
+            ComponentManager.MainView.RenderRequest(RenderRequestType.Static);
 
             Success();
         }

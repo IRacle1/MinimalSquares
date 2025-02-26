@@ -29,6 +29,7 @@ public class MainGame : Game
     private MainInputHandler Move { get; } = new();
     private InternalManager InternalManager { get; } = new();
     private MovingKeyboard MovingKeyboard { get; } = new();
+    private ReportManager InfoManager { get; } = new();
 
     public MainGame()
     {

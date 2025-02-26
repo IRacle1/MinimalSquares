@@ -13,7 +13,7 @@ namespace MinimalSquares.Functions
     // b = arctg(a2/a1)
     public class SinFunction : BaseFunction
     {
-        public override string Name { get; } = "Синусоида";
+        public override string Name { get; } = "Синус";
 
         public SinFunction(double k) :
             base(3)
@@ -42,6 +42,19 @@ namespace MinimalSquares.Functions
             Parameters[2] = ansv[2];
             Parameters[0] = Math.Sqrt(a1 * a1 + a2 * a2);
             Parameters[1] = Math.Atan2(a2, a1);
+        }
+
+        public override string GetGeneralNotation()
+        {
+            return $"y \\sim a * sin({K} * x + b) + c";
+        }
+
+        public override string GetFunctionNotation()
+        {
+            double a = GetFormattedParameter(0);
+            double b = GetFormattedParameter(1);
+            double c = GetFormattedParameter(2);
+            return $"y = {a} * sin({K} * x {(b < 0 ? b.ToString() : $"+ {b}")} {(c < 0 ? c.ToString() : $"+ {c}")}";
         }
     }
 }

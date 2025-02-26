@@ -9,24 +9,16 @@ namespace MinimalSquares.ConsoleCommands.Commands
     [ConsoleCommand]
     public class RestartCommand : BaseCommand
     {
-        private MainView mainView;
-        private PointManager pointManager;
-        private FunctionManager functionManager;
+        private InternalManager internalManager;
 
         public RestartCommand() : base("Рестарт", new string[] { "Restart" }, "откатывает программу")
         {
-            mainView = ComponentManager.Get<MainView>()!;
-            pointManager = ComponentManager.Get<PointManager>()!;
-            functionManager = ComponentManager.Get<FunctionManager>()!;
+            internalManager = ComponentManager.Get<InternalManager>()!;
         }
 
         public override void Handle()
         {
-            mainView.SetCamera(new Vector3(0, 0, 6));
-            pointManager.Points.Clear();
-            functionManager.CurrentFunctions.Clear();
-
-            pointManager.TriggerUpdate();
+            internalManager.Reset();
 
             Success();
         }

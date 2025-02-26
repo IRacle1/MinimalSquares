@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using MinimalSquares.Components;
 using MinimalSquares.Generic;
+using MinimalSquares.Graphics;
+
 using Sharprompt;
 using System.IO;
 using System.Linq;
@@ -39,6 +41,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
             }
 
             pointManager.TriggerUpdate();
+            ComponentManager.MainView.RenderRequest(RenderRequestType.Static);
 
             Success();
         }

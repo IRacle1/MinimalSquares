@@ -25,7 +25,28 @@ namespace MinimalSquares.Generic
             base.Start(game);
         }
 
-        public void Reset()
+        public void ResetPoints()
+        {
+            pointManager.Clear();
+            ComponentManager.MainView.RenderRequest(RenderRequestType.Static);
+        }
+
+        public void ResetCamera()
+        {
+            functionManager.CurrentFunctions.Clear();
+            pointManager.Clear();
+
+            ComponentManager.MainView.SetCamera(new Vector3(0, 0, 6));
+            ComponentManager.MainView.RenderRequest(RenderRequestType.All);
+        }
+
+        public void ResetFunctions()
+        {
+            functionManager.CurrentFunctions.Clear();
+            ComponentManager.MainView.RenderRequest(RenderRequestType.Function);
+        }
+
+        public void ResetAll()
         {
             functionManager.CurrentFunctions.Clear();
             pointManager.Clear();

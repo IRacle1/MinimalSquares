@@ -1,4 +1,6 @@
-﻿using MathNet.Numerics.LinearAlgebra;
+﻿using System;
+
+using MathNet.Numerics.LinearAlgebra;
 using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra.Double.Solvers;
 using MathNet.Numerics.LinearAlgebra.Solvers;
@@ -95,5 +97,15 @@ namespace MinimalSquares.Functions
                 Parameters[i] = ansv[i];
             }
         }
+
+        public abstract string GetGeneralNotation();
+
+        public abstract string GetFunctionNotation();
+
+        public virtual double GetFormattedParameter(int order)
+        {
+            return Math.Round(Parameters[order], 2);
+        }
+
     }
 }

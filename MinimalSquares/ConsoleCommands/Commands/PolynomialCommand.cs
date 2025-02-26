@@ -1,5 +1,6 @@
 ﻿using MinimalSquares.Components;
 using MinimalSquares.Functions;
+using MinimalSquares.Graphics;
 
 using Sharprompt;
 
@@ -24,6 +25,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
             functionManager.CurrentFunctions.Add(new PolynomialFunction(pow + 1));
 
             functionManager.UpdateParameters();
+            ComponentManager.MainView.RenderRequest(RenderRequestType.Function);
             Success();
         }
     }

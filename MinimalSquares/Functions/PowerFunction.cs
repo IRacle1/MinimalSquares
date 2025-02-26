@@ -7,7 +7,7 @@ namespace MinimalSquares.Functions
     // ln y = a * ln x + ln b
     public class PowerFunction : BaseFunction
     {
-        public override string Name { get; } = "Степенная функция";
+        public override string Name { get; } = "Степенная";
 
         public PowerFunction() :
             base(2)
@@ -41,6 +41,16 @@ namespace MinimalSquares.Functions
         {
             Parameters[0] = ansv[0];
             Parameters[1] = Math.Exp(ansv[1]);
+        }
+
+        public override string GetGeneralNotation()
+        {
+            return @"y \sim b * x^a";
+        }
+
+        public override string GetFunctionNotation()
+        {
+            return $"y = {GetFormattedParameter(1)} * x^{{{GetFormattedParameter(0)}}}";
         }
     }
 }

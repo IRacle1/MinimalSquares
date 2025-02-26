@@ -5,7 +5,7 @@ namespace MinimalSquares.Functions
     // y = a * ln x + b
     public class LogFunction : PolynomialFunction
     {
-        public override string Name { get; } = "Логарифмическая функция";
+        public override string Name { get; } = "Логарифм";
 
         public LogFunction() :
             base(2)
@@ -24,5 +24,18 @@ namespace MinimalSquares.Functions
                 1 => 1,
                 _ => double.NaN,
             };
+
+        public override string GetGeneralNotation()
+        {
+            return @"y \sim a * \ln(x) + b";
+        }
+
+        public override string GetFunctionNotation()
+        {
+            double a = GetFormattedParameter(0);
+            double b = GetFormattedParameter(1);
+
+            return $"y = {a} * \\ln(x) + {(b < 0 ? b.ToString() : $"+ {b}")}";
+        }
     }
 }

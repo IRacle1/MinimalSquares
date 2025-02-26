@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Text;
+
+using MinimalSquares.Components;
 
 namespace MinimalSquares.Functions
 {
@@ -30,6 +33,51 @@ namespace MinimalSquares.Functions
             }
 
             return y;
+        }
+
+        public override string GetGeneralNotation()
+        {
+            StringBuilder sb = new(@"y \sim ");
+            for (int i = MonomialCount - 1; i >= 0; i--)
+            {
+                int variableIndex = MonomialCount - 1 - i;
+                char variable = ComponentManager.ReportManager.GetVariableName(variableIndex);
+
+                sb.Append(variable);
+
+                if (i > 0)
+                {
+                    sb.AppendFormat("x^{0} + ", i);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        public override string GetFunctionNotation()
+        {
+            StringBuilder sb = new(@"y = ");
+            for (int i = MonomialCount - 1; i >= 0; i--)
+            {
+                int variableIndex = MonomialCount - 1 - i;
+
+                double curParam = GetFormattedParameter(variableIndex);
+
+                if (i != MonomialCount - 1 && curParam > 0f)
+                {
+                    sb.Append(" + ");
+                }
+
+                sb.Append(GetFormattedParameter(variableIndex))
+                    .AppendFormat("x^{0}", i);
+            }
+
+            return sb.ToString();
+        }
+
+        public override double GetFormattedParameter(int order)
+        {
+            return base.GetFormattedParameter(MonomialCount - 1 - order);
         }
     }
 }

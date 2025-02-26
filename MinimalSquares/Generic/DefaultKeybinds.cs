@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
+using MinimalSquares.Graphics;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.Keyboard.KeyEvents;
 

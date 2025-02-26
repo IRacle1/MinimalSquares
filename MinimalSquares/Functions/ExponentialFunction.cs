@@ -1,5 +1,8 @@
 ﻿using MathNet.Numerics.LinearAlgebra;
+using MinimalSquares.Components;
+
 using System;
+using System.Text;
 
 namespace MinimalSquares.Functions
 {
@@ -41,6 +44,16 @@ namespace MinimalSquares.Functions
         {
             Parameters[0] = ansv[0];
             Parameters[1] = Math.Exp(ansv[1]);
+        }
+
+        public override string GetGeneralNotation()
+        {
+            return @"y \sim b * e^{ax}";
+        }
+
+        public override string GetFunctionNotation()
+        {
+            return $"y = {GetFormattedParameter(1)} * e^{{{GetFormattedParameter(0)}x}}";
         }
     }
 }

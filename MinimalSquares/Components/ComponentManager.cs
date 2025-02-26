@@ -2,15 +2,10 @@
 using MinimalSquares.Components.Abstractions;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-using MinimalSquares.Components.Abstractions;
 using MinimalSquares.Graphics;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.MouseInput;
+using MinimalSquares.Generic;
 
 namespace MinimalSquares.Components
 {
@@ -19,6 +14,7 @@ namespace MinimalSquares.Components
         public static MainView MainView { get; private set; } = null!;
         public static KeyboardManager KeyboardManager { get; private set; } = null!;
         public static MouseController MouseController { get; private set; } = null!;
+        public static ReportManager ReportManager { get; private set; } = null!;
 
         public static List<IComponent> Components { get; } = new(10);
 
@@ -55,6 +51,7 @@ namespace MinimalSquares.Components
             MainView = Get<MainView>()!;
             KeyboardManager = Get<KeyboardManager>()!;
             MouseController = Get<MouseController>()!;
+            ReportManager = Get<ReportManager>()!;
 
             foreach (IComponent item in Components)
             {
