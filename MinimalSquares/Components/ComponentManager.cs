@@ -8,14 +8,19 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using MinimalSquares.Components.Abstractions;
 using MinimalSquares.Graphics;
+using MinimalSquares.Input.Keyboard;
+using MinimalSquares.Input.MouseInput;
 
 namespace MinimalSquares.Components
 {
     public static class ComponentManager
     {
-        public static MainView MainView { get; private set; }
+        public static MainView MainView { get; private set; } = null!;
+        public static KeyboardManager KeyboardManager { get; private set; } = null!;
+        public static MouseController MouseController { get; private set; } = null!;
 
         public static List<IComponent> Components { get; } = new(10);
+
         public static List<IUpdatedComponent> UpdateComponents { get; } = new(10);
         public static SortedSet<IDrawableComponent> DrawableComponents { get; } = new(new DrawableCompare());
         private static Dictionary<uint, IComponent> ComponentsById { get; } = new(10);
@@ -46,7 +51,9 @@ namespace MinimalSquares.Components
 
         public static void Start(MainGame game)
         {
-            (MainView = new()).Start(game);
+            MainView = Get<MainView>()!;
+            KeyboardManager = Get<KeyboardManager>()!;
+            MouseController = Get<MouseController>()!;
 
             foreach (IComponent item in Components)
             {

@@ -52,8 +52,8 @@ namespace MinimalSquares.Graphics
             linesCache.Clear();
             foreach (Vector2 point in pointManager.Points)
             {
-                //if (!ComponentManager.MainView.IsOnScreen(point))
-                //    continue;
+                if (!ComponentManager.MainView.IsOnRenderScreen(point))
+                    continue;
 
                 foreach (BaseFunction function in functionManager.CurrentFunctions)
                 {

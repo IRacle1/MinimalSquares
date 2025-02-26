@@ -21,6 +21,7 @@ public class MainGame : Game
     public GraphicsDeviceManager GraphicsManager = null!;
     public BasicEffect Effect = null!;
 
+    private MainView MainView { get; } = new();
     private KeyboardManager keyboardManager { get; } = new();
     private MouseController MouseController { get; } = new();
     private AxesPrinter AxesPrinter { get; } = new();

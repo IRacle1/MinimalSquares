@@ -62,15 +62,17 @@ namespace MinimalSquares.Graphics
             };
 
             SetCamera(CameraPosition);
+            UpdateBorders();
+            UpdateSteps();
 
             game.IsFixedTimeStep = true;
             game.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60);
-
-            UpdateBorders();
         }
 
         public void RenderRequest(RenderRequestType render)
         {
+            UpdateBorders();
+            UpdateSteps();
             OnViewUpdate?.Invoke(render);
         }
 
@@ -83,10 +85,7 @@ namespace MinimalSquares.Graphics
             AspectRatio = (float)targetGame.Window.ClientBounds.Width /
                 (float)targetGame.Window.ClientBounds.Height;
 
-            UpdateBorders();
-            UpdateSteps();
-
-            //RenderRequest(RenderRequestType.All);
+            RenderRequest(RenderRequestType.All);
         }
 
         private void UpdateBorders()
@@ -99,10 +98,7 @@ namespace MinimalSquares.Graphics
 
         private void UpdateSteps()
         {
-            Vector3 relativeVector = LeftUpBorder;
-            Vector3 deltaYVector = GetMouseWorldPosition(Vector2.UnitY);
-
-            float deltaY = relativeVector.Y - deltaYVector.Y;
+            float deltaY = (LeftUpBorder.Y - RightDownBorder.Y) / targetGame.Window.ClientBounds.Height;
 
             GrafhicStep = deltaY;
             Step = GrafhicStep / 10f;
@@ -110,6 +106,14 @@ namespace MinimalSquares.Graphics
         }
 
         public bool IsOnScreen(Vector2 point)
+        {
+            return LeftUpBorder.X < point.X &&
+                RightDownBorder.X > point.X &&
+                LeftUpBorder.Y > point.Y &&
+                RightDownBorder.Y < point.Y;
+        }
+
+        public bool IsOnRenderScreen(Vector2 point)
         {
             return RenderLeftUpBorder.X < point.X &&
                 RenderRightDownBorder.X > point.X &&
@@ -134,8 +138,11 @@ namespace MinimalSquares.Graphics
                 return Vector3.Zero;
         }
 
-        public void SetCamera(Vector3 cameraPosition) 
+        public bool SetCamera(Vector3 cameraPosition) 
         {
+            if (cameraPosition.Z <= 0.2f || cameraPosition.Z >= 100f || cameraPosition.GetXY().LengthSquared() > 1000f * 1000f)
+                return false;
+
             CameraPosition = cameraPosition;
 
             Vector3 cameraTarget = cameraPosition;
@@ -145,13 +152,12 @@ namespace MinimalSquares.Graphics
 
             projectionMatrix = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                 AspectRatio,
-                MathF.Max(CameraPosition.Z - 0.2f, 0.00001f), CameraPosition.Z + 0.2f);
+                CameraPosition.Z - 0.1f, CameraPosition.Z + 0.1f);
 
             targetGame.Effect.View = viewMatrix;
             targetGame.Effect.Projection = projectionMatrix;
 
-            UpdateBorders();
-            UpdateSteps();
+            return true;
         }
     }
 }

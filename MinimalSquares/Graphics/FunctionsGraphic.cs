@@ -58,6 +58,11 @@ namespace MinimalSquares.Graphics
                     if (!float.IsNormal(y))
                         continue;
 
+                    Vector3 center = new Vector3(x, y, 0);
+
+                    if (!ComponentManager.MainView.IsOnRenderScreen(center.GetXY()))
+                        return;
+
                     vertexCache.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
 
                     vertexCache.Add(new VertexPositionColor(new Vector3(x, y + MainView.GrafhicStep, 0f), function.Color));

@@ -65,8 +65,8 @@ namespace MinimalSquares.Graphics
             {
                 Vector2 point = pointManager.Points[i];
 
-                //if (!ComponentManager.MainView.IsOnScreen(point))
-                //    continue;
+                if (!ComponentManager.MainView.IsOnRenderScreen(point))
+                    continue;
 
                 Vector3 worldVec = new(point, 0.0f);
 

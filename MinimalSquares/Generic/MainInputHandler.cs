@@ -13,9 +13,7 @@ namespace MinimalSquares.Generic
 {
     class MainInputHandler : BaseComponent
     {
-        private MouseController mouseController = null!;
         private PointManager pointManager = null!;
-        private KeyboardManager keyboard = null!;
 
         private bool shouldUpdateVertex = false;
 
@@ -23,24 +21,22 @@ namespace MinimalSquares.Generic
 
         public override void Start(MainGame game)
         {
-            mouseController = ComponentManager.Get<MouseController>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
-            keyboard = ComponentManager.Get<KeyboardManager>()!;
 
-            keyboard.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Z));
+            ComponentManager.KeyboardManager.Register(new BasicKeyEvent(HandleRemovePoint, InputType.OnKeyDown, Keys.Z));
 
-            mouseController.OnWheelScrolled += OnWheelScrolled;
-            mouseController.OnCursorMoving += OnCursorMoving;
-            mouseController.OnLeftButtonPressed += OnLeftButtonPressed;
-            mouseController.OnLeftButtonReleased += OnLeftButtonReleased;
-            mouseController.OnRightButtonPressed += OnRightButtonPressed;
+            ComponentManager.MouseController.OnWheelScrolled += OnWheelScrolled;
+            ComponentManager.MouseController.OnCursorMoving += OnCursorMoving;
+            ComponentManager.MouseController.OnLeftButtonPressed += OnLeftButtonPressed;
+            ComponentManager.MouseController.OnLeftButtonReleased += OnLeftButtonReleased;
+            ComponentManager.MouseController.OnRightButtonPressed += OnRightButtonPressed;
 
             base.Start(game);
         }
 
         private void OnRightButtonPressed()
         {
-            Vector2 vector = ComponentManager.MainView.GetMouseWorldPosition(mouseController.CursorPosition).GetXY();
+            Vector2 vector = ComponentManager.MainView.GetMouseWorldPosition(ComponentManager.MouseController.CursorPosition).GetXY();
 
             for (int i = 0; i < pointManager.Points.Count; i++)
             {
@@ -59,7 +55,7 @@ namespace MinimalSquares.Generic
 
         private void OnLeftButtonPressed()
         {
-            leftPressed = mouseController.CursorPosition;
+            leftPressed = ComponentManager.MouseController.CursorPosition;
             shouldUpdateVertex = false;
         }
 
@@ -70,9 +66,9 @@ namespace MinimalSquares.Generic
                 ComponentManager.MainView.RenderRequest(RenderRequestType.All);
             }
 
-            if (Vector2.DistanceSquared(mouseController.CursorPosition, leftPressed) <= 10 * 10)
+            if (Vector2.DistanceSquared(ComponentManager.MouseController.CursorPosition, leftPressed) <= 10 * 10)
             {
-                Vector2 vector = ComponentManager.MainView.GetMouseWorldPosition(mouseController.CursorPosition).GetXY();
+                Vector2 vector = ComponentManager.MainView.GetMouseWorldPosition(ComponentManager.MouseController.CursorPosition).GetXY();
 
                 pointManager.Add(vector);
                 ComponentManager.MainView.RenderRequest(RenderRequestType.Static);
@@ -81,7 +77,7 @@ namespace MinimalSquares.Generic
 
         private void OnCursorMoving(Vector2 oldPosition, Vector2 newPosition)
         {
-            if (mouseController.IsLeftButtonPressed)
+            if (ComponentManager.MouseController.IsLeftButtonPressed)
             {
                 Vector3 oldGlobalPos = ComponentManager.MainView.GetMouseWorldPosition(oldPosition);
                 Vector3 newGlobalPos = ComponentManager.MainView.GetMouseWorldPosition(newPosition);
@@ -89,28 +85,28 @@ namespace MinimalSquares.Generic
                 Vector3 moveVector = oldGlobalPos - newGlobalPos;
 
                 Vector3 newCameraPosition = ComponentManager.MainView.CameraPosition + moveVector;
-                ComponentManager.MainView.SetCamera(newCameraPosition);
-
-                shouldUpdateVertex = true;
+                if (ComponentManager.MainView.SetCamera(newCameraPosition))
+                    shouldUpdateVertex = true;
             }
         }
 
         private void OnWheelScrolled(float oldValue, float newValue)
         {
             float delta = newValue - oldValue;
+
             Vector3 cameraPos = ComponentManager.MainView.CameraPosition;
 
-            if (cameraPos.Z <= 0.001f && delta > 0f || cameraPos.Z >= 1000f && delta < 0f)
-                return;
-
-            Vector3 cursorPos = ComponentManager.MainView.GetMouseWorldPosition(mouseController.CursorPosition);
+            Vector3 cursorPos = ComponentManager.MainView.GetMouseWorldPosition(ComponentManager.MouseController.CursorPosition);
 
             Vector3 moveVector = (cursorPos - cameraPos) * (MathF.Sign(delta));
 
             Vector3 newCameraPosition = Vector3.Lerp(cameraPos, cameraPos + moveVector, 0.1f);
 
-            ComponentManager.MainView.SetCamera(newCameraPosition);
-            ComponentManager.MainView.RenderRequest(RenderRequestType.All);
+            if (newCameraPosition.Z <= 0.1f || newCameraPosition.Z >= 100f)
+                return;
+
+            if (ComponentManager.MainView.SetCamera(newCameraPosition))
+                ComponentManager.MainView.RenderRequest(RenderRequestType.All);
         }
 
         private void HandleRemovePoint(InputType type, Keys keys)
@@ -118,7 +114,7 @@ namespace MinimalSquares.Generic
             if (pointManager.Points.Count == 0)
                 return;
 
-            if (keyboard.PressedKeys.Contains(Keys.LeftShift))
+            if (ComponentManager.KeyboardManager.PressedKeys.Contains(Keys.LeftShift))
             {
                 pointManager.Clear();
             }

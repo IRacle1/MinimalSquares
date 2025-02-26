@@ -17,7 +17,6 @@ namespace MinimalSquares.Generic
 {
     public class DefaultKeybinds : BaseComponent
     {
-        private KeyboardManager keyboardManager = null!;
         private FunctionManager functionManager = null!;
         private InternalManager internalManager = null!;
         private PointManager pointManager = null!;
@@ -26,17 +25,16 @@ namespace MinimalSquares.Generic
         {
             base.Start(game);
 
-            keyboardManager = ComponentManager.Get<KeyboardManager>()!;
             functionManager = ComponentManager.Get<FunctionManager>()!;
             internalManager = ComponentManager.Get<InternalManager>()!;
             pointManager = ComponentManager.Get<PointManager>()!;
 
-            keyboardManager.Register(new BasicKeyEvent(
+            ComponentManager.KeyboardManager.Register(new BasicKeyEvent(
                 (_, _) => targetGame.Exit(), 
                 InputType.OnKeyDown, 
                 Keys.Escape));
 
-            keyboardManager.Register(new BasicKeyEvent(
+            ComponentManager.KeyboardManager.Register(new BasicKeyEvent(
                 (_, _) =>
                 {
                     internalManager.Reset();
@@ -44,7 +42,7 @@ namespace MinimalSquares.Generic
                 InputType.OnKeyDown,
                 Keys.R));
 
-            keyboardManager.Register(new BasicKeyEvent(
+            ComponentManager.KeyboardManager.Register(new BasicKeyEvent(
                 (_, _) =>
                 {
                     pointManager.Add(ComponentManager.MainView.CenterWorld.GetXY());
@@ -53,7 +51,7 @@ namespace MinimalSquares.Generic
                 InputType.OnKeyDown,
                 Keys.Space));
 
-            keyboardManager.Register(new BasicKeyEvent(
+            ComponentManager.KeyboardManager.Register(new BasicKeyEvent(
                 (_, key) =>
                 {
                     int num = (int)key - 48;
