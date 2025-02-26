@@ -64,7 +64,7 @@ namespace MinimalSquares.Graphics
         public void Draw()
         {
             if (allLines.Length > 0)
-                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.LineList, allLines, 0, allLines.Length / 2);
+                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, allLines, 0, allLines.Length / 3);
         }
 
         private void OnViewUpdate(RenderRequestType renderRequestType)
@@ -93,37 +93,28 @@ namespace MinimalSquares.Graphics
             Vector3 renderRightDown = ComponentManager.MainView.RenderRightDownBorder;
             Color mainColor = ComponentManager.MainView.MainColor;
 
+            float mainStep = MainView.GrafhicStep * 5f;
+
+            float lowStep = MainView.GrafhicStep;
+
             if (renderLeftUp.X <= 0f && renderRightDown.X >= 0f)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(i * MainView.GrafhicStep, renderRightDown.Y, 0f) });
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(i * MainView.GrafhicStep, renderLeftUp.Y, 0f) });
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(-i * MainView.GrafhicStep, renderRightDown.Y, 0f) });
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(-i * MainView.GrafhicStep, renderLeftUp.Y, 0f) });
-                }
+                linesCache.AddRange(ComponentManager.MainView.DrawRectangle(new Vector2(mainStep, renderRightDown.Y), new Vector2(-mainStep, renderLeftUp.Y), mainColor));
             }
+
             if (renderLeftUp.Y >= 0f && renderRightDown.Y <= 0f)
             {
-                for (int i = 0; i < 5; i++)
-                {
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(renderLeftUp.X, i * MainView.GrafhicStep, 0f) });
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(renderRightDown.X, i * MainView.GrafhicStep, 0f) });
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(renderLeftUp.X, -i * MainView.GrafhicStep, 0f) });
-                    linesCache.Add(new() { Color = mainColor, Position = new Vector3(renderRightDown.X, -i * MainView.GrafhicStep, 0f) });
-                }
+                linesCache.AddRange(ComponentManager.MainView.DrawRectangle(new Vector2(renderRightDown.X, -mainStep), new Vector2(renderLeftUp.X, mainStep), mainColor));
             }
 
             for (float x = FloorBy(renderLeftUp.X, gridValue); x < CeilingBy(renderRightDown.X, gridValue); x += gridValue)
             {
-                linesCache.Add(new() { Color = mainColor, Position = new Vector3(x, renderRightDown.Y, 0f) });
-                linesCache.Add(new() { Color = mainColor, Position = new Vector3(x, renderLeftUp.Y, 0f) });
+                linesCache.AddRange(ComponentManager.MainView.DrawRectangle(new Vector2(x + lowStep, renderRightDown.Y), new Vector2(x - lowStep, renderLeftUp.Y), mainColor));
             }
 
             for (float y = FloorBy(renderRightDown.Y, gridValue); y < CeilingBy(renderLeftUp.Y, gridValue); y += gridValue)
             {
-                linesCache.Add(new() { Color = mainColor, Position = new Vector3(renderLeftUp.X, y, 0f) });
-                linesCache.Add(new() { Color = mainColor, Position = new Vector3(renderRightDown.X, y, 0f) });
+                linesCache.AddRange(ComponentManager.MainView.DrawRectangle(new Vector2(renderRightDown.X, y - lowStep), new Vector2(renderLeftUp.X, y + lowStep), mainColor));
             }
 
             allLines = linesCache.ToArray();

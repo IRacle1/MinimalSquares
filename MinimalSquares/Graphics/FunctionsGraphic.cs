@@ -44,6 +44,8 @@ namespace MinimalSquares.Graphics
         {
             vertexCache.Clear();
 
+            float step = MainView.GrafhicStep * 2;
+
             for (int i = 0; i < functionManager.CurrentFunctions.Count; i++)
             {
                 BaseFunction function = functionManager.CurrentFunctions[i];
@@ -61,19 +63,14 @@ namespace MinimalSquares.Graphics
                     Vector3 center = new Vector3(x, y, 0);
 
                     if (!ComponentManager.MainView.IsOnRenderScreen(center.GetXY()))
-                        return;
+                        continue;
 
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y, 0f), function.Color));
-
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y + MainView.GrafhicStep, 0f), function.Color));
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y - MainView.GrafhicStep, 0f), function.Color));
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x + MainView.GrafhicStep, y, 0f), function.Color));
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x - MainView.GrafhicStep, y, 0f), function.Color));
-
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y + 2 * MainView.GrafhicStep, 0f), function.Color));
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x, y - 2 * MainView.GrafhicStep, 0f), function.Color));
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x + 2 * MainView.GrafhicStep, y, 0f), function.Color));
-                    vertexCache.Add(new VertexPositionColor(new Vector3(x - 2 * MainView.GrafhicStep, y, 0f), function.Color));
+                    vertexCache.Add(new VertexPositionColor(center + new Vector3(step, step, 0), function.Color));
+                    vertexCache.Add(new VertexPositionColor(center + new Vector3(-step, step, 0), function.Color));
+                    vertexCache.Add(new VertexPositionColor(center + new Vector3(step, -step, 0), function.Color));
+                    vertexCache.Add(new VertexPositionColor(center + new Vector3(-step, step, 0), function.Color));
+                    vertexCache.Add(new VertexPositionColor(center + new Vector3(step, -step, 0), function.Color));
+                    vertexCache.Add(new VertexPositionColor(center + new Vector3(-step, -step, 0), function.Color));
                 }
             }
 
@@ -83,7 +80,7 @@ namespace MinimalSquares.Graphics
         public void Draw()
         {
             if (functionsVertex != null && functionsVertex.Length > 0)
-                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.PointList, functionsVertex, 0, functionsVertex.Length);
+                targetGame.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, functionsVertex, 0, functionsVertex.Length / 3);
         }
     }
 }

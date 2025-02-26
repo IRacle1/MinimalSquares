@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -158,6 +160,20 @@ namespace MinimalSquares.Graphics
             targetGame.Effect.Projection = projectionMatrix;
 
             return true;
+        }
+
+        public IEnumerable<VertexPositionColor> DrawRectangle(Vector2 rightDown, Vector2 leftUp, Color color)
+        {
+            Vector2 rightUp = new Vector2(rightDown.X, leftUp.Y);
+            Vector2 leftDown = new Vector2(leftUp.X, rightDown.Y);
+
+            yield return new VertexPositionColor(new Vector3(rightUp, 0), color);
+            yield return new VertexPositionColor(new Vector3(leftUp, 0), color);
+            yield return new VertexPositionColor(new Vector3(rightDown, 0), color);
+
+            yield return new VertexPositionColor(new Vector3(leftUp, 0), color);
+            yield return new VertexPositionColor(new Vector3(rightDown, 0), color);
+            yield return new VertexPositionColor(new Vector3(leftDown, 0), color);
         }
     }
 }

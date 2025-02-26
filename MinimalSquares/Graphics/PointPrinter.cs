@@ -68,14 +68,7 @@ namespace MinimalSquares.Graphics
                 if (!ComponentManager.MainView.IsOnRenderScreen(point))
                     continue;
 
-                Vector3 worldVec = new(point, 0.0f);
-
-                cachePointLines.Add(new VertexPositionColor(worldVec + new Vector3(step, step, 0), PointColor));
-                cachePointLines.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), PointColor));
-                cachePointLines.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), PointColor));
-                cachePointLines.Add(new VertexPositionColor(worldVec + new Vector3(-step, step, 0), PointColor));
-                cachePointLines.Add(new VertexPositionColor(worldVec + new Vector3(step, -step, 0), PointColor));
-                cachePointLines.Add(new VertexPositionColor(worldVec + new Vector3(-step, -step, 0), PointColor));
+                cachePointLines.AddRange(ComponentManager.MainView.DrawRectangle(point + new Vector2(step, -step), point + new Vector2(-step, step), PointColor));
             }
 
             pointLines = cachePointLines.ToArray();
