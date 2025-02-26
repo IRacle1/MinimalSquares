@@ -1,13 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Single;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System;
 
 namespace MinimalSquares.Functions
 {
@@ -23,7 +15,7 @@ namespace MinimalSquares.Functions
     {
         public override string Name { get; } = "Синусоида";
 
-        public SinFunction(double k) : 
+        public SinFunction(double k) :
             base(3)
         {
             K = k;

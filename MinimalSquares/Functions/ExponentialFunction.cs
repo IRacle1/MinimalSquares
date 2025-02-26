@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-
-using MathNet.Numerics.LinearAlgebra;
+﻿using MathNet.Numerics.LinearAlgebra;
+using System;
 
 namespace MinimalSquares.Functions
 {
@@ -16,7 +9,7 @@ namespace MinimalSquares.Functions
     {
         public override string Name { get; } = "Экспонента";
 
-        public ExponentialFunction() : 
+        public ExponentialFunction() :
             base(2)
         {
         }
@@ -26,7 +19,7 @@ namespace MinimalSquares.Functions
             return y > 0f;
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) => 
+        public override double GetMonomialValue(int monomialIndex, double x) =>
             monomialIndex switch
             {
                 0 => x,

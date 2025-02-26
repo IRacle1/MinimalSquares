@@ -1,13 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
-
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
-using MathNet.Numerics.LinearAlgebra.Double.Solvers;
 
 namespace MinimalSquares.Functions
 {
@@ -21,7 +12,7 @@ namespace MinimalSquares.Functions
             Name = $"Полином {monomialsCount - 1} степени";
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) => 
+        public override double GetMonomialValue(int monomialIndex, double x) =>
             monomialIndex switch
             {
                 0 => 1,

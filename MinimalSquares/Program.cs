@@ -1,9 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-
-using MinimalSquares.ConsoleCommands;
-
+﻿using MinimalSquares.ConsoleCommands;
 using Sharprompt;
+using System.Threading.Tasks;
 
 namespace MinimalSquares;
 

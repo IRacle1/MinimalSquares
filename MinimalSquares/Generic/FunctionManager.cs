@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
-using MinimalSquares.Components;
+﻿using MinimalSquares.Components;
 using MinimalSquares.Generic;
+using System;
+using System.Collections.Generic;
 
 namespace MinimalSquares.Functions
 {

@@ -1,23 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-
-using MinimalSquares;
 using MinimalSquares.Components;
 using MinimalSquares.Components.Abstractions;
-using MinimalSquares.Functions;
 using MinimalSquares.Generic;
-using MinimalSquares.Input.Keyboard;
-using MinimalSquares.Input.Keyboard.KeyEvents;
-using MinimalSquares.Input.MouseInput;
+using System.Collections.Generic;
 
 namespace MinimalSquares.Graphics
 {

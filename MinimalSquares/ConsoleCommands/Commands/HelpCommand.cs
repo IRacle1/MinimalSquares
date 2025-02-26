@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Channels;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace MinimalSquares.ConsoleCommands.Commands
 {
@@ -12,7 +7,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
     {
         public HelpCommand() : base("Помощь", new string[] { "Help", }, "Помощь по всем командам")
         {
-            
+
         }
 
         public override void Handle()

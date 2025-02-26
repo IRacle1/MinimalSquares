@@ -1,13 +1,10 @@
-﻿using System;
-
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using MinimalSquares.Components;
 using MinimalSquares.Graphics;
-using MinimalSquares.Input.MouseInput;
-
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
 using MinimalSquares.Input.Keyboard;
 using MinimalSquares.Input.Keyboard.KeyEvents;
+using MinimalSquares.Input.MouseInput;
 
 namespace MinimalSquares.Generic
 {

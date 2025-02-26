@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MinimalSquares.ConsoleCommands
 {
@@ -25,7 +21,7 @@ namespace MinimalSquares.ConsoleCommands
             var objects = types.Select(Activator.CreateInstance);
 
             allCommands.AddRange(objects.OfType<BaseCommand>());
-            
+
             foreach (BaseCommand command in Commands)
             {
                 AliasesToCommands.Add(command.Name.ToLowerInvariant(), command);

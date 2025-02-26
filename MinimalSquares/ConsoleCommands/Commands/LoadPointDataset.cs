@@ -1,19 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.Xna.Framework;
+using MinimalSquares.Components;
+using MinimalSquares.Generic;
+using Sharprompt;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
-
-using MinimalSquares.Components;
-using MinimalSquares.Functions;
-using MinimalSquares.Generic;
-using MinimalSquares.Graphics;
-
-using Sharprompt;
 
 namespace MinimalSquares.ConsoleCommands.Commands
 {
@@ -33,7 +23,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
                 Directory.CreateDirectory("Points");
 
             string[] avaibleFiles = Directory.GetFiles("Points", "*.txt").Select(file => Path.GetFileName(file)!).ToArray();
-            
+
             string file = Prompt.Select(BuildMessage("Выберите файл точек из списка"), avaibleFiles, 5);
             string fullPath = Path.Combine("Points", file);
 
@@ -41,7 +31,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
 
             pointManager.Points.Clear();
 
-            foreach (string Line in fileContent) 
+            foreach (string Line in fileContent)
             {
                 float[] a = Line.Split(' ').Select(float.Parse).ToArray();
                 Vector2 vector = new(a[0], a[1]);
