@@ -18,7 +18,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
 
         public override void Handle()
         {
-            internalManager.Reset();
+            internalManager.ResetAll();
 
             Success();
         }

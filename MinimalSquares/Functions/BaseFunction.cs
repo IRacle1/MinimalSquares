@@ -5,13 +5,11 @@ using MathNet.Numerics.LinearAlgebra.Double;
 using MathNet.Numerics.LinearAlgebra.Double.Solvers;
 using MathNet.Numerics.LinearAlgebra.Solvers;
 
-using Microsoft.Xna.Framework;
-
 namespace MinimalSquares.Functions
 {
     public abstract class BaseFunction
     {
-        private static IIterativeSolver<double> cachedSolver = new TFQMR();
+        private static readonly IIterativeSolver<double> cachedSolver = new TFQMR();
 
         public BaseFunction(int monomialsCount)
         {
@@ -20,7 +18,7 @@ namespace MinimalSquares.Functions
         }
 
         public abstract string Name { get; }
-        public virtual Color Color { get; set; } = Color.MediumSlateBlue;
+        public virtual Microsoft.Xna.Framework.Color Color { get; set; } = Microsoft.Xna.Framework.Color.MediumSlateBlue;
 
         public double[] Parameters { get; }
         public int MonomialCount { get; }
@@ -35,7 +33,7 @@ namespace MinimalSquares.Functions
 
         public void UpdateParameters(double[] x, double[] y)
         {
-            Matrix<double> xSums = MathNet.Numerics.LinearAlgebra.Double.Matrix.Build.Dense(MonomialCount, MonomialCount);
+            Matrix<double> xSums = Matrix.Build.Dense(MonomialCount, MonomialCount);
 
             Vector<double> yxSums = Vector.Build.Dense(MonomialCount);
 
