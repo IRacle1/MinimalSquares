@@ -1,4 +1,5 @@
 ﻿using MinimalSquares.Components;
+using MinimalSquares.Functions.Special;
 using MinimalSquares.Generic;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,8 @@ namespace MinimalSquares.Functions
             new LogFunction(),
             new ExponentialFunction(),
             new PowerFunction(),
-            new SinFunction(1.0),
+            new ExponentPolynomial(4),
+            //new SinFunction(1.0),
         };
 
         public event Action? OnFunctionUpdate;

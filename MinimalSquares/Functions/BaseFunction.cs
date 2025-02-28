@@ -23,7 +23,7 @@ namespace MinimalSquares.Functions
         public double[] Parameters { get; }
         public int MonomialCount { get; }
 
-        public virtual bool IsAcceptablePoint(double v1, double v2) => true;
+        public virtual bool IsAcceptablePoint(double x, double y) => true;
 
         public abstract double GetMonomialValue(int monomialIndex, double x);
 
@@ -31,7 +31,7 @@ namespace MinimalSquares.Functions
 
         public abstract double GetValue(double x);
 
-        public void UpdateParameters(double[] x, double[] y)
+        public virtual void UpdateParameters(double[] x, double[] y)
         {
             Matrix<double> xSums = Matrix.Build.Dense(MonomialCount, MonomialCount);
 
@@ -77,7 +77,7 @@ namespace MinimalSquares.Functions
             SetParameters(ansv);
         }
 
-        private double GetMonomialsByCache(ref double[] cache, int index, ref int cacheIndex, double x)
+        protected double GetMonomialsByCache(ref double[] cache, int index, ref int cacheIndex, double x)
         {
             if (cacheIndex < index)
             {
@@ -102,7 +102,7 @@ namespace MinimalSquares.Functions
 
         public virtual double GetFormattedParameter(int order)
         {
-            return Math.Round(Parameters[order], 2);
+            return Math.Round(Parameters[order], 4);
         }
 
     }

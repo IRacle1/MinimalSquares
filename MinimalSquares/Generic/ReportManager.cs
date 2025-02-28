@@ -85,7 +85,7 @@ namespace MinimalSquares.Generic
 
             foreach (Vector2 point in points)
             {
-                pointsStringBuilder.AppendFormat("|{0}|{1}|", MathF.Round(point.X, 2), MathF.Round(point.Y, 2))
+                pointsStringBuilder.AppendFormat("|{0}|{1}|", MathF.Round(point.X, 4), MathF.Round(point.Y, 4))
                     .AppendLine();
             }
 
