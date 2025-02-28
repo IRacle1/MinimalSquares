@@ -73,8 +73,12 @@ namespace MinimalSquares.Graphics
 
         public void RenderRequest(RenderRequestType render)
         {
-            UpdateBorders();
-            UpdateSteps();
+            if (render.HasFlag(RenderRequestType.General))
+            {
+                UpdateBorders();
+                UpdateSteps();
+            }
+
             OnViewUpdate?.Invoke(render);
         }
 

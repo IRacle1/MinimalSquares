@@ -27,6 +27,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
         public List<BaseFunction> CursedFunctions = new()
         {
             new ExponentPolynomial(3),
+            new LinearSin(),
         };
 
         public override void Handle()
