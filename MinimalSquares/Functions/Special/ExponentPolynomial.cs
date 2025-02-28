@@ -12,7 +12,10 @@ namespace MinimalSquares.Functions.Special
     {
         public ExponentPolynomial(int monomialsCount) : base(monomialsCount)
         {
+            Name = $"Экспоненциальный полином {monomialsCount - 1} степени";
         }
+
+        public override string Name { get; }
 
         public override bool IsAcceptablePoint(double x, double y)
         {

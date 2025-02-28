@@ -23,8 +23,7 @@ namespace MinimalSquares.Functions
             new LogFunction(),
             new ExponentialFunction(),
             new PowerFunction(),
-            new ExponentPolynomial(4),
-            //new SinFunction(1.0),
+            new SinFunction(1.0),
         };
 
         public event Action? OnFunctionUpdate;

@@ -105,5 +105,9 @@ namespace MinimalSquares.Functions
             return Math.Round(Parameters[order], 4);
         }
 
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
