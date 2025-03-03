@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -47,6 +48,24 @@ namespace MinimalSquares
                 return false;
 
             return true;
+        }
+
+        public static string Format(this double value, bool sign = false)
+        {
+            double newVal = Math.Round(value, 4);
+            if (!sign)
+                return newVal.ToString(CultureInfo.InvariantCulture);
+
+            return (newVal > 0 ? '+' : ' ') + newVal.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public static string Format(this float value, bool sign = false)
+        {
+            float newVal = MathF.Round(value, 4);
+            if (!sign)
+                return newVal.ToString(CultureInfo.InvariantCulture);
+
+            return (newVal > 0 ? '+' : ' ') + newVal.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

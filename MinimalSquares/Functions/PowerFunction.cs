@@ -45,12 +45,12 @@ namespace MinimalSquares.Functions
 
         public override string GetGeneralNotation()
         {
-            return @"y \sim b * x^a";
+            return @"b * x^a";
         }
 
         public override string GetFunctionNotation()
         {
-            return $"y = {GetFormattedParameter(1)} * x^{{{GetFormattedParameter(0)}}}";
+            return $"{GetFormattedParameter(1, false)} * x^{{{GetFormattedParameter(0, false)}}}";
         }
     }
 }

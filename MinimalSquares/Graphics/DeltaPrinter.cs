@@ -52,7 +52,7 @@ namespace MinimalSquares.Graphics
                 if (!ComponentManager.MainView.IsOnRenderScreen(point))
                     continue;
 
-                foreach (BaseFunction function in functionManager.CurrentFunctions)
+                foreach (var function in functionManager.CurrentFunctions)
                 {
                     if (!function.IsAcceptablePoint(point.X, point.Y))
                         continue;

@@ -10,9 +10,9 @@ namespace MinimalSquares.Functions
     {
         private PointManager pointManager = null!;
 
-        public List<BaseFunction> CurrentFunctions { get; } = new();
+        public List<AbstractFunction> CurrentFunctions { get; } = new();
 
-        public List<BaseFunction> AvaibleFunctions { get; } = new()
+        public List<AbstractFunction> AvaibleFunctions { get; } = new()
         {
             new PolynomialFunction(1),
             new PolynomialFunction(2),

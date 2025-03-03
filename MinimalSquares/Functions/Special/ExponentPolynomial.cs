@@ -4,22 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using MathNet.Numerics.LinearAlgebra;
+
 using MinimalSquares.Components;
 
 namespace MinimalSquares.Functions.Special
 {
-    class ExponentPolynomial : PolynomialFunction
+    class ExponentPolynomial : AbstractFunction
     {
-        public ExponentPolynomial(int monomialsCount) : base(monomialsCount)
+        public ExponentPolynomial(BaseFunction function)
         {
-            Name = $"Экспоненциальный полином {monomialsCount - 1} степени";
+            TargetFunction = function;
         }
 
-        public override string Name { get; }
+        public BaseFunction TargetFunction { get; }
+
+        public override string Name => $"Экспоненциальный {TargetFunction.Name}";
+
+        public override int MonomialCount => TargetFunction.MonomialCount;
 
         public override bool IsAcceptablePoint(double x, double y)
         {
-            return y > 0.0;
+            return y > 0.0 && TargetFunction.IsAcceptablePoint(x, y);
         }
 
         public override double GetYValue(double y)
@@ -29,25 +35,23 @@ namespace MinimalSquares.Functions.Special
 
         public override double GetValue(double x)
         {
-            return Math.Exp(base.GetValue(x));
+            return Math.Exp(TargetFunction.GetValue(x));
+        }
+
+        public override double GetMonomialValue(int monomialIndex, double x)
+        {
+            return TargetFunction.GetMonomialValue(monomialIndex, x);
+        }
+
+        public override void SetParameters(Vector<double> ansv)
+        {
+            TargetFunction.SetParameters(ansv);
         }
 
         public override string GetGeneralNotation()
         {
-            StringBuilder sb = new(@"y \sim e^{");
-            for (int i = MonomialCount - 1; i >= 0; i--)
-            {
-                int variableIndex = MonomialCount - 1 - i;
-                char variable = ComponentManager.ReportManager.GetVariableName(variableIndex);
-
-                sb.Append(variable);
-
-                if (i > 0)
-                {
-                    sb.AppendFormat("x^{0} + ", i);
-                }
-            }
-
+            StringBuilder sb = new(@"e^{");
+            sb.Append(TargetFunction.GetGeneralNotation());
             sb.Append('}');
 
             return sb.ToString();
@@ -55,25 +59,16 @@ namespace MinimalSquares.Functions.Special
 
         public override string GetFunctionNotation()
         {
-            StringBuilder sb = new(@"y = e^{");
-            for (int i = MonomialCount - 1; i >= 0; i--)
-            {
-                int variableIndex = MonomialCount - 1 - i;
-
-                double curParam = GetFormattedParameter(variableIndex);
-
-                if (i != MonomialCount - 1 && curParam > 0f)
-                {
-                    sb.Append(" + ");
-                }
-
-                sb.Append(GetFormattedParameter(variableIndex))
-                    .AppendFormat("x^{0}", i);
-            }
-
+            StringBuilder sb = new(@"e^{");
+            sb.Append(TargetFunction.GetFunctionNotation());
             sb.Append('}');
 
             return sb.ToString();
+        }
+
+        public override string GetFormattedParameter(int order, bool sign)
+        {
+            return TargetFunction.GetFormattedParameter(order, sign);
         }
     }
 }

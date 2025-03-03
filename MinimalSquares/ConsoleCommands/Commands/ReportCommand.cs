@@ -50,6 +50,8 @@ namespace MinimalSquares.ConsoleCommands.Commands
             string result = ComponentManager.ReportManager.GetGeneralReport(functionManager.CurrentFunctions, pointsManager.Points);
 
             File.WriteAllText(fullPath, result);
+
+            Success();
         }
     }
 }

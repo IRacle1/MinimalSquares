@@ -27,15 +27,15 @@ namespace MinimalSquares.Functions
 
         public override string GetGeneralNotation()
         {
-            return @"y \sim a * \ln(x) + b";
+            return @"a * \ln(x) + b";
         }
 
         public override string GetFunctionNotation()
         {
-            double a = GetFormattedParameter(0);
-            double b = GetFormattedParameter(1);
+            string a = GetFormattedParameter(0, false);
+            string b = GetFormattedParameter(1, true);
 
-            return $"y = {a} * \\ln(x) + {(b < 0 ? b.ToString() : $"+ {b}")}";
+            return $"{a} * \\ln(x) {b}";
         }
     }
 }

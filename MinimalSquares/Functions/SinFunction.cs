@@ -46,15 +46,15 @@ namespace MinimalSquares.Functions
 
         public override string GetGeneralNotation()
         {
-            return $"y \\sim a * sin({K} * x + b) + c";
+            return $"a * sin({K} * x + b) + c";
         }
 
         public override string GetFunctionNotation()
         {
-            double a = GetFormattedParameter(0);
-            double b = GetFormattedParameter(1);
-            double c = GetFormattedParameter(2);
-            return $"y = {a} * sin({K} * x {(b < 0 ? b.ToString() : $"+ {b}")} {(c < 0 ? c.ToString() : $"+ {c}")}";
+            string a = GetFormattedParameter(0, false);
+            string b = GetFormattedParameter(1, true);
+            string c = GetFormattedParameter(2, true);
+            return $"{a} * sin({K} * x {b}) {c}";
         }
     }
 }

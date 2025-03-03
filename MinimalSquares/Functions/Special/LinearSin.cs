@@ -8,7 +8,7 @@ using MinimalSquares.Components;
 
 namespace MinimalSquares.Functions.Special
 {
-    public class LinearSin : PolynomialFunction
+    public class LinearSin : BaseFunction
     {
         public LinearSin() : base(3)
         {
@@ -25,18 +25,23 @@ namespace MinimalSquares.Functions.Special
                 _ => double.NaN,
             };
 
+        public override double GetValue(double x)
+        {
+            return Parameters[0] * Math.Sin(x) + Parameters[1] * x + Parameters[2];
+        }
+
         public override string GetGeneralNotation()
         {
-            return @"y \sim a \sin(x) + bx + c";
+            return @"a \sin(x) + bx + c";
         }
 
         public override string GetFunctionNotation()
         {
-            double a = GetFormattedParameter(0);
-            double b = GetFormattedParameter(1);
-            double c = GetFormattedParameter(2);
+            string a = GetFormattedParameter(0, false);
+            string b = GetFormattedParameter(1, true);
+            string c = GetFormattedParameter(2, true);
 
-            return $"y ={(a < 0 ? a.ToString() : $"+ {a}")} \\sin(x) {(b < 0 ? b.ToString() : $"+ {b}")} x {(c < 0 ? c.ToString() : $"+ {c}")} ";
+            return $"{a} \\sin(x) {b} x {c} ";
         }
     }
 }

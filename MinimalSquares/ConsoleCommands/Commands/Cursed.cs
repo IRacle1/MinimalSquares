@@ -23,16 +23,15 @@ namespace MinimalSquares.ConsoleCommands.Commands
             functionManager = ComponentManager.Get<FunctionManager>()!;
         }
 
-
-        public List<BaseFunction> CursedFunctions = new()
+        public List<AbstractFunction> CursedFunctions = new()
         {
-            new ExponentPolynomial(3),
+            new ExponentPolynomial(new PolynomialFunction(3)),
             new LinearSin(),
         };
 
         public override void Handle()
         {
-            BaseFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), CursedFunctions, 5);
+            AbstractFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), CursedFunctions, 5);
             functionManager.CurrentFunctions.Clear();
             functionManager.CurrentFunctions.Add(function);
             functionManager.UpdateParameters();

@@ -37,7 +37,7 @@ namespace MinimalSquares.Functions
 
         public override string GetGeneralNotation()
         {
-            StringBuilder sb = new(@"y \sim ");
+            StringBuilder sb = new();
             for (int i = MonomialCount - 1; i >= 0; i--)
             {
                 int variableIndex = MonomialCount - 1 - i;
@@ -45,10 +45,20 @@ namespace MinimalSquares.Functions
 
                 sb.Append(variable);
 
-                if (i > 0)
+                switch (i)
                 {
-                    sb.AppendFormat("x^{0} + ", i);
+                    case 0:
+                        break;
+                    case 1:
+                        sb.Append('x');
+                        break;
+                    default:
+                        sb.AppendFormat("x^{0}", i);
+                        break;
                 }
+
+                if (i > 0)
+                    sb.Append(" + ");
             }
 
             return sb.ToString();
@@ -56,28 +66,34 @@ namespace MinimalSquares.Functions
 
         public override string GetFunctionNotation()
         {
-            StringBuilder sb = new(@"y = ");
+            StringBuilder sb = new();
             for (int i = MonomialCount - 1; i >= 0; i--)
             {
                 int variableIndex = MonomialCount - 1 - i;
 
-                double curParam = GetFormattedParameter(variableIndex);
+                string curParam = GetFormattedParameter(variableIndex, i != MonomialCount - 1);
 
-                if (i != MonomialCount - 1 && curParam > 0f)
+                sb.Append(curParam);
+
+                switch (i)
                 {
-                    sb.Append(" + ");
+                    case 0:
+                        break;
+                    case 1:
+                        sb.Append('x');
+                        break;
+                    default:
+                        sb.AppendFormat("x^{0}", i);
+                        break;
                 }
-
-                sb.Append(GetFormattedParameter(variableIndex))
-                    .AppendFormat("x^{0}", i);
             }
 
             return sb.ToString();
         }
 
-        public override double GetFormattedParameter(int order)
+        public override string GetFormattedParameter(int order, bool sign)
         {
-            return base.GetFormattedParameter(MonomialCount - 1 - order);
+            return base.GetFormattedParameter(MonomialCount - 1 - order, sign);
         }
     }
 }

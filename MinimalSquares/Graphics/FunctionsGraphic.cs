@@ -40,7 +40,7 @@ namespace MinimalSquares.Graphics
 
             for (int i = 0; i < functionManager.CurrentFunctions.Count; i++)
             {
-                BaseFunction function = functionManager.CurrentFunctions[i];
+                AbstractFunction function = functionManager.CurrentFunctions[i];
 
                 float left = ComponentManager.MainView.RenderLeftUpBorder.X;
                 float right = ComponentManager.MainView.RenderRightDownBorder.X;

@@ -49,7 +49,7 @@ namespace MinimalSquares.Generic
             return (char)(CharOffset + index);
         }
 
-        public string GetParametersTable(BaseFunction function)
+        public string GetParametersTable(AbstractFunction function)
         {
             StringBuilder parameters = new("|");
             for (int i = 0; i < function.MonomialCount; i++)
@@ -70,7 +70,7 @@ namespace MinimalSquares.Generic
 
             for (int i = 0; i < function.MonomialCount; i++)
             {
-                parameters.AppendFormat("{0}|", function.GetFormattedParameter(i));
+                parameters.AppendFormat("{0}|", function.GetFormattedParameter(i, false));
             }
 
             return parameters.ToString();
@@ -85,7 +85,7 @@ namespace MinimalSquares.Generic
 
             foreach (Vector2 point in points)
             {
-                pointsStringBuilder.AppendFormat("|{0}|{1}|", MathF.Round(point.X, 4), MathF.Round(point.Y, 4))
+                pointsStringBuilder.AppendFormat("|{0}|{1}|", point.X.Format(), point.Y.Format())
                     .AppendLine();
             }
 
@@ -93,18 +93,18 @@ namespace MinimalSquares.Generic
             return pointsStringBuilder.ToString();
         }
 
-        public string GetFunctionReport(BaseFunction function)
+        public string GetFunctionReport(AbstractFunction function)
         {
             return string.Format(FunctionFormat, function.Name, function.GetGeneralNotation(), function.GetFunctionNotation(), GetParametersTable(function));
         }
 
-        public string GetGeneralReport(IEnumerable<BaseFunction> functions, IEnumerable<Vector2> points)
+        public string GetGeneralReport(IEnumerable<AbstractFunction> functions, IEnumerable<Vector2> points)
         {
             StringBuilder functionsString = new();
 
             string pointsString = GetPointsTable(points);
 
-            foreach (BaseFunction function in functions)
+            foreach (var function in functions)
             {
                 functionsString.AppendLine(GetFunctionReport(function));
             }

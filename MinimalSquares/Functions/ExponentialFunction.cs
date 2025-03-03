@@ -48,12 +48,12 @@ namespace MinimalSquares.Functions
 
         public override string GetGeneralNotation()
         {
-            return @"y \sim b * e^{ax}";
+            return @"b * e^{ax}";
         }
 
         public override string GetFunctionNotation()
         {
-            return $"y = {GetFormattedParameter(1)} * e^{{{GetFormattedParameter(0)}x}}";
+            return $"{GetFormattedParameter(1, false)} * e^{{{GetFormattedParameter(0, false)}x}}";
         }
     }
 }
