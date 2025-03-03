@@ -21,22 +21,12 @@ namespace MinimalSquares.Functions
             return y > 0.0;
         }
 
-        public override string GetFunctionNotation()
-        {
-            return $"\\sqrt{{{GetFormattedParameter(0, false)} x {GetFormattedParameter(1, true)}}}";
-        }
-
-        public override string GetGeneralNotation()
-        {
-            return @"\sqrt{ax + b}";
-        }
-
-        public override double GetYValue(double y)
+        public override double GetYValue(double y, double x)
         {
             return y * y;
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) =>
+        public override double GetMonomialValue(int monomialIndex, double x, double y) =>
             monomialIndex switch
             {
                 0 => x,
@@ -47,6 +37,16 @@ namespace MinimalSquares.Functions
         public override double GetValue(double x)
         {
             return Math.Sqrt(Parameters[0] * x + Parameters[1]);
+        }
+
+        public override string GetFunctionNotation()
+        {
+            return $"\\sqrt{{{GetFormattedParameter(0, false)} x {GetFormattedParameter(1, true)}}}";
+        }
+
+        public override string GetGeneralNotation()
+        {
+            return @"\sqrt{ax + b}";
         }
     }
 }

@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using MinimalSquares.Components;
 using MinimalSquares.Components.Abstractions;
 using MinimalSquares.Functions;
+
+using System;
 using System.Collections.Generic;
 
 namespace MinimalSquares.Graphics
@@ -36,7 +38,7 @@ namespace MinimalSquares.Graphics
         {
             vertexCache.Clear();
 
-            float step = MainView.GrafhicStep * 2;
+            float step = MainView.GrafhicStep * 2.0f;
 
             for (int i = 0; i < functionManager.CurrentFunctions.Count; i++)
             {
@@ -45,24 +47,35 @@ namespace MinimalSquares.Graphics
                 float left = ComponentManager.MainView.RenderLeftUpBorder.X;
                 float right = ComponentManager.MainView.RenderRightDownBorder.X;
 
-                for (float x = left; x < right; x += MainView.Step)
+                float lastX = left;
+                float lastY = (float)function.GetValue(lastX);
+
+                for (float x = left + MainView.Step; x < right; x += MainView.Step)
                 {
                     float y = (float)function.GetValue(x);
 
                     if (!float.IsNormal(y))
+                    {
+                        lastX = float.NaN;
                         continue;
+                    }
 
-                    Vector3 center = new Vector3(x, y, 0);
+                    Vector2 center = new Vector2(x, y);
 
-                    if (!ComponentManager.MainView.IsOnRenderScreen(center.GetXY()))
+                    if (!ComponentManager.MainView.IsOnRenderScreen(center))
+                    {
+                        lastX = x;
+                        lastY = y;
                         continue;
+                    }
 
-                    vertexCache.Add(new VertexPositionColor(center + new Vector3(step, step, 0), function.Color));
-                    vertexCache.Add(new VertexPositionColor(center + new Vector3(-step, step, 0), function.Color));
-                    vertexCache.Add(new VertexPositionColor(center + new Vector3(step, -step, 0), function.Color));
-                    vertexCache.Add(new VertexPositionColor(center + new Vector3(-step, step, 0), function.Color));
-                    vertexCache.Add(new VertexPositionColor(center + new Vector3(step, -step, 0), function.Color));
-                    vertexCache.Add(new VertexPositionColor(center + new Vector3(-step, -step, 0), function.Color));
+                    if (float.IsNormal(lastX))
+                    {
+                        vertexCache.AddRange(ComponentManager.MainView.DrawRectangle(new Vector2(x + step, MathF.Min(y, lastY) - step), new Vector2(lastX - step, MathF.Max(y, lastY) + step), function.Color));
+                    }
+
+                    lastX = x;
+                    lastY = y;
                 }
             }
 

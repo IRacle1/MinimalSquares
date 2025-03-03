@@ -23,7 +23,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
 
         public override void Handle()
         {
-            AbstractFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), functionManager.AvaibleFunctions, 5);
+            AbstractFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), functionManager.AvaibleFunctions, 10);
             functionManager.CurrentFunctions.Clear();
             functionManager.CurrentFunctions.Add(function);
             functionManager.UpdateParameters();

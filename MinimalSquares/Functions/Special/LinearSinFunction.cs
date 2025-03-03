@@ -16,7 +16,7 @@ namespace MinimalSquares.Functions.Special
 
         public override string Name { get; } = "Линейный синус";
 
-        public override double GetMonomialValue(int monomialIndex, double x) =>
+        public override double GetMonomialValue(int monomialIndex, double x, double y) =>
             monomialIndex switch
             {
                 0 => Math.Sin(x),

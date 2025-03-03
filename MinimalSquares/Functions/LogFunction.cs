@@ -17,7 +17,7 @@ namespace MinimalSquares.Functions
             return x > 0f;
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) =>
+        public override double GetMonomialValue(int monomialIndex, double x, double y) =>
             monomialIndex switch
             {
                 0 => Math.Log(x),

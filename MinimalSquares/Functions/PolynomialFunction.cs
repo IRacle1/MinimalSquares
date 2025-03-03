@@ -15,7 +15,7 @@ namespace MinimalSquares.Functions
             Name = $"Полином {monomialsCount - 1} степени";
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) =>
+        public override double GetMonomialValue(int monomialIndex, double x, double y) =>
             monomialIndex switch
             {
                 0 => 1,
@@ -29,7 +29,7 @@ namespace MinimalSquares.Functions
 
             for (int i = 0; i < Parameters.Length; i++)
             {
-                y += Parameters[i] * GetMonomialValue(i, x);
+                y += Parameters[i] * GetMonomialValue(i, x, 0);
             }
 
             return y;
