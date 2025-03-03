@@ -10,9 +10,9 @@ using MinimalSquares.Components;
 
 namespace MinimalSquares.Functions.Special
 {
-    class ExponentPolynomial : AbstractFunction
+    class ExponentPolynomialFunction : AbstractFunction
     {
-        public ExponentPolynomial(BaseFunction function)
+        public ExponentPolynomialFunction(BaseFunction function)
         {
             TargetFunction = function;
         }

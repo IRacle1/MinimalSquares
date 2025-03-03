@@ -8,9 +8,9 @@ using MinimalSquares.Components;
 
 namespace MinimalSquares.Functions.Special
 {
-    public class LinearSin : BaseFunction
+    public class LinearSinFunction : BaseFunction
     {
-        public LinearSin() : base(3)
+        public LinearSinFunction() : base(3)
         {
         }
 

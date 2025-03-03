@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MinimalSquares.Functions.Special
+namespace MinimalSquares.Functions
 {
     // y = sqrt(ax + b)
     // y^2 = ax + b
-    public class SquareRoot : BaseFunction
+    public class SquareRootFunction : BaseFunction
     {
-        public SquareRoot() : base(2)
+        public SquareRootFunction() : base(2)
         {
         }
 

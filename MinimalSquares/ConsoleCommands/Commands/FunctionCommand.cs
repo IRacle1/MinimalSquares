@@ -6,33 +6,24 @@ using System.Threading.Tasks;
 
 using MinimalSquares.Components;
 using MinimalSquares.Functions;
-using MinimalSquares.Functions.Special;
 using MinimalSquares.Graphics;
-
 using Sharprompt;
 
 namespace MinimalSquares.ConsoleCommands.Commands
 {
     [ConsoleCommand]
-    class CursedCommand : BaseCommand
+    public class FunctionCommand : BaseCommand
     {
         private FunctionManager functionManager = null!;
 
-        public CursedCommand() : base("Эксперемент", new string[] { "Cursed" }, "Взаимодействие со странными функциями, созданными по приколу")
+        public FunctionCommand() : base("Функция", new string[] { "function" }, "Вручную выбирает функцию для апроксимации.")
         {
             functionManager = ComponentManager.Get<FunctionManager>()!;
         }
 
-        public List<AbstractFunction> CursedFunctions = new()
-        {
-            new ExponentPolynomialFunction(new PolynomialFunction(3)),
-            new LinearSinFunction(),
-            new SquareRoot(),
-        };
-
         public override void Handle()
         {
-            AbstractFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), CursedFunctions, 5);
+            AbstractFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), functionManager.AvaibleFunctions, 5);
             functionManager.CurrentFunctions.Clear();
             functionManager.CurrentFunctions.Add(function);
             functionManager.UpdateParameters();
