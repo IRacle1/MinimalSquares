@@ -107,8 +107,7 @@ namespace MinimalSquares.Graphics
             float deltaY = (LeftUpBorder.Y - RightDownBorder.Y) / targetGame.Window.ClientBounds.Height;
 
             GrafhicStep = deltaY;
-            Step = GrafhicStep / 10f;
-            targetGame.Window.Title = GrafhicStep.ToString();
+            Step = GrafhicStep / 2f;
         }
 
         public bool IsOnScreen(Vector2 point)

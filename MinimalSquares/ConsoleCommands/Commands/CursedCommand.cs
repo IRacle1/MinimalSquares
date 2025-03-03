@@ -14,11 +14,11 @@ using Sharprompt;
 namespace MinimalSquares.ConsoleCommands.Commands
 {
     [ConsoleCommand]
-    class Cursed : BaseCommand
+    class CursedCommand : BaseCommand
     {
         private FunctionManager functionManager = null!;
 
-        public Cursed() : base("Эксперемент", new string[] { "Cursed" }, "Взаимодействие со странными функциями, созданными по приколу")
+        public CursedCommand() : base("Эксперемент", new string[] { "Cursed" }, "Взаимодействие со странными функциями, созданными по приколу")
         {
             functionManager = ComponentManager.Get<FunctionManager>()!;
         }
@@ -27,6 +27,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
         {
             new ExponentPolynomial(new PolynomialFunction(3)),
             new LinearSin(),
+            new SquareRoot(),
         };
 
         public override void Handle()
