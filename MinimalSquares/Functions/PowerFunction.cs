@@ -27,7 +27,7 @@ namespace MinimalSquares.Functions
                 _ => double.NaN,
             };
 
-        public override double GetYValue(double y, double x)
+        public override double GetYValue(double x, double y)
         {
             return Math.Log(y);
         }

@@ -28,9 +28,9 @@ namespace MinimalSquares.Functions.Special
             return y > 0.0 && TargetFunction.IsAcceptablePoint(x, y);
         }
 
-        public override double GetYValue(double y, double x)
+        public override double GetYValue(double x, double y)
         {
-            return Math.Log(y);
+            return TargetFunction.GetYValue(x, Math.Log(y));
         }
 
         public override double GetValue(double x)

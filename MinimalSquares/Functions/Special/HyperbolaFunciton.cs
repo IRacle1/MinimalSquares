@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 using MathNet.Numerics.LinearAlgebra;
 
-namespace MinimalSquares.Functions
+namespace MinimalSquares.Functions.Special
 {
     // y = a/(x+b)
     // xy + by = a
-    // xy = - by + a
+    // xy = a - by
+    // x = a/y - b
     public class HyperbolaFunciton : BaseFunction
     {
         public HyperbolaFunciton() : base(2)
@@ -19,38 +20,36 @@ namespace MinimalSquares.Functions
 
         public override string Name { get; } = "Гипербола";
 
-        public override bool IsAcceptablePoint(double x, double y)
-        {
-            return y > 0.0;
-        }
-
         public override string GetFunctionNotation()
         {
-            return $"\\sqrt{{{GetFormattedParameter(0, false)} x {GetFormattedParameter(1, true)}}}";
+            string a = GetFormattedParameter(0, false);
+            string b = GetFormattedParameter(1, true);
+
+            return $"\\frac{{{a}}}{{x {b}}}";
         }
 
         public override string GetGeneralNotation()
         {
-            return @"\sqrt{ax + b}";
+            return @"\frac{a}{x+b}";
         }
 
-        public override double GetYValue(double y, double x)
+        public override double GetYValue(double x, double y)
         {
-            return x * y;
+            return x;
         }
 
         public override double GetMonomialValue(int monomialIndex, double x, double y) =>
             monomialIndex switch
             {
-                0 => y,
+                0 => 1 / y,
                 1 => 1,
                 _ => double.NaN,
             };
 
         public override void SetParameters(Vector<double> ansv)
         {
-            Parameters[1] = -ansv[0];
-            Parameters[0] = ansv[1];
+            Parameters[0] = ansv[0];
+            Parameters[1] = -ansv[1];
         }
 
         public override double GetValue(double x)

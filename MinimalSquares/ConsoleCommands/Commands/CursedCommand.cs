@@ -27,6 +27,7 @@ namespace MinimalSquares.ConsoleCommands.Commands
         {
             new ExponentPolynomialFunction(new PolynomialFunction(3)),
             new LinearSinFunction(),
+            new HyperbolaFunciton(),
         };
 
         public override void Handle()

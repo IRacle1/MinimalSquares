@@ -25,7 +25,6 @@ namespace MinimalSquares.Functions
             new PowerFunction(),
             new SinFunction(1.0),
             new SquareRootFunction(),
-            new HyperbolaFunciton(),
         };
 
         public event Action? OnFunctionUpdate;
