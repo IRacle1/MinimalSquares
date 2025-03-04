@@ -27,12 +27,12 @@ namespace MinimalSquares.ConsoleCommands.Commands
         {
             new ExponentPolynomialFunction(new PolynomialFunction(3)),
             new LinearSinFunction(),
-            new SquareRoot(),
+            new HyperbolaFunciton(),
         };
 
         public override void Handle()
         {
-            AbstractFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), CursedFunctions, 5);
+            AbstractFunction function = Prompt.Select(BuildMessage("Выберете функцию из списка"), CursedFunctions, 10);
             functionManager.CurrentFunctions.Clear();
             functionManager.CurrentFunctions.Add(function);
             functionManager.UpdateParameters();

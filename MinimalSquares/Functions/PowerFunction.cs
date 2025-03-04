@@ -19,7 +19,7 @@ namespace MinimalSquares.Functions
             return y > 0f && x > 0f;
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) =>
+        public override double GetMonomialValue(int monomialIndex, double x, double y) =>
             monomialIndex switch
             {
                 0 => Math.Log(x),
@@ -27,7 +27,7 @@ namespace MinimalSquares.Functions
                 _ => double.NaN,
             };
 
-        public override double GetYValue(double y)
+        public override double GetYValue(double x, double y)
         {
             return Math.Log(y);
         }

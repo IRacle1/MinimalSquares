@@ -28,13 +28,14 @@ namespace MinimalSquares.Functions
             return Parameters[0] * Math.Sin(x * K + Parameters[1]) + Parameters[2];
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x) => monomialIndex switch
-        {
-            0 => Math.Sin(K * x),
-            1 => Math.Cos(K * x),
-            2 => 1,
-            _ => double.NaN,
-        };
+        public override double GetMonomialValue(int monomialIndex, double x, double y) => 
+            monomialIndex switch
+            {
+                0 => Math.Sin(K * x),
+                1 => Math.Cos(K * x),
+                2 => 1,
+                _ => double.NaN,
+            };
 
         public override void SetParameters(Vector<double> ansv)
         {

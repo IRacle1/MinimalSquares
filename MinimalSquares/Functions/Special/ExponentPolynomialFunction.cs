@@ -28,9 +28,9 @@ namespace MinimalSquares.Functions.Special
             return y > 0.0 && TargetFunction.IsAcceptablePoint(x, y);
         }
 
-        public override double GetYValue(double y)
+        public override double GetYValue(double x, double y)
         {
-            return Math.Log(y);
+            return TargetFunction.GetYValue(x, Math.Log(y));
         }
 
         public override double GetValue(double x)
@@ -38,9 +38,9 @@ namespace MinimalSquares.Functions.Special
             return Math.Exp(TargetFunction.GetValue(x));
         }
 
-        public override double GetMonomialValue(int monomialIndex, double x)
+        public override double GetMonomialValue(int monomialIndex, double x, double y)
         {
-            return TargetFunction.GetMonomialValue(monomialIndex, x);
+            return TargetFunction.GetMonomialValue(monomialIndex, x, y);
         }
 
         public override void SetParameters(Vector<double> ansv)

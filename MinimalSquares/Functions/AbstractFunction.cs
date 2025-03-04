@@ -22,9 +22,9 @@ namespace MinimalSquares.Functions
 
         public virtual bool IsAcceptablePoint(double x, double y) => true;
 
-        public abstract double GetMonomialValue(int monomialIndex, double x);
+        public abstract double GetMonomialValue(int monomialIndex, double x, double y);
 
-        public virtual double GetYValue(double y) => y;
+        public virtual double GetYValue(double x, double y) => y;
 
         public abstract double GetValue(double x);
 
@@ -47,17 +47,17 @@ namespace MinimalSquares.Functions
 
                 acceptableCount++;
 
-                double yValue = GetYValue(y[i]);
+                double yValue = GetYValue(x[i], y[i]);
 
                 for (int j = 0; j < MonomialCount; j++)
                 {
-                    double xj = GetMonomialsByCache(ref monomialsCache, j, ref lastSetCache, x[i]);
+                    double xj = GetMonomialsByCache(ref monomialsCache, j, ref lastSetCache, x[i], y[i]);
 
                     yxSums[j] += yValue * xj;
 
                     for (int k = 0; k < MonomialCount; k++)
                     {
-                        double xk = GetMonomialsByCache(ref monomialsCache, k, ref lastSetCache, x[i]);
+                        double xk = GetMonomialsByCache(ref monomialsCache, k, ref lastSetCache, x[i], y[i]);
 
                         xSums[j, k] += xj * xk;
                     }
@@ -74,12 +74,12 @@ namespace MinimalSquares.Functions
             SetParameters(ansv);
         }
 
-        protected double GetMonomialsByCache(ref double[] cache, int index, ref int cacheIndex, double x)
+        protected double GetMonomialsByCache(ref double[] cache, int index, ref int cacheIndex, double x, double y)
         {
             if (cacheIndex < index)
             {
                 cacheIndex = index;
-                cache[index] = GetMonomialValue(index, x);
+                cache[index] = GetMonomialValue(index, x, y);
             }
 
             return cache[index];
