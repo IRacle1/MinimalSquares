@@ -21,7 +21,7 @@ namespace MinimalSquares.Functions
             return y > 0.0;
         }
 
-        public override double GetYValue(double x, double y)
+        public override double GetFreeValue(double x, double y)
         {
             return y * y;
         }

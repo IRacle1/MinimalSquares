@@ -24,7 +24,7 @@ namespace MinimalSquares.Functions
 
         public abstract double GetMonomialValue(int monomialIndex, double x, double y);
 
-        public virtual double GetYValue(double x, double y) => y;
+        public virtual double GetFreeValue(double x, double y) => y;
 
         public abstract double GetValue(double x);
 
@@ -47,7 +47,7 @@ namespace MinimalSquares.Functions
 
                 acceptableCount++;
 
-                double yValue = GetYValue(x[i], y[i]);
+                double yValue = GetFreeValue(x[i], y[i]);
 
                 for (int j = 0; j < MonomialCount; j++)
                 {

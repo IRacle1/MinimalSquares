@@ -33,7 +33,7 @@ namespace MinimalSquares.Functions.Special
             return @"\frac{a}{x+b}";
         }
 
-        public override double GetYValue(double x, double y)
+        public override double GetFreeValue(double x, double y)
         {
             return x;
         }
