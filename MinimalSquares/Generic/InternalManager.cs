@@ -36,8 +36,8 @@ namespace MinimalSquares.Generic
             functionManager.CurrentFunctions.Clear();
             pointManager.Clear();
 
-            ComponentManager.MainView.SetCamera(new Vector3(0, 0, 6));
-            ComponentManager.MainView.RenderRequest(RenderRequestType.All);
+            if (ComponentManager.MainView.SetCamera(new Vector3(0, 0, 6)))
+                ComponentManager.MainView.RenderRequest(RenderRequestType.All);
         }
 
         public void ResetFunctions()
@@ -51,8 +51,8 @@ namespace MinimalSquares.Generic
             functionManager.CurrentFunctions.Clear();
             pointManager.Clear();
 
-            ComponentManager.MainView.SetCamera(new Vector3(0, 0, 6));
-            ComponentManager.MainView.RenderRequest(RenderRequestType.All);
+            if (ComponentManager.MainView.SetCamera(new Vector3(0, 0, 6)))
+                ComponentManager.MainView.RenderRequest(RenderRequestType.All);
         }
     }
 }
